@@ -1,3 +1,5 @@
 node_modules
-core/data/*
-core/log/*
+download/*
+data/*
+log/*
+.git

@@ -36,11 +36,9 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 ### Screenshot
 
  * (soon)
- 
+
 
 ### Install
-
- * (pending)
 
 ```
 git clone https://github.com/kustomzone/Fuzium.git
@@ -49,14 +47,15 @@ npm install && npm start
 ```
 
 
-### Status
+### Status / Notes
 
 | **`Linux`** | **`Mac`** | **`Win`** |
 |-------------|-----------|-----------|
 |             |           |  running  |
-|-------------|-----------|-----------|
-|             |           |alt-key for|
-|             |           |menu+reload|
+|             |           |alt-key for menu|
+
+
+Report any [issues](https://github.com/kustomzone/Fuzium/issues) you come across, thanks.
 
 
 #### Thank you!

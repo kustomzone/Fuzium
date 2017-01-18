@@ -34,7 +34,7 @@ function createWindow() {
         submenu: [
           {
             label: 'About',
-            click () { require('electron').shell.openExternal('https://github.com/kustomzone/Fuzium/blob/master/README.md') }
+            click () { electron.shell.openExternal('https://github.com/kustomzone/Fuzium/blob/master/Readme.md') }
           }
         ]
     },
@@ -69,6 +69,7 @@ function createWindow() {
 	
 	console.log('creating main window...');
 	
+	// testing
 	mainWindow.webContents.on('new-window', function(event, urlToOpen) {
        event.preventDefault(); // event.defaultPrevented = true;
     });
@@ -79,7 +80,7 @@ function createWindow() {
 	
     mainWindow.on('closed', function() {
 		mainWindow = null
-		zeron.kill('SIGINT')
+		fuzium.kill('SIGINT')
     });
 	
 	// Set download folder 
@@ -96,17 +97,17 @@ function createWindow() {
          console.log('Download is paused')
        } else {
          console.log(`Received bytes: ${item.getReceivedBytes()}`)
-       }
-      }
-     })
+       };
+      };
+     });
      item.once('done', (event, state) => {
       if (state === 'completed') {
         console.log('Completed. Check your app download folder')
       } else {
         console.log(`Download failed: ${state}`)
-      }
-     })
-    })
+      };
+     });
+    });
 }
 
 app.on('ready', function() {
