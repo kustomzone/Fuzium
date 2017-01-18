@@ -1,20 +1,22 @@
+'use strict';
 
-const { electron, app, BrowserWindow, crashReporter, ipcMain, Menu, protocol, remote } = require('electron')
+const { electron, electronPath, app, BrowserWindow, crashReporter, ipcMain, Menu, protocol } = require('electron') // remote
 const url       = require('url')
 const path      = require('path')
-const debugMenu = require('debug-menu')
+const debugMenu = require('debug-menu') 
+const newOSMenu = require('./app/os-menu')
+var spawnChild  = require('child_process').spawn;
 
-// var spawn          = require('child_process').spawn;
-// var electronPath   = require('electron-prebuilt'); 
-// const createOSMenu = require('./app/os-menu')
-// var window         = remote.getCurrentWindow();
+// var hardReload = require('electron-reload')(__dirname)
+// var spawnAdult = require('electron-spawn')
+// var reload     = remote.getCurrentWindow().reload()
+
 
 let mainWindow
 
 var mainAddr = 'http://127.0.0.1:43110/1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D'
 
 function createWindow() {
-	var fuzium = require('child_process').spawn('./app/bin/ZeroNet.exe')
 	
 	mainWindow = new BrowserWindow({
 		webbrowser: 'electron',
@@ -34,7 +36,7 @@ function createWindow() {
         submenu: [
           {
             label: 'About',
-            click () { electron.shell.openExternal('https://github.com/kustomzone/Fuzium/blob/master/Readme.md') }
+            click () { require('electron').shell.openExternal('https://github.com/kustomzone/Fuzium/blob/master/Readme.md') }
           }
         ]
     },
@@ -65,14 +67,12 @@ function createWindow() {
         electron.Menu.setApplicationMenu(menu);
     }
 	
-	// createOSMenu();
-	
-	console.log('creating main window...');
+	// newOSMenu();
 	
 	// testing
-	mainWindow.webContents.on('new-window', function(event, urlToOpen) {
-       event.preventDefault(); // event.defaultPrevented = true;
-    });
+	// mainWindow.webContents.on('new-window', function(event, urlToOpen) {
+    //   event.preventDefault(); // event.defaultPrevented = true;
+    // });
 	
     mainWindow.loadURL(mainAddr)
 	// mainWindow.loadURL(`file://${__dirname}/app/browser.html`)
@@ -85,30 +85,44 @@ function createWindow() {
 	
 	// Set download folder 
 	mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
-     // Set the save path, making Electron not to prompt a save dialog
-     item.setSavePath('download/'+item.getFilename())
+      // Set the save path, making Electron not to prompt a save dialog
+      item.setSavePath('download/'+item.getFilename())
 	 
-	 // track download
-     item.on('updated', (event, state) => {
-      if (state === 'interrupted') {
-        console.log('Download is interrupted but can be resumed')
-      } else if (state === 'progressing') {
-       if (item.isPaused()) {
-         console.log('Download is paused')
-       } else {
-         console.log(`Received bytes: ${item.getReceivedBytes()}`)
-       };
-      };
-     });
-     item.once('done', (event, state) => {
-      if (state === 'completed') {
-        console.log('Completed. Check your app download folder')
-      } else {
-        console.log(`Download failed: ${state}`)
-      };
-     });
+	  // track download
+      item.on('updated', (event, state) => {
+	    var bytes = dl = 0;
+        if (state === 'interrupted') {
+          console.log('Download is interrupted but can be resumed')
+        } else if (state === 'progressing') {
+          if (item.isPaused()) {
+              console.log('Download is paused')
+          } else {
+			  dl = parseInt(`${item.getReceivedBytes()}`);
+		      if (bytes != dl) {
+			      console.log(`Received bytes: ${item.getReceivedBytes()}`)
+			      bytes = parseInt(`${item.getReceivedBytes()}`);
+			  }
+		  }
+        }
+      });
+	  
+	  // complete
+      item.once('done', (event, state) => {
+        if (state === 'completed') {
+            console.log('Completed. Check your app download folder')
+        } else {
+            console.log(`Download failed: ${state}`)
+        }
+      });
+	  
     });
-}
+	
+	console.log('creating main window...')
+	
+	// zeronet as child of electron
+	var fuzium = spawnChild('./app/bin/ZeroNet.exe', ['--open_browser', ''])
+	
+};
 
 app.on('ready', function() {
     createWindow();

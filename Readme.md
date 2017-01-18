@@ -19,7 +19,6 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 - [x] download folder
 - [ ] navigation (forward/backward)
 - [ ] addressbar
-- [ ] stop zeronet from also loading in default browser!
 - [ ] redesign
 - [ ] site creation
 - [ ] new app toplist
