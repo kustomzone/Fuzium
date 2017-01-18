@@ -1,4 +1,5 @@
 node_modules
+download/*
 data/*
 log/*
 .git
