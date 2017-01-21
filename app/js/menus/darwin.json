@@ -1,0 +1,75 @@
+{
+  "menu": [{
+    "label": "Fuzium",
+    "submenu": [{
+      "label": "About",
+      "command": "application:about"
+    }, {
+      "type": "separator"
+    }, {
+      "label": "Preferences",
+      "command": "application:show-settings",
+      "accelerator": "Command+,"
+    }, {
+      "type": "separator"
+    }, {
+      "label": "Quit",
+      "command": "application:quit",
+      "accelerator": "Command+Q"
+    }]
+  }, {
+    "label": "Edit",
+    "submenu": [{
+      "label": "Undo",
+      "role": "undo",
+      "accelerator": "Command+Z"
+    }, {
+      "label": "Redo",
+      "role": "redo",
+      "accelerator": "Shift+Command+Z"
+    }, {
+      "type": "separator"
+    }, {
+      "label": "Cut",
+      "role": "cut",
+      "accelerator": "Command+X"
+    }, {
+      "label": "Copy",
+      "role": "copy",
+      "accelerator": "Command+C"
+    }, {
+      "label": "Paste",
+      "role": "paste",
+      "accelerator": "Command+V"
+    }, {
+      "label": "Select All",
+      "role": "selectall",
+      "accelerator": "Command+A"
+    }]
+  }, {
+    "label": "View",
+    "submenu": [{
+      "label": "Reload",
+      "command": "window:reload",
+      "accelerator": "Command+R"
+    }, {
+      "label": "Toggle Full Screen",
+      "command": "window:toggle-full-screen",
+      "accelerator": "Command+Control+F"
+    }, {
+      "label": "Developer",
+      "submenu": [{
+        "label": "Toggle Developer Tools",
+        "command": "window:toggle-dev-tools",
+        "accelerator": "Alt+Command+I"
+      }]
+    }]
+  }, {
+    "label": "Window",
+    "submenu": [{
+      "label": "Minimize",
+      "role": "minimize",
+      "accelerator": "Command+M"
+    }]
+  }]
+}

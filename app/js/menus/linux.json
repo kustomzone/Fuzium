@@ -1,0 +1,66 @@
+{
+  "menu": [{
+    "label": "&File",
+    "submenu": [{
+      "label": "&Preferences",
+      "command": "application:show-settings"
+    }, {
+      "label": "Quit",
+      "command": "application:quit",
+      "accelerator": "Control+Q"
+    }]
+  }, {
+    "label": "&Edit",
+    "submenu": [{
+      "label": "&Undo",
+      "role": "undo",
+      "accelerator": "Control+Z"
+    }, {
+      "label": "&Redo",
+      "role": "redo",
+      "accelerator": "Control+Y"
+    }, {
+      "type": "separator"
+    }, {
+      "label": "&Cut",
+      "role": "cut",
+      "accelerator": "Control+X"
+    }, {
+      "label": "C&opy",
+      "role": "copy",
+      "accelerator": "Control+C"
+    }, {
+      "label": "&Paste",
+      "role": "paste",
+      "accelerator": "Control+V"
+    }, {
+      "label": "Select &All",
+      "role": "selectall",
+      "accelerator": "Control+A"
+    }]
+  }, {
+    "label": "&View",
+    "submenu": [{
+      "label": "&Reload",
+      "command": "window:reload",
+      "accelerator": "Control+R"
+    }, {
+      "label": "Toggle &Full Screen",
+      "command": "window:toggle-full-screen",
+      "accelerator": "Control+Shift+F"
+    }, {
+      "label": "Developer",
+      "submenu": [{
+        "label": "Toggle Developer &Tools",
+        "command": "window:toggle-dev-tools",
+        "accelerator": "Control+Shift+I"
+      }]
+    }]
+  }, {
+    "label": "&Help",
+    "submenu": [{
+      "label": "About",
+      "command": "application:about"
+    }]
+  }]
+}

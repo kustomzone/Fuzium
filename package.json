@@ -1,7 +1,6 @@
 {
   "name": "Fuzium",
-  "main": "main.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "description": "Zeronet + Electron = Fuzium",
   "author": "Andrew Kidoo",
@@ -12,17 +11,16 @@
   "bugs": {
 	"url": "https://github.com/kustomzone/Fuzium/issues"
   },
+  "main": "main.js",
   "scripts": {
-	"start": "electron ."
+	"start": "electron main.js"
   },
   "keywords": [
 	"fuzium",
-	"electron",
-	"bittorrent",
-	"p2p",
 	"zeronet",
-	"internet",
-	"browser"
+	"browser",
+	"electron",
+	"bittorrent"
   ],
   "devDependencies": {
 	"asar": "^0.12.2",
@@ -30,11 +28,13 @@
 	"debug-menu": "^0.4.0",
 	"electron": "^1.4.13",
 	"electron-installer-windows": "^0.2.0",
+    "electron-localshortcut": "^1.0.0",
 	"electron-packager": "^8.5.0",
 	"electron-prebuilt": "^1.4.13",
 	"electron-reload": "^1.1.0",
 	"electron-spawn": "^5.0.0",
 	"file-loader": "^0.9.0",
+    "file-watcher": "^0.0.2",
 	"gulp": "3.9.1",
 	"gulp-babel": "6.1.2",
 	"gulp-compass": "2.1.0",
@@ -44,5 +44,11 @@
 	"webpack": "^1.14.0"
   },
   "dependencies": {
+	"commander": "~2.8.1",
+	"configstore": "~1.2.1",
+	"monogamous": "~1.0.3",
+	"replify": "~1.2.0",
+	"underscore": "~1.8.3",
+	"winston": "~1.0.0"
   }
 }

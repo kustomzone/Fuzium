@@ -16,22 +16,30 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 
 ### Todo
 
-- [x] download folder
-- [ ] navigation (forward/backward)
-- [ ] addressbar
-- [ ] redesign
-- [ ] site creation
-- [ ] new app toplist
-- [ ] app/site donations
-- [ ] cross platform testing
-- [ ] packaged releases
+- [x] config & debug logging
+- [x] saves user windowing config
+- [x] user preferences & about screen
+- [x] download handler (no gui yet)
+- [ ] addressbar & navigation (forward/backward/url)
+- [ ] site creation tool (there's a basic one in Zeronet's home menu)
+- [ ] app/zite donation features
+- [ ] new app toplist & store
+- [ ] cross platform testing & packaged releases
 
 
+### Bugs (aka todo)
+
+ * No navigation. (except zite loading, and Zeronet's home button)
+ * Not resizable. (except fullscreen toggle)
+ * Have to reload (CTRL-R) when booting if Zeronet not shown.
+ * Some minor redraw glitches. (see previous bug)
+
+ 
 ### Features
 
- * (testing)
+ * taskbar preferences
 
-
+ 
 ### Screenshot
 
  * (soon)
@@ -60,7 +68,7 @@ Report any [issues](https://github.com/kustomzone/Fuzium/issues) you come across
 #### Thank you!
 
  - Tamas Kocsis, creator of Zeronet ( https://zeronet.io )
- - Cheng Zhao, creator of NW.js and Electron ( http://cheng.guru/ )
+ - Cheng Zhao, creator of Electron ( http://cheng.guru/ )
  - Plus Github and the rest of the team working on Electron
 
 License
