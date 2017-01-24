@@ -1,54 +1,65 @@
 {
   "name": "Fuzium",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "electronVersion": "1.4.15",
   "license": "MIT",
   "description": "Zeronet + Electron = Fuzium",
   "author": "Andrew Kidoo",
   "repository": {
-	"type": "git",
-	"url": "https://github.com/kustomzone/Fuzium"
+    "type": "git",
+    "url": "https://github.com/kustomzone/Fuzium"
   },
   "bugs": {
-	"url": "https://github.com/kustomzone/Fuzium/issues"
+    "url": "https://github.com/kustomzone/Fuzium/issues"
   },
   "main": "main.js",
   "scripts": {
-	"start": "electron main.js"
+    "start": "electron main.js",
+    "build": "electron-packager . Fuzium --platform win32 --arch x64 --electronVersion=1.4.15 && play done.wav",
+    "package": "electron-packager . Fuzium --platform win32 --arch=x64 --electronVersion=1.4.15 && play done.wav",
+    "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/",
+    "test": "node_modules/.bin/standard --verbose js/**/*.js main/*.js"
   },
   "keywords": [
-	"fuzium",
-	"zeronet",
-	"browser",
-	"electron",
-	"bittorrent"
+    "fuzium",
+    "zeronet",
+    "browser",
+    "electron",
+    "bittorrent"
   ],
   "devDependencies": {
-	"asar": "^0.12.2",
-	"babel-preset-react": "6.16.0",
-	"debug-menu": "^0.4.0",
-	"electron": "^1.4.13",
-	"electron-installer-windows": "^0.2.0",
-    "electron-localshortcut": "^1.0.0",
-	"electron-packager": "^8.5.0",
-	"electron-prebuilt": "^1.4.13",
-	"electron-reload": "^1.1.0",
-	"electron-spawn": "^5.0.0",
-	"file-loader": "^0.9.0",
-    "file-watcher": "^0.0.2",
-	"gulp": "3.9.1",
-	"gulp-babel": "6.1.2",
-	"gulp-compass": "2.1.0",
-	"is-there": "^4.3.3",
-	"json-loader": "^0.5.4",
-	"node-dir": "^0.1.16",
-	"webpack": "^1.14.0"
+    "asar": "^0.12.2",
+    "babel-preset-react": "6.16.0",
+    "electron": "^1.4.15",
+    "electron-devtools-installer": "^2.0.1",
+    "electron-devtools-installer-offline": "^0.1.4",
+    "electron-installer-windows": "^0.2.0",
+    "electron-packager": "^8.5.0",
+    "electron-reload": "^1.1.0",
+    "electron-winstaller": "^2.5.1",
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-uglify": "^0.10.0",
+    "grunt-electron": "^4.0.0",
+    "grunt-electron-installer-windows": "^0.2.0",
+    "gulp": "3.9.1",
+    "gulp-babel": "6.1.2",
+    "gulp-compass": "2.1.0",
+    "standard": "^7.1.0",
+    "webpack": "^1.14.0"
   },
   "dependencies": {
-	"commander": "~2.8.1",
-	"configstore": "~1.2.1",
-	"monogamous": "~1.0.3",
-	"replify": "~1.2.0",
-	"underscore": "~1.8.3",
-	"winston": "~1.0.0"
+    "commander": "~2.8.1",
+    "configstore": "~1.2.1",
+    "electron-localshortcut": "^1.0.0",
+    "electron-spawn": "^5.0.0",
+    "file-loader": "^0.9.0",
+    "file-watcher": "^0.0.2",
+    "is-there": "^4.3.3",
+    "json-loader": "^0.5.4",
+    "monogamous": "~1.0.3",
+    "node-dir": "^0.1.16",
+    "underscore": "~1.8.3",
+    "winston": "~1.0.0"
   }
 }

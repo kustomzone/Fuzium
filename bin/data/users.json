@@ -1,0 +1,16 @@
+{
+  "1LopZgidw5bb9qLHQ1Yf8rXaAsxjkEhCNv": {
+    "certs": {}, 
+    "master_seed": "27981e17218c7bf73c8fd471d02ed7e867603ca42be44a1730848f42a4ab20bf", 
+    "sites": {
+      "1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D": {
+        "auth_address": "1JRBxMPEoqVobqTNjXu6jhrp9Yf4UNGdXa", 
+        "auth_privatekey": "5K4Fe5MWXfXQppPxLqt6i6uYResNtQEpFabAeGWJ9QYVz9DnwJ5"
+      }, 
+      "1Name2NXVi1RDPDgf5617UoW7xA6YrhM9F": {
+        "auth_address": "1BSff9mbUsonk2hKtvKBVPyGGVu6PrjB2V", 
+        "auth_privatekey": "5KLZT5a9o7mQtEXXxmERGxZ4RzTfC3JRn7XArMcmrX4HPzjuWoG"
+      }
+    }
+  }
+}

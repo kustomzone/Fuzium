@@ -1,45 +1,107 @@
 'use strict';
 
-let windows = []; // global reference
+///////////////////// Zeronet ///////////////////
 
-var mainAddr = 'http://127.0.0.1:43110/1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D'; // Zeronet homepage
+// loads Zeronet default homepage
+var HelloZeronet = 'http://127.0.0.1:43110/';
 
-const { electron, app, crashReporter, globalShortcut, ipcMain, protocol,
-   BrowserWindow, Menu, MenuItem, Tray } = require('electron'); // remote
+///////////////////// Electron ///////////////////
+const { electron, app, crashReporter, globalShortcut, ipcMain, protocol, remote,
+   BrowserWindow, Menu, MenuItem, Tray } = require('electron');
 
 const electronLocalshortcut = require('electron-localshortcut');
 
-// Report crashes
-// electron.crashReporter.start()
+global.sharedObject = { prop1: process.argv }
 
-// Global constants
+// Constants
 const fs         = require('fs');
 const os         = require('os');
 const url        = require('url');
 const path       = require('path');
 const dir        = require('node-dir');
 
-
-// Load dependencies
+// Dependencies
 var _            = require('underscore');
+var _exist       = require("is-there");
+var program      = require('commander');
 var monogamous   = require('monogamous');
-var IsThere      = require("is-there");
+var Configstore  = require('configstore');
+var spawn        = require('electron-spawn');
 
-// Load utils
-var appConfig	 = require('./app/js/config');
-var appMenu      = require('./app/js/menu');
-var appTray      = require('./app/js/tray');
-var appLogger    = require('./app/js/logger');
-var appIcons     = require('./app/gfx/icons');
+// Release dependencies
+// (include in installer as still adding defaults)
+const devtools = require('electron-devtools-installer');
+
+// Other
+const spawnChild   = require('child_process').spawn;
+const ChildProcess = require('child_process');
+
+// Utils
+var appLogger    = require('./js/logger');
+var appMenu      = require('./js/menu');
+var appTray      = require('./js/tray');
+var appIcons     = require('./gfx/icons');
 
 // Multiplatform menus
-// var menuTemplate = require('./app/menus/' + process.platform + '.json');
+// var menuTemplate = require('./js/menus/' + process.platform + '.json');
 
 // Set history data
 var historyPath    = app.getPath('userData') + '/userdata/history.json';
 var extensionsPath = app.getPath('userData').replace(/\\/g, '/') + '/userdata/extensions';
 var userdataPath   = app.getPath('userData') + '/userdata';
 var configPath     = app.getPath("userData") + "/personal.config";
+
+// Load app info
+var pkg = require('./package.json');
+
+
+// Define config constructor
+function Config(cliOverrides, cliInfo) {
+  
+  // Create config
+  this.config = new Configstore(pkg.name, {
+    'playpause-shortcut': 'mediaplaypause',
+    'next-shortcut':      'medianexttrack',
+    'previous-shortcut':  'mediaprevioustrack'
+  });
+  this.cliOverrides = cliOverrides;
+
+  // Generate IPC bindings for config and its info
+  var that = this;
+  ipcMain.on('get-config-sync', function handleGetConfigSync (evt) {
+    evt.returnValue = JSON.stringify(that.getAll());
+  });
+  ipcMain.on('get-config-info-sync', function handleGetConfigInfoSync (evt) {
+    evt.returnValue = JSON.stringify(cliInfo);
+  });
+  ipcMain.on('get-config-overrides-sync', function handleGetConfigInfoSync (evt) {
+    evt.returnValue = JSON.stringify(cliOverrides);
+  });
+  ipcMain.on('set-config-item-sync', function handleSetConfigItemSync (evt, key, val) {
+    that.set(key, val);
+    evt.returnValue = JSON.stringify({success: true});
+  });
+}
+
+// Key configs
+Config.prototype = {
+  getAll: function () {
+    return _.defaults({}, this.cliOverrides, this.config.all);
+  },
+  get: function (key) {
+    var all = this.getAll();
+    return all[key];
+  },
+  set: function (key, val) {
+    return this.config.set(key, val);
+  },
+  del: function (key) {
+    return this.config.del(key);
+  },
+  clear: function () {
+    return this.config.clear();
+  }
+};
 
 // Check configs
 if (fs.existsSync(configPath)) {
@@ -59,17 +121,30 @@ if (fs.existsSync(configPath)) {
   }
 }
 
-// Load app info
-var pkg = require('./package.json');
+// Define CLI parser
+program
+  .version(pkg.version)
+  .option('-S, --skip-taskbar', 'Skip showing the application in the taskbar')
+  .option('--minimize-to-tray', 'Hide window to tray instead of minimizing')
+  .option('--hide-via-tray',    'Hide window to tray instead of minimizing (only for tray icon)')
+  .option('--allow-multiple-instances', 'Allow multiple instances of `Fuzium` to run')
+  .option('--verbose', 'Display verbose log output in stdout')
+  .allowUnknownOption(); // Allow unknown Chromium flags
 
-// Load CLI parser
-var program	= require('./app/js/cli-parser').parse(process.argv);
+// Specify keys that can be used by config if CLI isn't provided
+var cliConfigKeys = ['skip-taskbar', 'minimize-to-tray', 'hide-via-tray', 'allow-multiple-instances'];
+var cliInfo = _.object(cliConfigKeys.map(function generateCliInfo (key) {
+  return [key, _.findWhere(program.options, {long: '--' + key})];
+}));
 
 // Generate a logger
-var logger = appLogger({ verbose: '' + program.verbose }); // adding '' activates CLI logging ...?
+var logger = appLogger({ verbose: program.verbose + '' }); // adding a '' activates debug logging.
 
-// Log CLI arguments
-logger.debug('CLI arguments received', { argv: process.argv });
+console.log(''); // spacer
+
+// Amend attributes
+program._cliConfigKeys = cliConfigKeys;
+program._cliInfo       = cliInfo;
 
 // Check camelcase
 function camelcase(flag) {
@@ -86,102 +161,17 @@ var cliConfig = _.object(program._cliConfigKeys.map(function getCliValue (dashCa
 
 // Generate config based on CLI arguments
 // logger.debug('CLI options overriding config \n', cliConfig, '\n');
-var config = new appConfig(cliConfig, program._cliInfo, '\n');
-logger.debug('Generated starting config options \n', config.getAll(), '\n');
+var config = new Config(cliConfig, program._cliInfo, '\n');
+logger.debug('Config options \n', config.getAll(), '\n');
 
-
-/////////////////// Zeronet app //////////////////
-var spawnChild   = require('child_process').spawn;
-
-/*
-
-const spawnWindow = () => {
-	const win = new BrowserWindow({
-      width: 800,
-      height: 600,
-      frame: true // 'title-bar-style': 'hidden'
-    });
-	
-	// win.loadURL('file://' + __dirname + '/index.html');
-	
-	win.on('closed', function () {
-      var index = windows.indexOf(win)
-      if (index > -1) {
-       windows.splice(index, 1)
-      }
-    });
-	
-	win.loadURL('https://github.com');
-	win.show();
-	
-	electronLocalshortcut.register(win, 'Ctrl+A', () => {
-	    console.log('You pressed ctrl & A');
-	});
-	
-	electronLocalshortcut.register(win, 'Ctrl+B', () => {
-	    console.log('You pressed ctrl & B');
-	});
-	
-	console.log(
-	    electronLocalshortcut.isRegistered(win, 'Ctrl+A')
-	);
-	
-	electronLocalshortcut.unregister(win, 'Ctrl+A');
-	electronLocalshortcut.unregisterAll(win);
-	
-	return win;
-};
-
-*/
 
 ////////////// Window ready ////////////////
 app.on('ready', function() {
 	
-	/*
-	windows.push(spawnWindow());
-	
-	ipcMain.on('quit-application', () => {
-		app.quit()
-    });
-  
-    ipcMain.on('new-window', () => windows.push(spawnWindow()))
-    process.on('new-window', () => windows.push(spawnWindow()))
-	
-    ipcMain.on('close-window', () => BrowserWindow.getFocusedWindow().close())
-    process.on('close-window', () => BrowserWindow.getFocusedWindow().close())
-	
-    // Most of these events will simply be listened to by the app store and acted upon.
-    // However sometimes there are no state changes, for example with focusing the URL bar.
-    // In those cases it's acceptable for the individual components to listen to the events.
-	
-    const simpleWebContentEvents = [
-     ['CmdOrCtrl+L',     'shortcut-focus-url'],
-     ['Escape',          'shortcut-stop'],
-     ['Ctrl+Tab',        'shortcut-next-tab'],
-     ['Ctrl+Shift+Tab',  'shortcut-prev-tab'],
-     ['CmdOrCtrl+R',     'shortcut-reload'],
-     ['CmdOrCtrl+=',     'shortcut-zoom-in'],
-     ['CmdOrCtrl+-',     'shortcut-zoom-out'],
-     ['CmdOrCtrl+0',     'shortcut-zoom-reset'],
-     ['CmdOrCtrl+Alt+I', 'shortcut-toggle-dev-tools']
-    ];
-	
-    simpleWebContentEvents.forEach((shortcutEventName) =>
-      electronLocalshortcut.register(shortcutEventName[0], () => {
-        BrowserWindow.getFocusedWindow().webContents.send(shortcutEventName[1])
-    }));
-	
-    electronLocalshortcut.register('CmdOrCtrl+Shift+J', () => {
-      BrowserWindow.getFocusedWindow().toggleDevTools()
-    });
-	
-	*/
-	
 	if (booter) {
 		booter.boot();
-	} else { // launch app
-		startMain();
-		// Menu.init();
+	} else {
+		startApp();
 	}
 
 });
@@ -208,6 +198,8 @@ app.on("open-url", function(event, url) {
 
 //////////// Functions for main window ////////////
 var logo = appIcons['logo'];
+// var datetime = new Date();
+
 let func = {
   browserWindow: null,
   config: config,
@@ -229,14 +221,16 @@ let func = {
 		  '<br/>',
 		  'Chromium version: ' + process.versions.chrome,
 		'</p>',
+		'<p>App: <script>document.write(require(\'electron\').remote.process.argv)</script></p>',
+		'<br>',
 		'<img src="' + logo + '">',
 	  '</div>'
 	].join('');
 	
 	var aboutWindow = new BrowserWindow({
 	  title: 'About',
-	  width:  420,
-	  height: 220,
+	  width:  480,
+	  height: 340,
 	  autoHideMenuBar: true,
 	  titleBarStyle: 'hidden-inset',
 	  icon: appIcons['info-32']
@@ -255,7 +249,7 @@ let func = {
 	  icon: appIcons['info-32']
 	});
 	// Load config options
-	var configPage = __dirname + '/app/js/config.htm';
+	var configPage = __dirname + '/js/config.htm';
 	configWindow.loadURL(configPage);
 	logger.debug('Show config; ' + configPage);
   },
@@ -337,20 +331,20 @@ let func = {
   }
 };
 
-// Create paths if none exist
-// checkPaths();
+// Create userdata paths if none exist
+checkPaths();
 
 function checkPaths() {
     //check if directory called userdata exists
-    if (!IsThere(userdataPath)) {
+    if (!_exist(userdataPath)) {
         fs.mkdir(userdataPath);
     }
     //check if directory called extensions exists
-    if (!IsThere(extensionsPath)) {
+    if (!_exist(extensionsPath)) {
         fs.mkdir(extensionsPath);
     }
     //check if file called history.json exists
-    if (!IsThere(historyPath)) {
+    if (!_exist(historyPath)) {
         fs.writeFile(historyPath, '{"history":[]}');
     }
 }
@@ -371,7 +365,7 @@ if (!config.get('allow-multiple-instances')) {
   booter = monogamous({sock: pkg.name});
 
   // If we are the first instance, start up func
-  booter.on('boot', startMain);
+  booter.on('boot', startApp);
 
   // Otherwise, focus it
   booter.on('reboot', func.onRaise);
@@ -379,24 +373,49 @@ if (!config.get('allow-multiple-instances')) {
   // If we encounter an error, log it and start anyway
   booter.on('error', function handleError (err) {
 	logger.info('Ignoring boot error ' + err + ' while connecting to monogamous server');
-	startMain();
+	startApp();
   });
 }
 
 // Define a truncation utility for tooltip
 function truncateStr(str, len) {
-  // If the string is over the length, then truncate it
-  // DEV: We go 1 under length so we have room for ellipses
+  // If the string is over the length then truncate it
+  // (go 1 under length so there's room for ellipses)
   if (str.length > len) {
 	return str.slice(0, len - 2) + '…';
   }
-
-  // Otherwise, return the string
   return str;
 }
 
 ///////////////////////// Create Main Window /////////////////////////
-function startMain() {
+function startApp() {
+	
+	// Load some default Chrome extensions
+	/*
+	REACT_PERF
+	REDUX_DEVTOOLS
+	VUEJS_DEVTOOLS
+	ANGULARJS_BATARANG
+	JQUERY_DEBUGGER
+	BACKBONE_DEBUGGER
+	REACT_DEVELOPER_TOOLS
+	EMBER_INSPECTOR
+	+ (zeronetExt)
+	*/
+	
+	// Testing (default)
+	devtools.default(devtools.REACT_DEVELOPER_TOOLS)
+      .then((name) => console.log(`Added Extension: ${name}` + '\n'))
+      .catch((err) => console.log('An error occurred: ', err + '\n'));
+	
+	// Chrome Zeronet Extension
+	// var zeronetExtID = 'cpkpdcdljfbnepgfejplkhdnopniieop';
+	// var zeronetExtName = 'ZeroNet Protocol';
+	
+	// Testing (new default)
+	devtools.default(devtools.zeronetExt)
+      .then((name) => console.log(`Added Extension: ${name}` + '\n'))
+      .catch((err) => console.log('An error occurred: ', err + '\n'));
 	
 	// Get window info
 	var windowInfo = config.get('window-info') || {};
@@ -413,9 +432,17 @@ function startMain() {
 	  x: windowInfo.x || null,
 	  y: windowInfo.y || null,
 	  icon: appIcons['icon-32'],
-	  preload: __dirname + '/app/js/browser.js',
+	  preload: __dirname + '/js/browser.js',
 	  title: 'Fuzium'
 	};
+	
+	// Define main browser window
+	func.browserWindow = new BrowserWindow(windowOpts);
+	// func.browserWindow.loadURL('https://google.com');
+	
+	// Todo: Set window resizable and focus
+	// func.browserWindow.setResizable(true);
+	// func.browserWindow.focus();
 	
 	// Logger info
 	logger.info('\n\n App is ready:', {
@@ -425,16 +452,6 @@ function startMain() {
 	  processVersions: process.versions
 	});
 	
-	// Loading Zeronet
-	func.browserWindow = new BrowserWindow(windowOpts);
-	func.browserWindow.loadURL(mainAddr);
-	
-	// Set window resizable and focus
-	func.browserWindow.setResizable(true); // ?
-	// func.browserWindow.focus();
-	
-	// func.browserWindow.loadURL('https://google.com');
-
 	// Minimize to tray
 	if (config.get('minimize-to-tray')) {
 	  func.browserWindow.on('minimize', func.toggleVisibility);
@@ -457,15 +474,15 @@ function startMain() {
 
 	// When window is closed, clean up the reference to window
 	func.browserWindow.on('closed', function handleWindowClose () {
-	  logger.debug('Fuzium closing down.');
+	  logger.debug('Fuzium shutting down.');
 	  func.browserWindow = null;
-	  fuzium.kill('SIGINT');
+	  if (fuzium) { fusium.kill('SIGINT'); }
 	});
 
   	// Set download folder 
 	func.browserWindow.webContents.session.on('will-download', (event, item, webContents) => {
 	  // Set the save path, making Electron not to prompt a save dialog
-	  item.setSavePath('download/'+item.getFilename());
+	  item.setSavePath('files/'+item.getFilename());
 	 
 	  // Track download progress
 	  var bytes, dl = 0;
@@ -495,18 +512,88 @@ function startMain() {
 	  });  
 	});
 	
-	console.log('\n [ALT]  Show menu');
-	console.log('[CTRL-R] Reboot Zeronet (if not showing) \n');
-	
-	// Spawn Zeronet as child of Electron
-	var fuzium = spawnChild('./app/bin/zeronet.exe', ['--open_browser', ''])
-	
-	// Set up appl menu, tray, and shortcuts
+	// Init menu & tray
+	// Menu.init();
 	appMenu.init(func);
 	appTray.init(func);
 	
-	// func.browserWindow.getCurrentWindow().reload()
-	// BrowserWindow.getFocusedWindow().reload();
+	// Timing bootup.
+	// Getting Electron's and Zeronet's timing right will depend on each device.
+	// Of course Electron should be ready first while Zeronet is booting.
+	// Timing is improving as more things get added anyway.
 	
+	if (func.browserWindow) {
+		// Hopefully Zeronet is ready to go after a few of seconds.
+		setTimeout(function() { func.browserWindow.loadURL(HelloZeronet); }, 3000);
+		
+		// But if not, a delayed reload also works fine.
+		// setTimeout(function(){ func.browserWindow.reload(); }, 4000);
+		
+		// For now we'll assume it's loading okay.
+		console.log('\n Electron is ready, load Zeronet.. \n');
+		
+		// But worst case may happen on slow or busy device.
+		// Then we might also need Zeronet to inform the browser.
+		// So tell the user to reload the app manually...
+		
+		// console.log('\n Press [CTRL-R] to reload browser.');
+		
+		// Testing Dev and Release as they behave quite differently!
+		// var devOnly  = spawnChild(path.resolve(__dirname + '/bin/ZeroNet.exe'), ['--open_browser', '']);
+		// ..or..
+		// var forApp   = path.resolve(path.dirname(process.execPath), '..', __dirname + '/bin/ZeroNet.exe');
+		// var packaged = spawnChild(forApp, { detached: false } ); // { stdio: 'inherit' }
+		
+		// (note: our "fuzium.kill" process needs fixing now there's an installer)
+		var fuzium = startZeronet();
+		// console.log('\n fuzium = ' + fuzium + '\n');
+		
+		// Spawn Zeronet as child of Electron
+		function startZeronet() {
+			
+			// process.env.PATH
+			
+			// Check args (mainly for release installer)
+			if (process.argv.length === 1) {
+				var ZeronetApp = app.getAppPath() + '\\bin\\ZeroNet.exe';
+				console.log('Zeronet app: ' + ZeronetApp + '\n');
+				// With installer we seem to lose our console even if it's detatched
+				return spawn(ZeronetApp, { detached: true } ); // ['--open_browser', '']);
+			}
+			
+			// Show any processes
+			for (var i = 0; i < process.argv.length; i++) {
+				console.log('process #' + i + ' = ' + process.argv[i]);
+			}
+			
+			// Show paths
+			var appName = path.basename(process.execPath)
+			console.log('appName = ' + appName + '\n');
+			var electronApp = path.resolve(process.execPath);
+			console.log('electronApp = ' + electronApp);
+			var distFolder  = path.resolve(process.execPath, '..');
+			console.log('distFolder = ' + distFolder);
+			var appFolder   = path.resolve(distFolder, '..');
+			console.log('appFolder = ' + appFolder);
+			var ZeronetApp  = path.resolve(path.join(__dirname, '/bin/ZeroNet.exe') );
+			console.log('ZeronetApp = ' + ZeronetApp);
+			
+			// Spawn Zeronet
+			return spawnChild( ZeronetApp, ['--open_browser', ''] ); // { detached: false }
+			
+			// (alternative options)
+			// return spawn( ZeronetApp, { detached: true }, ['--open_browser', ''] ); // { detached: false }
+			
+			// Todo: try to respawn zeronet if closed.
+			let respawn = function(command, args) {
+				var spawnedProcess, error;
+				try {
+					spawnedProcess = ChildProcess.spawn(command, args, {detached: false } );
+				} catch (error) {};
+				return spawnedProcess;
+			};
+		};
+	};
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////////

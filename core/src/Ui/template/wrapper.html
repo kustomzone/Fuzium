@@ -1,22 +1,21 @@
-
 <!DOCTYPE html>
 
 <html>
 <head>
- <title>{title} - ZeroNet</title>
+ <title>{title}</title>
  <meta charset="utf-8" />
  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+ <link rel="stylesheet" href="/uimedia/css/photon.css" />
  <link rel="stylesheet" href="/uimedia/all.css?rev={rev}" />
  {meta_tags}
 </head>
-<body style="{body_style}">
+<body style="height: 920px;">
 
 <script>
 // If we are inside iframe escape from it
 if (window.self !== window.top) window.open(window.location.toString(), "_top");
 if (window.self !== window.top) window.stop();
 if (window.self !== window.top && document.execCommand) document.execCommand("Stop", false)
-
 
 // Dont allow site to load in a popup
 /*
@@ -53,26 +52,51 @@ if (window.opener && window.stop) window.stop()
  </div>
 </div>
 
+<!-- Address bar -->
+<div id="address-bar" class="window">
+    <header class="toolbar toolbar-header">
+    <div class="toolbar-actions">
+     <button id="reload" class="btn btn-default">
+       <span class="icon icon-arrows-ccw icon-text"><b>⟳</b></span>
+     </button>
+     <button id="back" class="btn btn-default">
+       <span class="icon icon-left icon-text"><b> &lt;</b></span>
+     </button>
+     <button id="forward" class="btn btn-default">
+       <span class="icon icon-right icon-text"><b> &gt;</b></span>
+     </button>
+	 <button id="favorite" class="btn btn-default">
+       <span class="icon icon-star icon-text"> <b> ♥</b></span>
+     </button>
+	  <ul id="fav-list" class="list-group"></ul>
+     <input type="text" id="urlbar" class="form-control" placeholder="URL" value="http://127.0.0.1:43110/">
+    </div>
+    </header>
+</div>
 
-<!-- Site Iframe -->
-<iframe src='about:blank' id='inner-iframe' sandbox="allow-forms allow-scripts allow-top-navigation allow-popups {sandbox_permissions}"></iframe>
+<webview id="webview" style="height: 100%; width: 100%;"></webview>
+
+<script type="text/javascript" src="/uimedia/js/urlbar.js"></script>
+
+<!-- Site iframe -->
+<iframe id="inner-iframe" sandbox="allow-forms allow-scripts allow-top-navigation allow-popups {sandbox_permissions}"></iframe>
 
 <!-- Site info -->
 <script>
-document.getElementById("inner-iframe").src = "about:blank"
-document.getElementById("inner-iframe").src = "{file_url}{query_string}"
-address = "{address}"
-wrapper_nonce = "{wrapper_nonce}"
-wrapper_key = "{wrapper_key}"
+document.getElementById('inner-iframe').src = '{file_url}{query_string}'
+address            = '{address}'
+wrapper_nonce      = '{wrapper_nonce}'
+wrapper_key        = '{wrapper_key}'
 postmessage_nonce_security = {postmessage_nonce_security}
-file_inner_path = "{file_inner_path}"
-permissions = {permissions}
+file_inner_path    = '{file_inner_path}'
+permissions        = {permissions}
 show_loadingscreen = {show_loadingscreen}
-server_url = '{server_url}'
+server_url         = '{server_url}'
 
 if (typeof WebSocket === "undefined")
-	document.body.innerHTML += "<div class='unsupported'>Your browser is not supported please use <a href='http://outdatedbrowser.com'>Chrome or Firefox</a>.</div>";
+	document.body.innerHTML += "<div class='unsupported'>Websocket unsupported.</div>";
 </script>
+
 <script type="text/javascript" src="/uimedia/all.js?rev={rev}&lang={lang}"></script>
 
 </body>

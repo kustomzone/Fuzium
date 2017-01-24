@@ -1,0 +1,66 @@
+<html>
+<head>
+ <link rel="stylesheet" href="css/all.css" />
+</head>
+<body>
+
+<div class="block block-head">
+ <h1><span>ZeroNet domain name registry</span></h1>
+</div>
+
+<div class='block block-domains'>
+ <table class='domains'>
+  <tr><th class="pre"></th><th class='name'>Domain</th><th>Address</th><th>Network</th><th class="post"></th></tr>
+  <tr class="domain template">
+   <td class="pre"></td>
+   <td class='name'><a href="blog.zeronetwork.bit" target="_top">blog.zeronetwork.bit</a></td>
+   <td class="address"><a href="#" target="_top">1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8</a></td>
+   <td class="network"><span class="bullet">&bullet;</span> <a href="#" target="_top">Namecoin</a></td>
+   <td class="post"></td>
+  </tr>
+ </table>
+</div>
+ 
+<div class="link-register"><a href="#Register">How to add a domain?</a></div>
+
+<div class="block block-register">
+ <h2><span>To register just add 'zeronet' key to your namecoin domain.</span></h2>
+ 
+ The <code>""</code> key means the primary domain, any other than that is a subdomain. <a href="http://namecha.in/name/d/zeronetwork" target="_top">Example</a>:
+ <pre class='code'>
+ {
+    "name": {
+        "formatted": "ZeroNet project"
+    },
+    "bitcoin": {
+        "address": "1QDhxQ6PraUZa21ET5fYUCPgdrwBomnFgX"
+    },
+    <b>"zeronet": {
+        "": "1EU1tbG9oC1A8jz2ouVwGZyQ5asrNsE4Vr", 
+        "blog": "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8", 
+        "talk": "1TaLk3zM7ZRskJvrh3ZNCDVGXvkJusPKQ"
+    },</b>
+    "ns": [
+       "ns1.domaincoin.net"
+       "ns2.domaincoin.net"
+    ]
+ }
+ </pre>
+ 
+ After the changes confirmed by Namecoin network the domain will automatically added to the registry and anyone can access your site using the registered domain.<br>
+ <br>
+ To make the homepage (ZeroHello) link to your site domain you have to add a "domain" key to your site's content.json file, for example:
+ <pre class='code'>
+ {
+  "address": "1TaLk3zM7ZRskJvrh3ZNCDVGXvkJusPKQ", 
+  "background-color": "#F5F5F5", 
+  "description": "Decentralized forum demo", 
+  <b>"domain": "Talk.ZeroNetwork.bit", </b>
+  "files": {
+  ...
+ </pre>
+</div>
+
+<script type='text/javascript' src='js/all.js' asyc></script>
+</body>
+</html>

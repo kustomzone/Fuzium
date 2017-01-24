@@ -29,10 +29,9 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 
 ### Bugs (aka todo)
 
- * No navigation. (except zite loading, and Zeronet's home button)
- * Not resizable. (except fullscreen toggle)
- * Have to reload (CTRL-R) when booting if Zeronet not shown.
- * Some minor redraw glitches. (see previous bug)
+ * No url or navigation. (just some zites and Zeronet's home button)
+ * Not resizable. (just fullscreen toggle)
+ * Some minor redraw glitches.
 
  
 ### Features
