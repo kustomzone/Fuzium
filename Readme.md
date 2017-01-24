@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="app/gfx/zero_electron.jpg"><br><br>
+  <img src="gfx/zero_electron.jpg"><br><br>
 </div>
 
 ## Fuzium 
@@ -20,23 +20,31 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 - [x] saves user windowing config
 - [x] user preferences & about screen
 - [x] download handler (no gui yet)
-- [ ] addressbar & navigation (forward/backward/url)
-- [ ] site creation tool (there's a basic one in Zeronet's home menu)
+- [x] packaged release (pre-alpha)
+- [x] addressbar (there is one, but it only hops once :)
+- [ ] bookmarks, notes etc
+- [ ] view consoles
+- [ ] test Chrome extensions
+- [ ] test zeronet plugins
+- [ ] site creation tools
 - [ ] app/zite donation features
-- [ ] new app toplist & store
-- [ ] cross platform testing & packaged releases
+- [ ] new app toplist & store (altcoins)
+- [ ] cross platform testing
 
 
 ### Bugs (aka todo)
 
- * No url or navigation. (just some zites and Zeronet's home button)
- * Not resizable. (just fullscreen toggle)
+ * URL bar works once, then reload to use again (zeronet wrapper hack)
+ * Not resizable. (except fullscreen toggle)
+ * Reload (CTRL-R) when booting is just occasional now
  * Some minor redraw glitches.
 
  
 ### Features
 
+ * can add new zites
  * taskbar preferences
+ * testing win32 installer
 
  
 ### Screenshot
@@ -51,6 +59,10 @@ git clone https://github.com/kustomzone/Fuzium.git
 cd Fuzium
 npm install && npm start
 ```
+
+### Test Installer
+
+[Fuzium-win32-x64-v0.0.2-pre-alpha Release](https://github.com/kustomzone/Fuzium/releases)
 
 
 ### Status / Notes
@@ -70,7 +82,13 @@ Report any [issues](https://github.com/kustomzone/Fuzium/issues) you come across
  - Cheng Zhao, creator of Electron ( http://cheng.guru/ )
  - Plus Github and the rest of the team working on Electron
 
-License
---------------------------------------
 
-Fuzium is released under the MIT License.
+License
+-------
+
+|----------------------------------|
+|   Kustomzone Production (2017)   |
+| Contact: Fuzium @ kustomzone.com |
+|   (see Fuzium MIT license)       |
+|----------------------------------|
+
