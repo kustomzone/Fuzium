@@ -86,9 +86,6 @@ Report any [issues](https://github.com/kustomzone/Fuzium/issues) you come across
 License
 -------
 
-|----------------------------------|
-|   Kustomzone Production (2017)   |
-| Contact: Fuzium @ kustomzone.com |
-|   (see Fuzium MIT license)       |
-|----------------------------------|
+- Kustomzone Production, MIT license.
+- Contact: fuzium @ kustomzone.com
 

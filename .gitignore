@@ -1,4 +1,4 @@
-
+*.exe
 
 node_modules
 dist
@@ -6,6 +6,6 @@ temp
 .git
 
 core/tools/tor/*
-
+files/*
 data/*
 log/*
