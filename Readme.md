@@ -38,6 +38,7 @@ Fusion of Electron and Zeronet into something new. 【WIP】
  * Not resizable. (except fullscreen toggle)
  * Reload (CTRL-R) when booting is just occasional now
  * Some minor redraw glitches.
+ * Remove file duplication (dev vs release)
 
  
 ### Features
