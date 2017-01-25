@@ -43,11 +43,11 @@ Fusion of Electron and Zeronet into something new. 【WIP】
  
 ### Features
 
- * can add new zites
+ * add zites using address bar
  * taskbar preferences
- * testing win32 installer
+ * win32 installer or zip
 
- 
+
 ### Screenshot
 
  * (soon)
@@ -61,17 +61,18 @@ cd Fuzium
 npm install && npm start
 ```
 
-### Test Installer
+### Test Releases
 
-[Fuzium-win32-x64-v0.0.2-pre-alpha Release](https://github.com/kustomzone/Fuzium/releases)
+[Fuzium-win32-v0.0.2-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.2-pre-alpha)
+[Fuzium-win32-v0.0.3-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.3-pre-alpha)
 
 
-### Status / Notes
+### OS Platform Status / Notes
 
 | **`Linux`** | **`Mac`** | **`Win`** |
 |-------------|-----------|-----------|
-|             |           |  running  |
-|             |           |alt-key for menu|
+| not running | not running | running  |
+|  (afaik)    | [issue #4](https://github.com/kustomzone/Fuzium/issues/4) |alt-key for menu|
 
 
 Report any [issues](https://github.com/kustomzone/Fuzium/issues) you come across, thanks.

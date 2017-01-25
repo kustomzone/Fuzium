@@ -5,7 +5,10 @@ dist
 temp
 .git
 
+bin/core/tools/tor/*
 core/tools/tor/*
+bin/data/*
+bin/log/*
 files/*
 data/*
 log/*
