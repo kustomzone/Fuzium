@@ -195,12 +195,34 @@ h6 {
 #urlbar {
   position: absolute;
   top: 0px;
-  left: 250px;
-  width: 55%;
+  left: 210px;
+  width: 50%;
   height: 20px;
   color: #E0E0D6;
   font-size: 17px;
   background-color: #3A3838;
+}
+
+#favbar {
+  position: absolute;
+  top: 0px;
+  left: 855px;
+  width: 185px;
+  height: 20px;
+  color: #E0E0D6;
+  font-size: 17px;
+  background-color: #3A3838;
+}
+
+#clear-favs {
+  margin-left: 850px;
+}
+
+.show-errors {
+  position: absolute;
+  top: 35px;
+  left: 855px;
+  z-index: 999;
 }
 
 iframe {

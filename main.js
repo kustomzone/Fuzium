@@ -3,13 +3,15 @@
 ///////////////////// Zeronet ///////////////////
 
 // loads Zeronet default homepage
-var HelloZeronet = 'http://127.0.0.1:43110/';
+var HelloZeronet = 'http://localhost:43110/';
 
 ///////////////////// Electron ///////////////////
 const { electron, app, crashReporter, globalShortcut, ipcMain, protocol, remote,
    BrowserWindow, Menu, MenuItem, Tray } = require('electron');
 
-const electronLocalshortcut = require('electron-localshortcut');
+const devtools   = require('electron-devtools-installer');
+// const Browser    = require("./hub/browser");
+// new Browser(app);
 
 global.sharedObject = { prop1: process.argv }
 
@@ -28,41 +30,38 @@ var monogamous   = require('monogamous');
 var Configstore  = require('configstore');
 var spawn        = require('electron-spawn');
 
-// Release dependencies
-// (include in installer as still adding defaults)
-const devtools = require('electron-devtools-installer');
-
 // Other
 const spawnChild   = require('child_process').spawn;
 const ChildProcess = require('child_process');
 
 // Utils
-var appLogger    = require('./js/logger');
-var appMenu      = require('./js/menu');
-var appTray      = require('./js/tray');
+var appLogger    = require('./hub/logger');
 var appIcons     = require('./gfx/icons');
 
-// Multiplatform menus
-// var menuTemplate = require('./js/menus/' + process.platform + '.json');
+// Get browser history
+var userDP         = app.getPath('userData');
+var historyPath    = userDP + '/userdata/history.json';
+var extensionsPath = userDP.replace(/\\/g, '/') + '/userdata/extensions';
+var userdataPath   = userDP + '/userdata';
+var configPath     = userDP + '/personal.config';
+var logPath        = userDP + '/verbose.log';
 
-// Set history data
-var historyPath    = app.getPath('userData') + '/userdata/history.json';
-var extensionsPath = app.getPath('userData').replace(/\\/g, '/') + '/userdata/extensions';
-var userdataPath   = app.getPath('userData') + '/userdata';
-var configPath     = app.getPath("userData") + "/personal.config";
+// save window
+var saveWindowBounds = function () {
+  if (app) {
+    fs.writeFile(path.join(userDataPath, 'windowBounds.json'), JSON.stringify(app.getBounds()))
+  }
+}
 
 // Load app info
 var pkg = require('./package.json');
-
 
 // Define config constructor
 function Config(cliOverrides, cliInfo) {
   
   // Create config
   this.config = new Configstore(pkg.name, {
-    'playpause-shortcut': 'mediaplaypause',
-    'next-shortcut':      'medianexttrack',
-    'previous-shortcut':  'mediaprevioustrack'
+    'bookmarks': 'pending',
   });
   this.cliOverrides = cliOverrides;
 
@@ -139,8 +138,7 @@ var cliInfo = _.object(cliConfigKeys.map(function generateCliInfo (key) {
 
 // Generate a logger
 var logger = appLogger({ verbose: program.verbose + '' }); // adding a '' activates debug logging.
-
-console.log(''); // spacer
+logger.info('\n\n Writing all logs to "%s"', logPath);
 
 // Amend attributes
 program._cliConfigKeys = cliConfigKeys;
@@ -167,18 +165,17 @@ logger.debug('Config options \n', config.getAll(), '\n');
 
 ////////////// Window ready ////////////////
 app.on('ready', function() {
-	
 	if (booter) {
 		booter.boot();
 	} else {
 		startApp();
 	}
-
 });
 
 // Windows are closed
 app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') { 
+	  // saveWindowBounds();
 	  app.quit();
 	}
 });
@@ -249,7 +246,7 @@ let func = {
 	  icon: appIcons['info-32']
 	});
 	// Load config options
-	var configPage = __dirname + '/js/config.htm';
+	var configPage = __dirname + '/hub/config.htm';
 	configWindow.loadURL(configPage);
 	logger.debug('Show config; ' + configPage);
   },
@@ -356,6 +353,15 @@ func.onTrayClick = (config.get('hide-via-tray') || config.get('minimize-to-tray'
 func.onRaise = (config.get('hide-via-tray') || config.get('minimize-to-tray')) ?
   func.showInvisibleWindow : func.showMinimizedWindow;
 
+// Shorten tooltips
+function truncateStr(str, len) {
+  // If the string is over the length then truncate it
+  // (go 1 under length so there's room for ellipses)
+  if (str.length > len) {
+	return str.slice(0, len - 2) + '…';
+  }
+  return str;
+}
 
 // If we are only allowing single instances
 var booter;
@@ -375,16 +381,6 @@ if (!config.get('allow-multiple-instances')) {
 	logger.info('Ignoring boot error ' + err + ' while connecting to monogamous server');
 	startApp();
   });
-}
-
-// Define a truncation utility for tooltip
-function truncateStr(str, len) {
-  // If the string is over the length then truncate it
-  // (go 1 under length so there's room for ellipses)
-  if (str.length > len) {
-	return str.slice(0, len - 2) + '…';
-  }
-  return str;
 }
 
 ///////////////////////// Create Main Window /////////////////////////
@@ -432,7 +428,7 @@ function startApp() {
 	  x: windowInfo.x || null,
 	  y: windowInfo.y || null,
 	  icon: appIcons['icon-32'],
-	  preload: __dirname + '/js/browser.js',
+	  preload: __dirname + '/hub/browser.js',
 	  title: 'Fuzium'
 	};
 	
@@ -476,7 +472,7 @@ function startApp() {
 	func.browserWindow.on('closed', function handleWindowClose () {
 	  logger.debug('Fuzium shutting down.');
 	  func.browserWindow = null;
-	  if (fuzium) { fusium.kill('SIGINT'); }
+	  // if (fuzium) { fusium.kill('SIGINT'); }
 	});
 
   	// Set download folder 
@@ -513,9 +509,67 @@ function startApp() {
 	});
 	
 	// Init menu & tray
-	// Menu.init();
-	appMenu.init(func);
-	appTray.init(func);
+	var menuTemplate = require('./json/menus/' + process.platform + '.json');
+	bindMenuItems(menuTemplate.menu);
+	Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate.menu));
+	
+	// Assign tray click behavior
+	func.onTrayClick = (config.get('hide-via-tray') || config.get('minimize-to-tray')) ?
+		func.toggleVisibility : func.toggleMinimize;
+	
+	func.onRaise = (config.get('hide-via-tray') || config.get('minimize-to-tray')) ?
+		func.showInvisibleWindow : func.showMinimizedWindow;
+	
+	// Tray icon menu
+	var trayMenu = new Menu();
+	
+	trayMenu.append(new MenuItem({
+		label: 'Show/hide',
+		click: func.onTrayClick
+	}));
+	trayMenu.append(new MenuItem({
+		type: 'separator'
+	}));
+	trayMenu.append(new MenuItem({
+		label: 'Restart',
+		click: function() { ipcRenderer.send('restart', 'true' ); console.log('restarting..'); }
+	}));
+	trayMenu.append(new MenuItem({
+		label: 'Quit',
+		click: func.quitApplication
+	}));
+	
+	// App tray icon
+	var appIcon = new Tray( appIcons['icon-32'] );
+	appIcon.setContextMenu(trayMenu);
+	appIcon.setToolTip('Fuzium');
+	
+	// Tray clicked; toggle visibility
+	appIcon.on('clicked', func.onTrayClick);
+
+	// State change; update tooltip
+	ipcMain.on('change:state', function handlestateChange(evt, stateInfo) {
+	  func.logger.debug('Updating tray tooltip', {
+	    stateInfo: stateInfo
+	  });
+	  
+	  // Max length of 127 chars on Windows
+	  var infoStr = [
+	    truncateStr('Zeronet :', 9),
+	    truncateStr('Electron:', 9)
+	  ].join('\n');
+	  appIcon.setToolTip(infoStr);
+	});
+
+	// Config change; update icon
+	ipcMain.on('change:config', function handlePlaybackChange(evt, configState) {
+	  func.logger.debug('Updating tray icon; Config -', {
+	    configState: configState
+	  });
+	  // var icon = appIcons['updated-icon-32'];
+	  // appIcon.setImage(icon);
+	});
+	
 	
 	// Timing bootup.
 	// Getting Electron's and Zeronet's timing right will depend on each device.
@@ -594,6 +648,44 @@ function startApp() {
 			};
 		};
 	};
+};
+
+// Bind menus
+function bindMenuItems(menuItems) {
+  menuItems.forEach(function bindMenuItemFn (menuItem) {
+	// If there is a role, continue
+	if (menuItem.role !== undefined) {
+	  return;
+	}
+	// If there is a separator, continue
+	if (menuItem.type === 'separator') {
+	  return;
+	}
+	// If there is a submenu, recurse it
+	if (menuItem.submenu) {
+	  bindMenuItems(menuItem.submenu);
+	  return;
+	}
+	
+	// else find the function for command
+	var cmd = menuItem.command;
+	if (cmd === 'application:about') {
+	  menuItem.click = func.openAboutWindow;
+	} else if (cmd === 'application:show-settings') {
+	  menuItem.click = func.openConfigWindow;
+	} else if (cmd === 'application:quit') {
+	  menuItem.click = func.quitApplication;
+	} else if (cmd === 'window:reload') {
+	  menuItem.click = func.reloadWindow;
+	} else if (cmd === 'window:toggle-dev-tools') {
+	  menuItem.click = func.toggleDevTools;
+	} else if (cmd === 'window:toggle-full-screen') {
+	  menuItem.click = func.toggleFullScreen;
+	} else {
+	  throw new Error('Could not find function for menu command "' + cmd + '" ' +
+	    'under label "' + menuItem.label + '"');
+	}
+  });
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

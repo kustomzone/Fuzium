@@ -42,7 +42,6 @@ if (window.opener && window.stop) window.stop()
  <div class='notification template'><span class='notification-icon'>!</span> <span class='body'>Test notification</span><a class="close" href="#Close">&times;</a><div style="clear: both"></div></div>
 </div>
 
-
 <!-- Loadingscreen -->
 <div class='loadingscreen'>
  <div class='loading-text console'>
@@ -68,14 +67,20 @@ if (window.opener && window.stop) window.stop()
 	 <button id="favorite" class="btn btn-default">
        <span class="icon icon-star icon-text"> <b> ♥</b></span>
      </button>
-	  <ul id="fav-list" class="list-group"></ul>
-     <input type="text" id="urlbar" class="form-control" placeholder="URL" value="http://127.0.0.1:43110/">
+	 <button id="clear-favs" class="btn btn-default" title="clear favs">
+	   <span class="icon icon-star icon-text"> <b> X</b></span>
+	 </button>
+     <input type="text" id="urlbar" class="form-control" placeholder="URL" value="http://localhost:43110/">
+	 <input type="text" id="favbar" class="form-control" placeholder="URL" value="http://fav">
+	 <div class="show-errors"></div>
+	 <div class="show-favs"></div>
     </div>
     </header>
 </div>
 
 <webview id="webview" style="height: 100%; width: 100%;"></webview>
 
+<script type="text/javascript" src="/uimedia/js/favbar.js"></script>
 <script type="text/javascript" src="/uimedia/js/urlbar.js"></script>
 
 <!-- Site iframe -->

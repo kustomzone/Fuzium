@@ -23,6 +23,5 @@ module.exports = function (options) {
       })
     ]
   });
-  logger.info('\n\n Logger initialized. Writing all logs to "%s"', logPath);
   return logger;
 };
