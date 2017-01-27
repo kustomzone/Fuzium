@@ -22,10 +22,10 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 - [x] download handler (no gui yet)
 - [x] packaged release (pre-alpha)
 - [x] addressbar (there is one, but it only hops once :)
-- [ ] bookmarks, notes etc
-- [ ] view consoles
+- [ ] bookmarks & localstorage
 - [ ] test Chrome extensions
 - [ ] test zeronet plugins
+- [ ] view console info as sub-windows
 - [ ] site creation tools
 - [ ] app/zite donation features
 - [ ] new app toplist & store (altcoins)
@@ -35,11 +35,9 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 ### Bugs (aka todo)
 
  * URL bar works once, then reload to use again (zeronet wrapper hack)
- * Not resizable. (except fullscreen toggle)
- * Reload (CTRL-R) when booting is just occasional now
- * Some minor redraw glitches.
- * Remove file duplication (dev vs release)
-
+ * Bookmarks not saving to localstore (testing)
+ * Needing to reload (CTRL-R) when booting is occasional now
+ * Some file duplication (dev vs release)
  
 ### Features
 
@@ -63,8 +61,8 @@ npm install && npm start
 
 ### Test Releases
 
-[Fuzium-win32-v0.0.2-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.2-pre-alpha)
-[Fuzium-win32-v0.0.3-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.3-pre-alpha)
+ - [Fuzium-win32-v0.0.2-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.2-pre-alpha)
+ - [Fuzium-win32-v0.0.3-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.3-pre-alpha)
 
 
 ### OS Platform Status / Notes

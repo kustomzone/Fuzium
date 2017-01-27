@@ -35,7 +35,8 @@ const spawnChild   = require('child_process').spawn;
 const ChildProcess = require('child_process');
 
 // Utils
-var appLogger    = require('./hub/logger');
+const appLogger    = require('./hub/logger');
+const Store        = require('./hub/store');
 var appIcons     = require('./gfx/icons');
 
 // Get browser history
@@ -46,12 +47,22 @@ var userdataPath   = userDP + '/userdata';
 var configPath     = userDP + '/personal.config';
 var logPath        = userDP + '/verbose.log';
 
-// save window
+// Save windowbounds #1
 var saveWindowBounds = function () {
   if (app) {
     fs.writeFile(path.join(userDataPath, 'windowBounds.json'), JSON.stringify(app.getBounds()))
   }
 }
+
+// Save windowbounds #2
+const store = new Store({
+  // We'll call our data file 'user-preferences'
+  configName: 'user-preferences',
+  defaults: {
+    // 800x600 is the default size of our window
+    windowBounds: { width: 800, height: 600 }
+  }
+});
 
 // Load app info
 var pkg = require('./package.json');
@@ -166,24 +177,39 @@ logger.debug('Config options \n', config.getAll(), '\n');
 ////////////// Window ready ////////////////
 app.on('ready', function() {
 	if (booter) {
+		// multiple instances
 		booter.boot();
 	} else {
+		
+		// testing..
+		// reload browser size (if any)
+		let { width, height } = store.get('windowBounds');
+		windowInfo.width  = width;
+		windowInfo.height = height;
+	
 		startApp();
 	}
 });
 
+app.on('resize', () => {
+	// saveWindowBounds();
+	
+	// testing..
+	let { width, height } = func.browserWindow.getBounds();
+	store.set('windowBounds', { width, height });
+});
+
 // Windows are closed
 app.on('window-all-closed', function() {
-	if (process.platform != 'darwin') { 
-	  // saveWindowBounds();
+	if (process.platform != 'darwin') {
 	  app.quit();
 	}
 });
 
+// to do..
 var windows_built = false;
 var open_url;
 
-// Open URL
 app.on("open-url", function(event, url) {
   event.preventDefault();
   open_url = url;
@@ -420,11 +446,12 @@ function startApp() {
 	var windowOpts = {
 	  frame:           true,
 	  resizable:       true,
-	  transparent:	   true,
+	  // fullscreen:      false,
+	  // transparent:	  false,
 	  autoHideMenuBar: false,
 	  titleBarStyle: 'hidden-inset',
+	  width:  windowInfo.width  || 1020,
 	  height: windowInfo.height || 920,
-	  width:  windowInfo.width  || 1024,
 	  x: windowInfo.x || null,
 	  y: windowInfo.y || null,
 	  icon: appIcons['icon-32'],

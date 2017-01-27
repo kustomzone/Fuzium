@@ -3,13 +3,13 @@
 <html>
 <head>
  <title>{title}</title>
- <meta charset="utf-8" />
- <meta http-equiv="content-type" content="text/html; charset=utf-8" />
- <link rel="stylesheet" href="/uimedia/css/photon.css" />
- <link rel="stylesheet" href="/uimedia/all.css?rev={rev}" />
+ <meta charset="utf-8">
+ <meta http-equiv="content-type" content="text/html; charset=utf-8">
+ <link rel="stylesheet" href="/uimedia/css/photon.css">
+ <link rel="stylesheet" href="/uimedia/all.css?rev={rev}">
  {meta_tags}
 </head>
-<body style="height: 920px;">
+<body style="height: 940px;">
 
 <script>
 // If we are inside iframe escape from it
@@ -64,24 +64,21 @@ if (window.opener && window.stop) window.stop()
      <button id="forward" class="btn btn-default">
        <span class="icon icon-right icon-text"><b> &gt;</b></span>
      </button>
-	 <button id="favorite" class="btn btn-default">
+	 <button id="fav" class="btn btn-default">
        <span class="icon icon-star icon-text"> <b> ♥</b></span>
      </button>
 	 <button id="clear-favs" class="btn btn-default" title="clear favs">
 	   <span class="icon icon-star icon-text"> <b> X</b></span>
 	 </button>
      <input type="text" id="urlbar" class="form-control" placeholder="URL" value="http://localhost:43110/">
-	 <input type="text" id="favbar" class="form-control" placeholder="URL" value="http://fav">
+	 <input type="text" id="favbar" class="form-control" placeholder="URL" value="http://google.com">
 	 <div class="show-errors"></div>
-	 <div class="show-favs"></div>
+	 <div id="fav-list" class="show-favs"></div>
     </div>
     </header>
 </div>
 
 <webview id="webview" style="height: 100%; width: 100%;"></webview>
-
-<script type="text/javascript" src="/uimedia/js/favbar.js"></script>
-<script type="text/javascript" src="/uimedia/js/urlbar.js"></script>
 
 <!-- Site iframe -->
 <iframe id="inner-iframe" sandbox="allow-forms allow-scripts allow-top-navigation allow-popups {sandbox_permissions}"></iframe>
@@ -102,6 +99,7 @@ if (typeof WebSocket === "undefined")
 	document.body.innerHTML += "<div class='unsupported'>Websocket unsupported.</div>";
 </script>
 
+<script type="text/javascript" src="/uimedia/js/addbar.js"></script>
 <script type="text/javascript" src="/uimedia/all.js?rev={rev}&lang={lang}"></script>
 
 </body>

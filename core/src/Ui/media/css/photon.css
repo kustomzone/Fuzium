@@ -1,3 +1,61 @@
+iframe {
+  position: absolute;
+  top: 33px;
+  background-color: transparent;
+}
+
+#urlbar {
+  position: absolute;
+  top: 0px;
+  left: 158px;
+  width: 40%;
+  height: 20px;
+  color: #E0E0D6;
+  font-size: 17px;
+  background-color: #3A3838;
+}
+
+#favbar {
+  position: absolute;
+  top: 0px;
+  left: 680px;
+  width: 350px;
+  height: 20px;
+  color: #E0E0D6;
+  font-size: 17px;
+  background-color: #3A3838;
+}
+
+#fav {
+  margin-left: 895px;
+}
+
+.fav-item:hover {
+  background-color: #454540;
+  color: #FFFFF0;
+}
+
+.show-favs {
+  position: absolute;
+  z-index: 998;
+  opacity: 0.5;
+  top:   40px;
+  left: 920px;
+  margin: 0px;
+  padding-left:  5px;
+  padding-right: 5px;
+  color: #B0B0A6;
+  background-color: #252520;
+  border: 1px solid #808070;
+  border-radius: 4px;
+}
+
+.show-errors {
+  position: absolute;
+  z-index: 999;
+  top:   35px;
+  left: 855px;
+}
 
 @charset "UTF-8";
 audio,
@@ -190,45 +248,6 @@ h5 {
 
 h6 {
   font-size: 12px;
-}
-
-#urlbar {
-  position: absolute;
-  top: 0px;
-  left: 210px;
-  width: 50%;
-  height: 20px;
-  color: #E0E0D6;
-  font-size: 17px;
-  background-color: #3A3838;
-}
-
-#favbar {
-  position: absolute;
-  top: 0px;
-  left: 855px;
-  width: 185px;
-  height: 20px;
-  color: #E0E0D6;
-  font-size: 17px;
-  background-color: #3A3838;
-}
-
-#clear-favs {
-  margin-left: 850px;
-}
-
-.show-errors {
-  position: absolute;
-  top: 35px;
-  left: 855px;
-  z-index: 999;
-}
-
-iframe {
-  position: absolute;
-  top: 33px;
-  background-color: transparent;
 }
 
 .selectable-text {
