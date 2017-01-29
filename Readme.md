@@ -48,7 +48,13 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 
 ### Screenshot
 
- * (soon)
+ * (coming soon)
+ 
+ 
+ <div align="center">
+  <img src="gfx/fuzium-screeny.png"><br><br>
+</div>
+
 
 
 ### Install
