@@ -17,8 +17,9 @@ A fusion of Electron and Zeronet goodness, with more to come.
 ### What's new?
 
 - (Feb 1, 2017) Merged in [Min Browser](https://github.com/minbrowser/min) which uses [DuckDuckGo](https://duckduckgo.com/)
-  for extra privacy and instant answers. It's a [smarter, faster](https://minbrowser.github.io/min/) address bar which suits
-  this project just perfectly.
+  for extra privacy and instant answers.<br>
+  It's a ['smarter, faster'](https://minbrowser.github.io/min/) address bar which suits
+  this project perfectly. :surfing_man:
 
 
 ### Todo
@@ -78,8 +79,8 @@ npm install && npm start
 
 ### Test Releases
 
- - [Fuzium-win32-v0.0.2-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.2-pre-alpha)
- - [Fuzium-win32-v0.0.3-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.3-pre-alpha)
+ - [Fuzium-v0.0.5-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.5-pre-alpha)
+ - [Fuzium-v0.0.3-win32-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.3-pre-alpha)
 
 
 ### OS Platform Status / Notes
