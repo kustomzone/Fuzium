@@ -10,10 +10,10 @@ const { electron, app, crashReporter, globalShortcut, ipcMain, protocol, remote,
    BrowserWindow, Menu, MenuItem, Tray } = require('electron');
 
 const devtools   = require('electron-devtools-installer');
-// const Browser    = require("./hub/browser");
-// new Browser(app);
 
-global.sharedObject = { prop1: process.argv }
+// Global
+let window = {}
+window._ = require('underscore');
 
 // Constants
 const fs         = require('fs');
@@ -23,21 +23,19 @@ const path       = require('path');
 const dir        = require('node-dir');
 
 // Dependencies
-var _            = require('underscore');
 var _exist       = require("is-there");
 var program      = require('commander');
 var monogamous   = require('monogamous');
 var Configstore  = require('configstore');
 var spawn        = require('electron-spawn');
 
-// Other
 const spawnChild   = require('child_process').spawn;
 const ChildProcess = require('child_process');
 
 // Utils
 const appLogger    = require('./hub/logger');
 const Store        = require('./hub/store');
-var appIcons     = require('./gfx/icons');
+var appIcons       = require('./gfx/icons');
 
 // Get browser history
 var userDP         = app.getPath('userData');
@@ -47,14 +45,7 @@ var userdataPath   = userDP + '/userdata';
 var configPath     = userDP + '/personal.config';
 var logPath        = userDP + '/verbose.log';
 
-// Save windowbounds #1
-var saveWindowBounds = function () {
-  if (app) {
-    fs.writeFile(path.join(userDataPath, 'windowBounds.json'), JSON.stringify(app.getBounds()))
-  }
-}
-
-// Save windowbounds #2
+// Save windowbounds
 const store = new Store({
   // We'll call our data file 'user-preferences'
   configName: 'user-preferences',
@@ -71,9 +62,7 @@ var pkg = require('./package.json');
 function Config(cliOverrides, cliInfo) {
   
   // Create config
-  this.config = new Configstore(pkg.name, {
-    'bookmarks': 'pending',
-  });
+  this.config = new Configstore(pkg.name, {  });
   this.cliOverrides = cliOverrides;
 
   // Generate IPC bindings for config and its info
@@ -93,10 +82,9 @@ function Config(cliOverrides, cliInfo) {
   });
 }
 
-// Key configs
 Config.prototype = {
   getAll: function () {
-    return _.defaults({}, this.cliOverrides, this.config.all);
+    return  window._.defaults({}, this.cliOverrides, this.config.all);
   },
   get: function (key) {
     var all = this.getAll();
@@ -131,6 +119,7 @@ if (fs.existsSync(configPath)) {
   }
 }
 
+
 // Define CLI parser
 program
   .version(pkg.version)
@@ -143,8 +132,8 @@ program
 
 // Specify keys that can be used by config if CLI isn't provided
 var cliConfigKeys = ['skip-taskbar', 'minimize-to-tray', 'hide-via-tray', 'allow-multiple-instances'];
-var cliInfo = _.object(cliConfigKeys.map(function generateCliInfo (key) {
-  return [key, _.findWhere(program.options, {long: '--' + key})];
+var cliInfo =  window._.object(cliConfigKeys.map(function generateCliInfo (key) {
+  return [key,  window._.findWhere(program.options, {long: '--' + key})];
 }));
 
 // Generate a logger
@@ -163,7 +152,7 @@ function camelcase(flag) {
 }
 
 // CLI config defaults
-var cliConfig = _.object(program._cliConfigKeys.map(function getCliValue (dashCaseKey) {
+var cliConfig =  window._.object(program._cliConfigKeys.map(function getCliValue (dashCaseKey) {
   var camelCaseKey = camelcase(dashCaseKey);
   return [dashCaseKey, program[camelCaseKey]];
 }));
@@ -176,19 +165,21 @@ logger.debug('Config options \n', config.getAll(), '\n');
 
 ////////////// Window ready ////////////////
 app.on('ready', function() {
+	
 	if (booter) {
-		// multiple instances
 		booter.boot();
 	} else {
 		
-		// testing..
-		// reload browser size (if any)
 		let { width, height } = store.get('windowBounds');
 		windowInfo.width  = width;
 		windowInfo.height = height;
-	
+		
+		// const state = store.getState();
+		// localStorage.myAppState = JSON.stringify(state);
+		
 		startApp();
 	}
+
 });
 
 app.on('resize', () => {
@@ -201,15 +192,15 @@ app.on('resize', () => {
 
 // Windows are closed
 app.on('window-all-closed', function() {
-	if (process.platform != 'darwin') {
+	if (process.platform != 'darwin') { 
 	  app.quit();
 	}
 });
 
-// to do..
 var windows_built = false;
 var open_url;
 
+// Open URL
 app.on("open-url", function(event, url) {
   event.preventDefault();
   open_url = url;
@@ -221,8 +212,6 @@ app.on("open-url", function(event, url) {
 
 //////////// Functions for main window ////////////
 var logo = appIcons['logo'];
-// var datetime = new Date();
-
 let func = {
   browserWindow: null,
   config: config,
@@ -236,7 +225,9 @@ let func = {
 	  '<div style="text-align: center; font-family: \'Helvetica Neue\', \'Arial\', \'sans-serif\'">',
 		'<h3>About</h3>',
 		'<p>',
-		  'Version: ' + pkg.version,
+		  'Fuzium: ' + pkg.version,
+		  '<br/>',
+		  'Zeronet: 0.5.1',
 		  '<br/>',
 		  'Electron version: ' + process.versions.electron,
 		  '<br/>',
@@ -252,8 +243,8 @@ let func = {
 	
 	var aboutWindow = new BrowserWindow({
 	  title: 'About',
-	  width:  480,
-	  height: 340,
+	  width:  540,
+	  height: 360,
 	  autoHideMenuBar: true,
 	  titleBarStyle: 'hidden-inset',
 	  icon: appIcons['info-32']
@@ -354,7 +345,7 @@ let func = {
   }
 };
 
-// Create userdata paths if none exist
+// Create paths if none exist
 checkPaths();
 
 function checkPaths() {
@@ -446,12 +437,11 @@ function startApp() {
 	var windowOpts = {
 	  frame:           true,
 	  resizable:       true,
-	  // fullscreen:      false,
-	  // transparent:	  false,
+	  //transparent:   true,
 	  autoHideMenuBar: false,
 	  titleBarStyle: 'hidden-inset',
-	  width:  windowInfo.width  || 1020,
-	  height: windowInfo.height || 920,
+	  width:  windowInfo.width  || 1000,
+	  height: windowInfo.height || 900,
 	  x: windowInfo.x || null,
 	  y: windowInfo.y || null,
 	  icon: appIcons['icon-32'],
@@ -461,11 +451,11 @@ function startApp() {
 	
 	// Define main browser window
 	func.browserWindow = new BrowserWindow(windowOpts);
-	// func.browserWindow.loadURL('https://google.com');
 	
 	// Todo: Set window resizable and focus
 	// func.browserWindow.setResizable(true);
 	// func.browserWindow.focus();
+	// func.browserWindow.loadURL('https://google.com');
 	
 	// Logger info
 	logger.info('\n\n App is ready:', {
@@ -484,13 +474,13 @@ function startApp() {
 	function saveWindowInfo() {
 	  config.set('window-info', func.browserWindow.getBounds());
 	}
-	func.browserWindow.on('move', _.debounce(function handleWindowMove () {
+	func.browserWindow.on('move',  window._.debounce(function handleWindowMove () {
 	  // logger.debug('Browser window moved, saving window info in config.');
 	  saveWindowInfo();
 	}, 250));
 
 	// Save the window size after resizing
-	func.browserWindow.on('resize', _.debounce(function handleWindowResize () {
+	func.browserWindow.on('resize',  window._.debounce(function handleWindowResize () {
 	  // logger.debug('Browser window resized, saving window info in config.');
 	  saveWindowInfo();
 	}, 250));
@@ -499,7 +489,7 @@ function startApp() {
 	func.browserWindow.on('closed', function handleWindowClose () {
 	  logger.debug('Fuzium shutting down.');
 	  func.browserWindow = null;
-	  // if (fuzium) { fusium.kill('SIGINT'); }
+	  if (fuzium) { fusium.kill('SIGINT'); }
 	});
 
   	// Set download folder 
@@ -634,12 +624,23 @@ function startApp() {
 			
 			// process.env.PATH
 			
-			// Check args (mainly for release installer)
+			var detatch = true;
+			
+			// Check args (dev or release)
 			if (process.argv.length === 1) {
-				var ZeronetApp = app.getAppPath() + '\\bin\\ZeroNet.exe';
-				console.log('Zeronet app: ' + ZeronetApp + '\n');
+				var ZeronetApp = app.getAppPath() + '\\bin\\zeronet.exe';
+				
 				// With installer we seem to lose our console even if it's detatched
-				return spawn(ZeronetApp, { detached: true } ); // ['--open_browser', '']);
+				// (and Zeronet now fails to start...)
+				// return spawn(ZeronetApp, { detached: true } ); // ['--open_browser', '']);
+				
+				var electron = ChildProcess.spawn(ZeronetApp, ['--open_browser', ''] );
+				electron.stderr.on('data', function (data) {
+					console.error(data.toString())
+				});
+				electron.stdout.on('data', function (data) {
+					console.log(data.toString())
+				});
 			}
 			
 			// Show any processes
@@ -661,9 +662,7 @@ function startApp() {
 			
 			// Spawn Zeronet
 			return spawnChild( ZeronetApp, ['--open_browser', ''] ); // { detached: false }
-			
-			// (alternative options)
-			// return spawn( ZeronetApp, { detached: true }, ['--open_browser', ''] ); // { detached: false }
+			// return   spawn( ZeronetApp, { detached: true }, ['--open_browser', ''] ); // { detached: false }
 			
 			// Todo: try to respawn zeronet if closed.
 			let respawn = function(command, args) {
@@ -716,3 +715,4 @@ function bindMenuItems(menuItems) {
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+

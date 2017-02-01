@@ -5,13 +5,20 @@
 
 ## Fuzium 
 
-Fusion of Electron and Zeronet into something new. 【WIP】
+A fusion of Electron and Zeronet goodness, with more to come.
 
 
 ### Why?
 
  * What could be better than combining our favorite opensource technologies. 
  * The name is a play on Chromium which Electron is built on.
+
+ 
+### What's new?
+
+- (Feb 1, 2017) Merged in [Min Browser](https://github.com/minbrowser/min) which uses [DuckDuckGo](https://duckduckgo.com/)
+  for extra privacy and instant answers. It's a [smarter, faster](https://minbrowser.github.io/min/) address bar which suits
+  this project just perfectly.
 
 
 ### Todo
@@ -20,9 +27,10 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 - [x] saves user windowing config
 - [x] user preferences & about screen
 - [x] download handler (no gui yet)
-- [x] packaged release (pre-alpha)
-- [x] addressbar (there is one, but it only hops once :)
-- [ ] bookmarks & localstorage
+- [x] packaged releases (pre-alpha)
+- [x] addressbar (surf's up! :)
+- [ ] a newly designed homepage
+- [ ] bookmarks & notepad
 - [ ] test Chrome extensions
 - [ ] test zeronet plugins
 - [ ] view console info as sub-windows
@@ -34,27 +42,30 @@ Fusion of Electron and Zeronet into something new. 【WIP】
 
 ### Bugs (aka todo)
 
- * URL bar works once, then reload to use again (zeronet wrapper hack)
- * Bookmarks not saving to localstore (testing)
- * Needing to reload (CTRL-R) when booting is occasional now
- * Some file duplication (dev vs release)
+ * Opening a zite in the address bar creates additional toggle switches and sidebar buttons.
+ * Need to reload (CTRL-R) occasionally after starting if zeronet boots up late.
  
 ### Features
 
- * add zites using address bar
+ * [Min browser's](https://minbrowser.github.io/min/) 'instant answers' address bar with DuckDuckGo integration.
  * taskbar preferences
  * win32 installer or zip
 
 
-### Screenshot
+### Samples
 
- * (coming soon)
+ 
+ <div align="center">
+  <img src="gfx/fuzium-screeny1.png"><br><br>
+ </div>
+
+ 
+ -----
  
  
  <div align="center">
-  <img src="gfx/fuzium-screeny.png"><br><br>
-</div>
-
+  <img src="gfx/fuzium-screeny2.jpg"><br><br>
+ </div>
 
 
 ### Install
@@ -84,6 +95,7 @@ Report any [issues](https://github.com/kustomzone/Fuzium/issues) you come across
 
 #### Thank you!
 
+ - [PalmerAL](https://github.com/PalmerAL), for the [Min Browser](https://github.com/minbrowser) components.
  - Tamas Kocsis, creator of Zeronet ( https://zeronet.io )
  - Cheng Zhao, creator of Electron ( http://cheng.guru/ )
  - Plus Github and the rest of the team working on Electron

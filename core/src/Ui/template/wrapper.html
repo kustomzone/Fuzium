@@ -5,11 +5,19 @@
  <title>{title}</title>
  <meta charset="utf-8">
  <meta http-equiv="content-type" content="text/html; charset=utf-8">
- <link rel="stylesheet" href="/uimedia/css/photon.css">
+
  <link rel="stylesheet" href="/uimedia/all.css?rev={rev}">
+ <link rel="stylesheet" href="/uimedia/css/navbar.css">
+ <link rel="stylesheet" href="/uimedia/css/tasks.css">
+ <link rel="stylesheet" href="/uimedia/css/webviews.css">
+ <link rel="stylesheet" href="/uimedia/css/searchbar.css">
+ <link rel="stylesheet" href="/uimedia/css/findinpage.css">
+ <link rel="stylesheet" href="/uimedia/css/font-awesome.min.css">
+ <link rel="stylesheet" href="/uimedia/css/toggle.css">
+ <link rel="stylesheet" href="/uimedia/css/dragula.css">
  {meta_tags}
-</head>
-<body style="height: 940px;">
+ </head>
+<body style="height: 930px;">
 
 <script>
 // If we are inside iframe escape from it
@@ -25,9 +33,8 @@ if (window.opener && window.stop) window.stop()
 */
 </script>
 
-<div class="progressbar">
- <div class="peg"></div>
-</div>
+<!-- Progress bar -->
+<div class="progressbar"><div class="peg"></div></div>
 
 <!-- Fixed button -->
 <div class='fixbutton'>
@@ -36,10 +43,9 @@ if (window.opener && window.stop) window.stop()
  <a class='fixbutton-bg' href="{homepage}/"></a>
 </div>
 
-
 <!-- Notifications -->
 <div class='notifications'>
- <div class='notification template'><span class='notification-icon'>!</span> <span class='body'>Test notification</span><a class="close" href="#Close">&times;</a><div style="clear: both"></div></div>
+ <div class='notification template'><span class='notification-icon'>!</span> <span class='body'></span><a class="close" href="#Close">&times;</a><div style="clear: both"></div></div>
 </div>
 
 <!-- Loadingscreen -->
@@ -51,10 +57,17 @@ if (window.opener && window.stop) window.stop()
  </div>
 </div>
 
-<!-- Address bar -->
-<div id="address-bar" class="window">
-    <header class="toolbar toolbar-header">
-    <div class="toolbar-actions">
+<!-- Toggle Zeronet -->
+<div class="toggle" style="display: block">
+    <input id="toggle" name="toggle" class="toggle-checkbox" value="on" type="checkbox" checked onclick="toggleState(this)">
+    <label class="toggle-label" for="toggle">
+        <span class="toggle-inner"></span>
+        <span class="toggle-switch"></span>
+    </label>
+</div>
+
+<!-- Nav (pending) -->
+<!-- div id="nav" class="toolbar-actions">
      <button id="reload" class="btn btn-default">
        <span class="icon icon-arrows-ccw icon-text"><b>⟳</b></span>
      </button>
@@ -64,21 +77,46 @@ if (window.opener && window.stop) window.stop()
      <button id="forward" class="btn btn-default">
        <span class="icon icon-right icon-text"><b> &gt;</b></span>
      </button>
-	 <button id="fav" class="btn btn-default">
-       <span class="icon icon-star icon-text"> <b> ♥</b></span>
-     </button>
-	 <button id="clear-favs" class="btn btn-default" title="clear favs">
-	   <span class="icon icon-star icon-text"> <b> X</b></span>
-	 </button>
-     <input type="text" id="urlbar" class="form-control" placeholder="URL" value="http://localhost:43110/">
-	 <input type="text" id="favbar" class="form-control" placeholder="URL" value="http://google.com">
-	 <div class="show-errors"></div>
-	 <div id="fav-list" class="show-favs"></div>
-    </div>
-    </header>
+</div -->
+
+<!-- Switch task -->
+<i id="switch-task-button" class="fa fa-bars navbar-action-button theme-text-color" title="View Tasks"></i>
+
+<!-- Tabs -->
+<div id="navbar" class="tab-group theme-background-color theme-text-color" tabindex="-1">
+	<div id="tabs"></div>
+	<i id="add-tab-button" class="fa fa-plus navbar-action-button" title="New Tab"></i>
+	<i class="fa fa-bars navbar-action-button invisible"></i>
 </div>
 
-<webview id="webview" style="height: 100%; width: 100%;"></webview>
+<!-- Search bar -->
+<div id="searchbar" class="theme-background-color theme-text-color">
+	<div class="top-answer-area"></div>
+</div>
+
+<!-- webview -->
+<div id="webviews"></div>  <!-- webview id="webview" style="height: 100%; width: 100%;"></webview -->
+
+<!-- Find in page -->
+<div id="findinpage-bar" hidden class="theme-background-color theme-text-color">
+	<input class="findinpage-input mousetrap" placeholder="Search in Page" />
+	<span id="findinpage-count" class="inline-text">
+	</span>
+	<div class="divider"></div>
+	<i class="icon fa fa-angle-up findinpage-previous-match cancel-blur-propogation" tabindex="-1"></i>
+	<i class="icon fa fa-angle-down findinpage-next-match cancel-blur-propogation" tabindex="-1"></i>
+	<div class="divider"></div>
+	<i id="findinpage-end" class="icon fa fa-close"></i>
+</div>
+
+<!-- Task list -->
+<div id="task-overlay" class="" hidden>
+	<div class="navbar" id="task-overlay-navbar"></div>
+	<div id="task-area"></div>
+	<div id="add-task">
+		<i class="fa fa-pencil-square-o"></i> New Task
+	</div>
+</div>
 
 <!-- Site iframe -->
 <iframe id="inner-iframe" sandbox="allow-forms allow-scripts allow-top-navigation allow-popups {sandbox_permissions}"></iframe>
@@ -94,13 +132,16 @@ file_inner_path    = '{file_inner_path}'
 permissions        = {permissions}
 show_loadingscreen = {show_loadingscreen}
 server_url         = '{server_url}'
-
 if (typeof WebSocket === "undefined")
 	document.body.innerHTML += "<div class='unsupported'>Websocket unsupported.</div>";
 </script>
 
-<script type="text/javascript" src="/uimedia/js/addbar.js"></script>
 <script type="text/javascript" src="/uimedia/all.js?rev={rev}&lang={lang}"></script>
+<script type="text/javascript" src="/uimedia/js/dexie.min.js"></script>
+<script type="text/javascript" src="/uimedia/js/dragula.min.js"></script>
+<script type="text/javascript" src="/uimedia/js/string_score.min.js"></script>
+<script type="text/javascript" src="/uimedia/js/bundle.js"></script>
+<script type="text/javascript" src="/uimedia/js/toggle.js"></script>
 
 </body>
 </html>
