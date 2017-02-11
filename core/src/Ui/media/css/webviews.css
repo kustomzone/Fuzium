@@ -28,8 +28,7 @@
 }
 
 #inner-iframe {
-  position: absolute;
-  top: 10px;
+  position: fixed;
+  top: 0;
   opacity: 1;
-  background-color: transparent;
 }

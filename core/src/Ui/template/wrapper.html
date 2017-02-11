@@ -15,6 +15,8 @@
  <link rel="stylesheet" href="/uimedia/css/font-awesome.min.css">
  <link rel="stylesheet" href="/uimedia/css/toggle.css">
  <link rel="stylesheet" href="/uimedia/css/dragula.css">
+ <link rel="stylesheet" href="/uimedia/css/semantic.min.css">
+ <link rel="stylesheet" href="/uimedia/css/style.css">
  {meta_tags}
  </head>
 <body style="height: 930px;">
@@ -95,7 +97,7 @@ if (window.opener && window.stop) window.stop()
 </div>
 
 <!-- webview -->
-<div id="webviews"></div>  <!-- webview id="webview" style="height: 100%; width: 100%;"></webview -->
+<div id="webviews"></div>
 
 <!-- Find in page -->
 <div id="findinpage-bar" hidden class="theme-background-color theme-text-color">
@@ -117,6 +119,9 @@ if (window.opener && window.stop) window.stop()
 		<i class="fa fa-pencil-square-o"></i> New Task
 	</div>
 </div>
+
+<!-- App Store -->
+<app></app>
 
 <!-- Site iframe -->
 <iframe id="inner-iframe" sandbox="allow-forms allow-scripts allow-top-navigation allow-popups {sandbox_permissions}"></iframe>
@@ -142,6 +147,8 @@ if (typeof WebSocket === "undefined")
 <script type="text/javascript" src="/uimedia/js/string_score.min.js"></script>
 <script type="text/javascript" src="/uimedia/js/bundle.js"></script>
 <script type="text/javascript" src="/uimedia/js/toggle.js"></script>
+<script type="text/javascript" src="/uimedia/js/semantic.min.js"></script>
+<script type="text/javascript" src="/uimedia/js/build.js"></script>
 
 </body>
 </html>

@@ -3,12 +3,12 @@
   /* leave room for zeronet toggle */
   position: relative;
   margin-top: 2px;
-  margin-left: 65px;
+  margin-left: 75px;
   display: flex;
   align-items: center;
   transition: 0.2s background-color;
   max-width: calc(100vw - 2.25em);
-  max-height: 32px;
+  max-height: 30px;
   -webkit-user-select: none;
   outline: none;
   opacity: 1;

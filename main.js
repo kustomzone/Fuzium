@@ -3,7 +3,7 @@
 ///////////////////// Zeronet ///////////////////
 
 // loads Zeronet default homepage
-var HelloZeronet = 'http://localhost:43110/';
+var HelloZeronet = 'http://localhost:43210/';
 
 ///////////////////// Electron ///////////////////
 const { electron, app, crashReporter, globalShortcut, ipcMain, protocol, remote,
@@ -489,7 +489,7 @@ function startApp() {
 	func.browserWindow.on('closed', function handleWindowClose () {
 	  logger.debug('Fuzium shutting down.');
 	  func.browserWindow = null;
-	  if (fuzium) { fusium.kill('SIGINT'); }
+	  if (fuzium) { fuzium.kill('SIGINT'); }
 	});
 
   	// Set download folder 
@@ -610,9 +610,9 @@ function startApp() {
 		// console.log('\n Press [CTRL-R] to reload browser.');
 		
 		// Testing Dev and Release as they behave quite differently!
-		// var devOnly  = spawnChild(path.resolve(__dirname + '/bin/ZeroNet.exe'), ['--open_browser', '']);
+		// var devOnly  = spawnChild(path.resolve(__dirname + '/bin/zeronet.exe'), ['--open_browser', '']);
 		// ..or..
-		// var forApp   = path.resolve(path.dirname(process.execPath), '..', __dirname + '/bin/ZeroNet.exe');
+		// var forApp   = path.resolve(path.dirname(process.execPath), '..', __dirname + '/bin/zeronet.exe');
 		// var packaged = spawnChild(forApp, { detached: false } ); // { stdio: 'inherit' }
 		
 		// (note: our "fuzium.kill" process needs fixing now there's an installer)
@@ -634,7 +634,7 @@ function startApp() {
 				// (and Zeronet now fails to start...)
 				// return spawn(ZeronetApp, { detached: true } ); // ['--open_browser', '']);
 				
-				var electron = ChildProcess.spawn(ZeronetApp, ['--open_browser', ''] );
+				var electron = ChildProcess.spawn(ZeronetApp, ['--open_browser', ''], ['--homepage', '1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv'] );
 				electron.stderr.on('data', function (data) {
 					console.error(data.toString())
 				});
@@ -657,12 +657,12 @@ function startApp() {
 			console.log('distFolder = ' + distFolder);
 			var appFolder   = path.resolve(distFolder, '..');
 			console.log('appFolder = ' + appFolder);
-			var ZeronetApp  = path.resolve(path.join(__dirname, '/bin/ZeroNet.exe') );
-			console.log('ZeronetApp = ' + ZeronetApp);
+			var appNet      = path.resolve(path.join(__dirname, '/bin/zeronet.exe') );
+			console.log('appNet = ' + appNet);
 			
 			// Spawn Zeronet
-			return spawnChild( ZeronetApp, ['--open_browser', ''] ); // { detached: false }
-			// return   spawn( ZeronetApp, { detached: true }, ['--open_browser', ''] ); // { detached: false }
+			return spawnChild( appNet, ['--open_browser', ''], ['--homepage', '1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv'] ); // { detached: false }
+			// return   spawn( appNet, { detached: true }, ['--open_browser', ''] ); // { detached: false }
 			
 			// Todo: try to respawn zeronet if closed.
 			let respawn = function(command, args) {

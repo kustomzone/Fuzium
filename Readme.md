@@ -5,7 +5,7 @@
 
 ## Fuzium 
 
-A fusion of Electron and Zeronet goodness, with more to come.
+A fusion of Electron and Zeronet, with more goodness to come.
 
 
 ### Why?
@@ -20,7 +20,10 @@ A fusion of Electron and Zeronet goodness, with more to come.
   for extra privacy and instant answers.<br>
   It's a ['smarter, faster'](https://minbrowser.github.io/min/) address bar which suits
   this project perfectly. :surfing_man:
-
+  <br>
+- (Feb 5) New homepage, ready for app store (1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv)
+  <br>
+- (Feb 11) Merged in bookmarking with [Vue.js](https://github.com/coligo-io/bookmarking-app-electron-vuejs-firebase)
 
 ### Todo
 
@@ -30,28 +33,29 @@ A fusion of Electron and Zeronet goodness, with more to come.
 - [x] download handler (no gui yet)
 - [x] packaged releases (pre-alpha)
 - [x] addressbar (surf's up! :)
-- [ ] a newly designed homepage
-- [ ] bookmarks & notepad
-- [ ] test Chrome extensions
-- [ ] test zeronet plugins
+- [x] a newly designed homepage
+- [x] bookmarks & notepad
+- [ ] zite bookmark sharing & rating
+- [ ] featured apps & store (altcoins)
+- [ ] test Chrome extensions & zeronet plugins
+- [ ] site creation tools & widgets
 - [ ] view console info as sub-windows
-- [ ] site creation tools
-- [ ] app/zite donation features
-- [ ] new app toplist & store (altcoins)
 - [ ] cross platform testing
 
 
-### Bugs (aka todo)
+### Bugs (v0.0.6)
 
+ * Hide bookmarks when using tabs.
  * Opening a zite in the address bar creates additional toggle switches and sidebar buttons.
  * Need to reload (CTRL-R) occasionally after starting if zeronet boots up late.
+
  
 ### Features
 
  * [Min browser's](https://minbrowser.github.io/min/) 'instant answers' address bar with DuckDuckGo integration.
  * taskbar preferences
  * win32 installer or zip
-
+ * bookmarking tool
 
 ### Samples
 
@@ -88,7 +92,7 @@ npm install && npm start
 | **`Linux`** | **`Mac`** | **`Win`** |
 |-------------|-----------|-----------|
 | not running | not running | running  |
-|  (afaik)    | [issue #4](https://github.com/kustomzone/Fuzium/issues/4) |alt-key for menu|
+|  (afaik)    | [issue #4](https://github.com/kustomzone/Fuzium/issues/4) |Ctrl-R to reload|
 
 
 Report any [issues](https://github.com/kustomzone/Fuzium/issues) you come across, thanks.

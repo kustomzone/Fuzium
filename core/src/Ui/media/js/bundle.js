@@ -1213,6 +1213,11 @@ bookmarks.init()
 ;/* common to webview, tabrenderer, etc */
 
 function navigate (tabId, newURL) {
+  // go to URL - hide bookmarks
+  var lander = document.getElementById('app')
+  console.log(lander)
+  lander.setAttribute('style', 'display: none')
+  
   newURL = urlParser.parse(newURL)
 
   tabs.update(tabId, {
@@ -3233,6 +3238,11 @@ function rerenderTabElement (tabId) {
 }
 
 function createTabElement (data) {
+  // new tab opened - show bookmarks
+  var lander = document.getElementById('app')
+  console.log(lander)
+  lander.setAttribute('style', 'display: block')
+  
   var url = urlParser.parse(data.url)
 
   var tabEl = document.createElement('div')

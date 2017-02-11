@@ -1,12 +1,16 @@
 #findinpage-bar {
-  width: 320px;
-  display: flex;
   position: relative;
-  top: 0px;
-  left: 999px;
+  top:          0px;
+  left:       990px;
+  padding-left: 3px;
+  height:      28px;
+  width:      270px;
+  max-width:  270px;
   align-items: center;
-  height: 28px;
-  z-index: 100;
+  z-index: 25;
+  display: flex;
+  border-bottom: 1px solid #706060;
+  border-left:   1px solid #605050;
 }
 
 #findinpage-end:hover {
@@ -20,7 +24,7 @@
   background:         inherit;
   color:              inherit;
   min-width: 80px;
-  border: 0px;
+  border:     0px;
   size: 12;
   flex: 1;
 }
@@ -31,7 +35,7 @@
 }
 
 #findinpage-input:focus {
-  z-index: 950;
+  z-index: 95;
 }
 
 #findinpage-bar .divider {

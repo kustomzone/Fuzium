@@ -29,7 +29,7 @@ a { color: black }
 /* Fixbutton */
 
 .fixbutton {
-	position: absolute; right: 35px; top: 40px; width: 40px;  z-index: 999;
+	position: absolute; right: 24px; top: 42px; width: 40px;  z-index: 999;
 	text-align: center; color: white; font-family: Consolas, Monaco, monospace; font-size: 25px;
 }
 .fixbutton-bg {

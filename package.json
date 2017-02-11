@@ -1,9 +1,9 @@
 {
   "name": "Fuzium",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "electronVersion": "1.4.15",
   "license": "MIT",
-  "description": "Zeronet + Electron = Fuzium",
+  "description": "Fusion of Electron & Zeronet",
   "author": "Andrew Kidoo",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "build": "electron-packager . Fuzium --platform win32 --arch x64 --electronVersion=1.4.15 && play done.wav",
+    "build":   "electron-packager . Fuzium --platform win32 --arch x64 --electronVersion=1.4.15 && play done.wav",
     "package": "electron-packager . Fuzium --platform win32 --arch=x64 --electronVersion=1.4.15 && play done.wav",
     "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/",
     "test": "node_modules/.bin/standard --verbose js/**/*.js main/*.js"
@@ -51,6 +51,8 @@
   "dependencies": {
     "commander": "~2.8.1",
     "configstore": "~1.2.1",
+    "dexie": "^1.2.0",
+    "dragula": "^3.6.2",
     "electron-spawn": "^5.0.0",
     "file-loader": "^0.9.0",
     "file-watcher": "^0.0.2",
@@ -58,7 +60,10 @@
     "json-loader": "^0.5.4",
     "marked": "^0.3.6",
     "monogamous": "~1.0.3",
+    "mousetrap": "^1.5.3",
+    "nlp_compromise": "^1.1.5",
     "node-dir": "^0.1.16",
+    "string_score": "^0.1.22",
     "underscore": "~1.8.3",
     "winston": "~1.0.0"
   }

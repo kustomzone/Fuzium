@@ -1,0 +1,68 @@
+{
+ "address": "1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv",
+ "description": "",
+ "files": {
+  "css/lander.css": {
+   "sha512": "e5e8d4ecf1f7c0c38217445b2751b6007a48ffc20915c6beb5d3426ec153fe6f",
+   "size": 192823
+  },
+  "img/lander.jpg": {
+   "sha512": "8d1a4c5732acea0fa92635f113cdbfa9782248864632916928e194438cb0f1bd",
+   "size": 2087
+  },
+  "img/lander2.jpg": {
+   "sha512": "2ae931f9c0ef759dfb01ed24f585d698b5fc6c3f866595bad57c69348d3417ba",
+   "size": 2172
+  },
+  "img/lander3.jpg": {
+   "sha512": "3063d3d1f80e0242a84e7cee62616621ce834d31e4709f3b992e3f1eaaf97523",
+   "size": 2041
+  },
+  "img/loading-circle.gif": {
+   "sha512": "339baf1bccb9b80ae29c2493e73b40cf0588c96fc095954b475dea0538aaa929",
+   "size": 2346
+  },
+  "img/notepad.png": {
+   "sha512": "e94ff9e37673aeb0ee65141f3970d48e0c302e045666f1e594a2ae0d3843108e",
+   "size": 3803
+  },
+  "index.html": {
+   "sha512": "87d5b7120a3b52e300f8d6c8a477d341f73d6aad18b2ca8fd2b83282b8f7009b",
+   "size": 815
+  },
+  "js/bookmarksHistory/bookmarksHistory.js": {
+   "sha512": "bfe7af8cea69530c3d71ed2cb44d6b5c1253a9191707a3a13b790843bbfa2e79",
+   "size": 4942
+  },
+  "js/bookmarksHistory/fullTextSearch.js": {
+   "sha512": "38ff5bbd48c38e273ace0bf0b7876542f0a9e0fb5431a9a79e11d3a3aed44315",
+   "size": 5163
+  },
+  "js/bookmarksHistory/placesSearch.js": {
+   "sha512": "cef201784c7e2a7947f2366ae1a1d0e7f21ea779c8dee76df5305423bc4b2dad",
+   "size": 2911
+  },
+  "js/bookmarksHistory/placesWorker.js": {
+   "sha512": "a22989498abdd5ac2eda5b97a4233570ad8d900fd07a598c59a103fb61cad728",
+   "size": 6657
+  },
+  "js/lander.js": {
+   "sha512": "312908b9716e0c9d440a48251862af58430117bc5a30cd817e540a9b30b20147",
+   "size": 129272
+  }
+ },
+ "ignore": "",
+ "inner_path": "content.json",
+ "modified": 1486827110,
+ "sign": [
+  84591078446043062291461893431669356344447897537914562958659885009002657369114,
+  100001974617085521629317237918216615041188965446190319549919471039811802962279
+ ],
+ "signers_sign": "G1Yf49FKrejMtJBkk8IZLDeTnXwEqBXb9jUmB47FdqU+aV464SGlImInLa5buPt4pAdkMtnbF7s384eHFPrsaPc=",
+ "signs": {
+  "1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv": "G1QRWCrif6wC53PTvtmUF6YGuFnZqwapFib8hPNYAggiRBLpPOYAdnxEh5iW7OXqYfFKzFmmQk7YikTh5cVM+TY="
+ },
+ "signs_required": 1,
+ "title": "Lander Apps",
+ "zeronet_version": "0.5.1"
+}
