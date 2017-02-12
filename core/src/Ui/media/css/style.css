@@ -10,7 +10,7 @@ body {
 }
 
 #app {
-	display: none;
+	display: block;
 }
 
 .right-float {
@@ -62,15 +62,20 @@ body {
   bottom: 2px;
   left: 15px;
   font-family: 'Raleway', sans-serif !important;
-  font-weight: 300;
-  font-size: 20px;
+  font-weight: 320;
+  font-size: 18px;
   color: #B2B0CD;
   text-transform: uppercase;
 }
 
 #categories h2 .app.icon,
 #categories h2 .add.icon {
-  color: #87568D;
+  color: #B87452;
+}
+
+#categories h2 .app.icon:hover {
+  cursor: pointer;
+  color: #C88462;
 }
 
 .clickable {

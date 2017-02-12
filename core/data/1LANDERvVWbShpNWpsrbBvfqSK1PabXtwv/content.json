@@ -46,21 +46,221 @@
    "sha512": "a22989498abdd5ac2eda5b97a4233570ad8d900fd07a598c59a103fb61cad728",
    "size": 6657
   },
+  "js/components/about-me.js": {
+   "sha512": "af1abef31a813fe04a53cef75ffc5abae7797a2a1aa2a279915ab9ca5a0f9c2e",
+   "size": 250
+  },
+  "js/components/home.js": {
+   "sha512": "f82a969d4aa099dce43b5efcaf5fdb5766dc70f61c02f5abe60008c5008346c9",
+   "size": 334
+  },
+  "js/components/main.layout.js": {
+   "sha512": "352f7e3b6c3c38455b69d11f7d2598838a5f83e8b3a4e87b115d43136279d9e2",
+   "size": 1419
+  },
+  "js/components/messages.js": {
+   "sha512": "9fec37de03ae43ec761b812180714e339295e3605059c1ebd368e2939a6ba201",
+   "size": 1115
+  },
+  "js/components/tutorial.js": {
+   "sha512": "d088ef3e6a5382b514cc208c4aa24008ee7652b709948af14ab5ffcce6281c38",
+   "size": 246
+  },
+  "js/crash/crash.css": {
+   "sha512": "d60d9627415c4959c093d426f6fd5b1c0d7e4cb62dfeccc4d5dc1f3dd19a96dc",
+   "size": 107
+  },
+  "js/crash/index.html": {
+   "sha512": "d3bb52a31227423c64fa64edefd6977520fc6476c9162ba90cc0bc3fb2ece222",
+   "size": 572
+  },
+  "js/error/error.css": {
+   "sha512": "44ec7d549267e58a7072d2ef998c7e52f763b20ff924bb1cdfca1f1e067d89c7",
+   "size": 106
+  },
+  "js/error/error.js": {
+   "sha512": "17cb8deabb268a8cfb598ee482810a22dc82476fc2eb050074ff0d6d47f1fc9c",
+   "size": 2862
+  },
+  "js/error/index.html": {
+   "sha512": "bb811a5b7260ddc29ce598483f8428cd91bd4146f725ae22a62cf7f3229fc29c",
+   "size": 621
+  },
   "js/lander.js": {
    "sha512": "312908b9716e0c9d440a48251862af58430117bc5a30cd817e540a9b30b20147",
    "size": 129272
+  },
+  "js/navbar/addTabButton.js": {
+   "sha512": "a53d3a9b673cbcd39508928cb01757eaf3747f380be5332cc1f1be30e432ca86",
+   "size": 203
+  },
+  "js/navbar/navbarTabs.js": {
+   "sha512": "385cbf30c7e03fef47f35e7eac0a2c52bc50f8c8f1abd683ee734f4b56560c68",
+   "size": 8880
+  },
+  "js/navbar/tabActivity.js": {
+   "sha512": "16cb9e79b92cff8b2390aa46667de49c23c8ff922105bab0f05691e830de42b2",
+   "size": 838
+  },
+  "js/navbar/tabColor.js": {
+   "sha512": "f9b37bae85516bb312856a08eaa8afad72ec318a61a7b2f10ea00f3f11a21e92",
+   "size": 5833
+  },
+  "js/reader/index.html": {
+   "sha512": "8d929f44486b1941cc27570612eab526a3d8076b5ca08d5f4220a5c3ce1fd7d4",
+   "size": 737
+  },
+  "js/reader/reader.js": {
+   "sha512": "ea99b6a6c1e8d341ef3a073f835f35d62cf41ddc7e744586e7ddb22360170844",
+   "size": 3869
+  },
+  "js/reader/readerView.css": {
+   "sha512": "b22c1de7f6c26b82b557fef8c08cb0d7cbee1140cecffd72335b35c0b3c583e2",
+   "size": 2575
+  },
+  "js/reader/readerViewDB.js": {
+   "sha512": "58b69f6b75fbafe4881433549fcdcf6191ced925b8a9a3a37b6dcd4ca24b436f",
+   "size": 1428
+  },
+  "js/reader/whiteFavicon.png": {
+   "sha512": "c6dbd16977de74990f4db8da81393b3faccbf3f8fa80b005deec64ae8c45dcea",
+   "size": 73
+  },
+  "js/searchbar/bangsPlugin.js": {
+   "sha512": "6705246ac2642373ace9b896cfd11b89e790cf645985d2b4e7814ffd4b41b334",
+   "size": 3616
+  },
+  "js/searchbar/customBangs.js": {
+   "sha512": "b62d25d2665b88e07cb012a004373b2b2cbaa6149b2243b6e909215311171695",
+   "size": 3661
+  },
+  "js/searchbar/hostsSuggestionsPlugin.js": {
+   "sha512": "2de02783166e32de94ee13045888b6fb2255ae04abd31edbe53fac755dbffd18",
+   "size": 682
+  },
+  "js/searchbar/instantAnswerPlugin.js": {
+   "sha512": "1b2b8909ea329d5a430ebb952772d7b8909f24d254fae7d992676e0386137225",
+   "size": 5594
+  },
+  "js/searchbar/openTabsPlugin.js": {
+   "sha512": "c12b2cb78df91953ca3646a1d032fa3f3c5f08940525527eb235b8e6373bb286",
+   "size": 1718
+  },
+  "js/searchbar/placeSuggestionsPlugin.js": {
+   "sha512": "53fc51d3020787b0c632bf099dd081239a46f1afc5578494e83dfa32e3eda80f",
+   "size": 1160
+  },
+  "js/searchbar/placesPlugin.js": {
+   "sha512": "b404d4e4d5d99fe22c0e04142ce2f929719df7ea14029472961c90d8b507bafb",
+   "size": 3298
+  },
+  "js/searchbar/searchSuggestionsPlugin.js": {
+   "sha512": "a0cea08a6e3f7c8c0873b9588f7e05f0b6c9628b7f4c3b1ddc57724c80239149",
+   "size": 1486
+  },
+  "js/searchbar/searchbar-autocomplete.js": {
+   "sha512": "05e78c10783a9de8161d9a1ba464220745209dcf67d13473aac2bb06b9862953",
+   "size": 1532
+  },
+  "js/searchbar/searchbar-plugins.js": {
+   "sha512": "1630dc0b979b6dc7d6b341931933e9b9a1969048f5d0ad00b2f363e827be1f58",
+   "size": 2150
+  },
+  "js/searchbar/searchbar.js": {
+   "sha512": "5b628d0a668e1fdc0433cea443761d3da69805748f9a9ad865529a5da10e6eb4",
+   "size": 10727
+  },
+  "js/settings/index.html": {
+   "sha512": "46fafa8c2af56d58549a2a904934a5b0784b9955cd0125c744e3911b497645e9",
+   "size": 2678
+  },
+  "js/settings/settings.css": {
+   "sha512": "e7c994f1a98721521faf86243e11032e58dfdb7c3cb7e2cac797bcedcc108dd6",
+   "size": 3049
+  },
+  "js/settings/settings.js": {
+   "sha512": "0371b644761bbd7f9f19fc5df9338fa9c5ff1677ab2a4e7ce43ce190b980b395",
+   "size": 4509
+  },
+  "js/util/database.js": {
+   "sha512": "f0cc48903417ae9cd3c9678bb53444c2dd09c21493ae66e1e5f6d1284495cdc4",
+   "size": 3457
+  },
+  "js/util/defaultKeyMap.js": {
+   "sha512": "176a8b1e91e7e1faf6de4269bb0377404a730d0989675608b5c4bd23f5b241b9",
+   "size": 1004
+  },
+  "js/util/searchEngine.js": {
+   "sha512": "93c8e8c181f555f72e54a1bd8d6decb90598bb6fb240ac7b770fe25aa2f85cc0",
+   "size": 1104
+  },
+  "js/util/settings.js": {
+   "sha512": "244b713671e5644e984866d7acd75ddcd24daba0c5c7467d78423bd6329de7bb",
+   "size": 1688
+  },
+  "js/util/theme.js": {
+   "sha512": "2fd6c147b8f852afc81fa75f96c6b36afca5b005ea8e72670ecd1ec4f4bcaa81",
+   "size": 549
+  },
+  "js/util/urlParser.js": {
+   "sha512": "1ed40ea8aa4158996af6285a7457bc945ebbfa67cd189ce48095f94dbcb2620b",
+   "size": 2896
+  },
+  "js/webview/contextMenu.js": {
+   "sha512": "fd7a4f328ff92caa072c823e311551cd90a10623fecb085ae24b03b07f61349a",
+   "size": 709
+  },
+  "js/webview/default.js": {
+   "sha512": "f3c049e7b12d38d128f8ce8cdc37ffc8f05c4b89ac398f490cd794210347f678",
+   "size": 109
+  },
+  "js/webview/keywordExtractor.js": {
+   "sha512": "cb05f7b3bc9f56dec6dbc3b4acbda636d7f0fe59a36cdda88952b216b2764f2f",
+   "size": 2153
+  },
+  "js/webview/phishDetector.js": {
+   "sha512": "71b1e98b8c976bc117ffc0b54441746e9fcf9cb0b989a20a17d49c09f08ba73b",
+   "size": 14808
+  },
+  "js/webview/readerDetector.js": {
+   "sha512": "a31369b5535f8fba775680a3e4014843c55761f6855454c2eabfcb515ee3536e",
+   "size": 1056
+  },
+  "js/webview/swipeEvents.js": {
+   "sha512": "8be6e881ff35e58e10c646a159ee9a9d936f2469fdfccaaff49420d05d39b8ad",
+   "size": 1784
+  },
+  "js/webview/textExtractor.js": {
+   "sha512": "125c926cd71a1afb9328152fb8899d5ed88c5f86ffe7ce90b7c35ca02fe86714",
+   "size": 4999
+  },
+  "js/webview/zoom.js": {
+   "sha512": "dfbecf1c7187dbd0d6ab885cbce191b8e5ffeef4dbfd63b555f0890d242d3c99",
+   "size": 755
+  },
+  "js/zeroframe/zeroframe.js": {
+   "sha512": "0289348c6dbd65203b32be7f51458286e7f16b4bea10c8d5aa145216a5544672",
+   "size": 2897
+  },
+  "node_modules/dexie/dist/dexie.min.js": {
+   "sha512": "911bdd4245353d80c1e494f93f25dec9a1be7a8faadce1c796d0db5b854f86a7",
+   "size": 53930
+  },
+  "node_modules/string_score/string_score.min.js": {
+   "sha512": "7692061b972848e7d4193c23ad48102a6512e1addca0b0c218a485158f3e549f",
+   "size": 693
   }
  },
  "ignore": "",
  "inner_path": "content.json",
- "modified": 1486827110,
+ "modified": 1486915625,
  "sign": [
-  84591078446043062291461893431669356344447897537914562958659885009002657369114,
-  100001974617085521629317237918216615041188965446190319549919471039811802962279
+  112592545027504005764917151093762817810921865774044160198570346389253110516202,
+  12570745779770200301290222034584124550531264921593621302398110404723049741584
  ],
  "signers_sign": "G1Yf49FKrejMtJBkk8IZLDeTnXwEqBXb9jUmB47FdqU+aV464SGlImInLa5buPt4pAdkMtnbF7s384eHFPrsaPc=",
  "signs": {
-  "1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv": "G1QRWCrif6wC53PTvtmUF6YGuFnZqwapFib8hPNYAggiRBLpPOYAdnxEh5iW7OXqYfFKzFmmQk7YikTh5cVM+TY="
+  "1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv": "HLPTszkq63a+PcaEg8IxEUq6uRtREXqwWJoc7mdyFBWsDN6cxl3xYekjI0RG4lDfAfcpVkU+DykEFLjftwb6LTw="
  },
  "signs_required": 1,
  "title": "Lander Apps",

@@ -61,7 +61,7 @@ if (window.opener && window.stop) window.stop()
 
 <!-- Toggle Zeronet -->
 <div class="toggle" style="display: block">
-    <input id="toggle" name="toggle" class="toggle-checkbox" value="on" type="checkbox" checked onclick="toggleState(this)">
+    <input id="toggle" name="toggle" class="toggle-checkbox" text="toggle" type="checkbox" checked value="on" onclick="toggleState(this.parentElement)">
     <label class="toggle-label" for="toggle">
         <span class="toggle-inner"></span>
         <span class="toggle-switch"></span>
@@ -81,9 +81,6 @@ if (window.opener && window.stop) window.stop()
      </button>
 </div -->
 
-<!-- Switch task -->
-<i id="switch-task-button" class="fa fa-bars navbar-action-button theme-text-color" title="View Tasks"></i>
-
 <!-- Tabs -->
 <div id="navbar" class="tab-group theme-background-color theme-text-color" tabindex="-1">
 	<div id="tabs"></div>
@@ -97,7 +94,7 @@ if (window.opener && window.stop) window.stop()
 </div>
 
 <!-- webview -->
-<div id="webviews"></div>
+<div id="webviews"></div>  <!-- webview id="webview" style="height: 100%; width: 100%;"></webview -->
 
 <!-- Find in page -->
 <div id="findinpage-bar" hidden class="theme-background-color theme-text-color">
@@ -111,11 +108,14 @@ if (window.opener && window.stop) window.stop()
 	<i id="findinpage-end" class="icon fa fa-close"></i>
 </div>
 
+<!-- Switch task -->
+<i id="switch-task-button" style="z-index: 654;" class="fa fa-bars navbar-action-button theme-text-color" title="View Tasks"></i>
+
 <!-- Task list -->
 <div id="task-overlay" class="" hidden>
 	<div class="navbar" id="task-overlay-navbar"></div>
-	<div id="task-area"></div>
-	<div id="add-task">
+	<div id="task-area" style="z-index: 655;"></div>
+	<div id="add-task" style="z-index: 656;">
 		<i class="fa fa-pencil-square-o"></i> New Task
 	</div>
 </div>
@@ -141,6 +141,8 @@ if (typeof WebSocket === "undefined")
 	document.body.innerHTML += "<div class='unsupported'>Websocket unsupported.</div>";
 </script>
 
+<!-- script>window.$ = window.jQuery = require('jquery')</script -->
+
 <script type="text/javascript" src="/uimedia/all.js?rev={rev}&lang={lang}"></script>
 <script type="text/javascript" src="/uimedia/js/dexie.min.js"></script>
 <script type="text/javascript" src="/uimedia/js/dragula.min.js"></script>
@@ -149,6 +151,11 @@ if (typeof WebSocket === "undefined")
 <script type="text/javascript" src="/uimedia/js/toggle.js"></script>
 <script type="text/javascript" src="/uimedia/js/semantic.min.js"></script>
 <script type="text/javascript" src="/uimedia/js/build.js"></script>
+
+<!-- script> 
+ var lander = document.getElementsById('app');
+ // lander.innerHTML += "<div style='position: absolute; top: 300px; left: 300px;'>text</div>";
+</script -->
 
 </body>
 </html>

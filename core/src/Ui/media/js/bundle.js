@@ -236,14 +236,6 @@ var searchEngines = {
     name: 'Google',
     searchURL: 'https://google.com/search?q=%s'
   },
-  Bing: {
-    name: 'Bing',
-    searchURL: 'https://www.bing.com/search?q=%s'
-  },
-  Yahoo: {
-    name: 'Yahoo',
-    searchURL: 'https://search.yahoo.com/yhs/search?p=%s'
-  },
   Baidu: {
     name: 'Baidu',
     searchURL: 'https://www.baidu.com/s?wd=%s'
@@ -312,7 +304,7 @@ var tabPrototype = {
       var tab = {}
     }
 
-    var tabId = String(tab.id || Math.round(Math.random() * 100000000000000000)) // you can pass an id that will be used, or a random one will be generated.
+    var tabId = String(tab.id || Math.round(Math.random() * 1000000000)) // you can pass an id that will be used, or a random one will be generated.
 
     var newTab = {
       url: tab.url || '',
@@ -1214,10 +1206,7 @@ bookmarks.init()
 
 function navigate (tabId, newURL) {
   // go to URL - hide bookmarks
-  var lander = document.getElementById('app')
-  console.log(lander)
-  lander.setAttribute('style', 'display: none')
-  
+  document.getElementById('app').setAttribute('style', 'display: none')
   newURL = urlParser.parse(newURL)
 
   tabs.update(tabId, {
@@ -3238,13 +3227,11 @@ function rerenderTabElement (tabId) {
 }
 
 function createTabElement (data) {
-  // new tab opened - show bookmarks
-  var lander = document.getElementById('app')
-  console.log(lander)
-  lander.setAttribute('style', 'display: block')
-  
   var url = urlParser.parse(data.url)
-
+  
+  // new tab opened - show bookmarks
+  document.getElementById('app').setAttribute('style', 'display: block')
+  
   var tabEl = document.createElement('div')
   tabEl.className = 'tab-item'
   tabEl.setAttribute('data-tab', data.id)
@@ -3470,11 +3457,11 @@ bindWebviewEvent('focus', function () {
   addTab()
 }
 
-var overlay = document.getElementById('task-overlay')
-var taskContainer = document.getElementById('task-area')
+var overlay            = document.getElementById('task-overlay')
+var taskContainer      = document.getElementById('task-area')
 var taskSwitcherButton = document.getElementById('switch-task-button')
-var addTaskButton = document.getElementById('add-task')
-var navbar = document.getElementById('task-overlay-navbar')
+var addTaskButton      = document.getElementById('add-task')
+var navbar             = document.getElementById('task-overlay-navbar')
 
 taskSwitcherButton.addEventListener('click', function () {
   taskOverlay.toggle()
@@ -4166,10 +4153,10 @@ var sessionRestore = {
 
     // first run, show the tour
     if (!data) {
-      tasks.setSelected(tasks.add()) // create a new task
+      tasks.setSelected(tasks.add()) // create new task
 
       var newTab = currentTask.tabs.add({
-        url: 'https://palmeral.github.io/min/tour'
+        url: 'http://duckduckgo.com'
       })
       addTab(newTab, {
         enterEditMode: false

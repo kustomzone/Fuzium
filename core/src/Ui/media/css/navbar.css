@@ -2,8 +2,8 @@
 #navbar {
   /* leave room for zeronet toggle */
   position: relative;
-  margin-top: 2px;
-  margin-left: 75px;
+  margin-top: 1px;
+  margin-left: 322px;
   display: flex;
   align-items: center;
   transition: 0.2s background-color;
@@ -158,10 +158,13 @@
 
 /* buttons */
 .navbar-action-button {
-  padding: 1em;
+  z-index: 654;
+  margin-top: 5px;
+  margin-right: 15px;
+  margin-left: 5px;
 }
 .navbar-action-button + .navbar-action-button {
-  padding-left: 0.5em;
+  padding-left: 1em;
 }
 
 /* reader button */

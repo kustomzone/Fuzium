@@ -32,6 +32,12 @@ class UiWebsocket(object):
         self.channels = []  # Channels joined to
         self.sending = False  # Currently sending to client
         self.send_queue = []  # Messages to send to client
+        self.admin_commands = (
+            "sitePause", "siteResume", "siteDelete", "siteList", "siteSetLimit", "siteClone",
+            "channelJoinAllsite", "serverUpdate", "serverPortcheck", "serverShutdown", "certSet", "configSet",
+            "actionPermissionAdd", "actionPermissionRemove"
+        )
+        self.async_commands = ("fileGet", "fileList")
 
     # Start listener loop
     def start(self):
@@ -103,6 +109,16 @@ class UiWebsocket(object):
                     self.log.error("WebSocket handleRequest error: %s" % Debug.formatException(err))
                     self.cmd("error", "Internal error: %s" % Debug.formatException(err, "html"))
 
+    # Has permission to run the command
+    def hasCmdPermission(self, cmd):
+        cmd = cmd[0].lower() + cmd[1:]
+
+        if cmd in self.admin_commands and "ADMIN" not in self.permissions:
+            return False
+        else:
+            return True
+
+    # Has permission to access a site
     def hasSitePermission(self, address):
         if address != self.site.address and "ADMIN" not in self.site.settings["permissions"]:
             return False
@@ -152,6 +168,20 @@ class UiWebsocket(object):
             permissions.append("ADMIN")
         return permissions
 
+    def asyncWrapper(self, func):
+        def asyncErrorWatcher(func, *args, **kwargs):
+            try:
+                func(*args, **kwargs)
+            except Exception, err:
+                if config.debug:  # Allow websocket errors to appear on /Debug
+                    sys.modules["main"].DebugHook.handleError()
+                self.log.error("WebSocket handleRequest error: %s" % Debug.formatException(err))
+                self.cmd("error", "Internal error: %s" % Debug.formatException(err, "html"))
+
+        def wrapper(*args, **kwargs):
+            gevent.spawn(asyncErrorWatcher, func, *args, **kwargs)
+        return wrapper
+
     # Handle incoming messages
     def handleRequest(self, data):
         req = json.loads(data)
@@ -160,15 +190,9 @@ class UiWebsocket(object):
         params = req.get("params")
         self.permissions = self.getPermissions(req["id"])
 
-        admin_commands = (
-            "sitePause", "siteResume", "siteDelete", "siteList", "siteSetLimit", "siteClone",
-            "channelJoinAllsite", "serverUpdate", "serverPortcheck", "serverShutdown", "certSet", "configSet",
-            "actionPermissionAdd", "actionPermissionRemove"
-        )
-
         if cmd == "response":  # It's a response to a command
             return self.actionResponse(req["to"], req["result"])
-        elif cmd in admin_commands and "ADMIN" not in self.permissions:  # Admin commands
+        elif not self.hasCmdPermission(cmd):  # Admin commands
             return self.response(req["id"], {"error": "You don't have permission to run %s" % cmd})
         else:  # Normal command
             func_name = "action" + cmd[0].upper() + cmd[1:]
@@ -176,6 +200,10 @@ class UiWebsocket(object):
             if not func:  # Unknown command
                 self.response(req["id"], {"error": "Unknown command: %s" % cmd})
                 return
+
+        # Execute in parallel
+        if cmd in self.async_commands:
+            func = self.asyncWrapper(func)
 
         # Support calling as named, unnamed parameters and raw first argument too
         if type(params) is dict:
@@ -278,7 +306,7 @@ class UiWebsocket(object):
         self.response(to, ret)
 
     # Sign content.json
-    def actionSiteSign(self, to, privatekey=None, inner_path="content.json", response_ok=True, update_changed_files=False):
+    def actionSiteSign(self, to, privatekey=None, inner_path="content.json", response_ok=True, update_changed_files=False, remove_missing_optional=False):
         self.log.debug("Signing: %s" % inner_path)
         site = self.site
         extend = {}  # Extended info for signing
@@ -311,7 +339,7 @@ class UiWebsocket(object):
         # Reload content.json, ignore errors to make it up-to-date
         site.content_manager.loadContent(inner_path, add_bad_files=False, force=True)
         # Sign using private key sent by user
-        signed = site.content_manager.sign(inner_path, privatekey, extend=extend, update_changed_files=update_changed_files)
+        signed = site.content_manager.sign(inner_path, privatekey, extend=extend, update_changed_files=update_changed_files, remove_missing_optional=remove_missing_optional)
         if not signed:
             self.cmd("notification", ["error", _["Content signing failed"]])
             self.response(to, {"error": "Site sign failed"})
@@ -460,6 +488,16 @@ class UiWebsocket(object):
         ):
             return self.response(to, {"error": "Forbidden, you can only modify your own files"})
 
+        file_info = self.site.content_manager.getFileInfo(inner_path)
+        if file_info.get("optional"):
+            self.log.debug("Deleting optional file: %s" % inner_path)
+            relative_path = file_info["relative_path"]
+            content_json = self.site.storage.loadJson(file_info["content_inner_path"])
+            if relative_path in content_json.get("files_optional", {}):
+                del content_json["files_optional"][relative_path]
+                self.site.storage.writeJson(file_info["content_inner_path"], content_json)
+                self.site.content_manager.loadContent(file_info["content_inner_path"], add_bad_files=False, force=True)
+
         try:
             self.site.storage.delete(inner_path)
         except Exception, err:
@@ -503,14 +541,18 @@ class UiWebsocket(object):
         return self.response(to, rows)
 
     # Return file content
-    def actionFileGet(self, to, inner_path, required=True):
+    def actionFileGet(self, to, inner_path, required=True, format="text", timeout=300):
         try:
             if required or inner_path in self.site.bad_files:
-                self.site.needFile(inner_path, priority=6)
+                with gevent.Timeout(timeout):
+                    self.site.needFile(inner_path, priority=6)
             body = self.site.storage.read(inner_path)
         except Exception, err:
             self.log.debug("%s fileGet error: %s" % (inner_path, err))
             body = None
+        if body and format == "base64":
+            import base64
+            body = base64.b64encode(body)
         return self.response(to, body)
 
     def actionFileRules(self, to, inner_path):
@@ -649,9 +691,9 @@ class UiWebsocket(object):
                 site.websockets.append(self)
 
     # Update site content.json
-    def actionSiteUpdate(self, to, address, check_files=False):
+    def actionSiteUpdate(self, to, address, check_files=False, since=None):
         def updateThread():
-            site.update(check_files=check_files)
+            site.update(check_files=check_files, since=since)
             self.response(to, "Updated")
 
         site = self.server.sites.get(address)
@@ -700,7 +742,7 @@ class UiWebsocket(object):
             self.response(to, {"error": "Unknown site: %s" % address})
 
     def actionSiteClone(self, to, address, root_inner_path=""):
-        self.cmd("notification", ["info", "Cloning site..."])
+        self.cmd("notification", ["info", _["Cloning site..."]])
         site = self.server.sites.get(address)
         # Generate a new site from user's bip32 seed
         new_address, new_address_index, new_site_data = self.user.getNewSiteData()
