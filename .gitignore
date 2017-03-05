@@ -10,5 +10,4 @@ core/tools/tor/*
 bin/data/*
 bin/log/*
 files/*
-data/*
 log/*

@@ -1,0 +1,41 @@
+{
+  "db_name": "LanderApps",
+  "db_file": "data/lander.db",
+  "version": 3,
+  "maps": {
+    "users/.+/data.json": {
+      "to_table": [
+        {"node": "posts", "table": "posts"},
+        {"node": "comments", "table": "comments", "key_col": "com_post"}
+      ]
+    },
+    "users/.+/content.json": {
+      "to_keyvalue": [ "cert_user_id" ]
+    }
+  },
+  "tables": {
+    "posts": {
+      "cols": [
+        ["post_id",      "INTEGER PRIMARY KEY"],
+        ["post_date",    "INTEGER"],
+        ["post_title",   "TEXT"],
+        ["post_content", "TEXT"],
+        ["post_cat",     "INTEGER"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX post_key ON posts(json_id, post_date)"],
+      "schema_changed": 1426195825
+    },
+    "comments": {
+      "cols": [
+        ["com_id",       "INTEGER PRIMARY KEY"],
+        ["com_date",     "INTEGER"],
+        ["com_post",     "INTEGER"],
+        ["com_content",  "TEXT"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX com_key ON comments(json_id, com_date)"],
+      "schema_changed": 1426195825
+    }
+  }
+}

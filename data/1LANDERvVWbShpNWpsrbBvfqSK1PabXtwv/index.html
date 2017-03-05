@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Lander Apps</title>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+	
+	<link rel="stylesheet"    type="text/css"     href="css/lander.css">
+	<link rel="stylesheet"    type="text/css"     href="css/fonts1.css">
+	
+	<script type="text/javascript" src="js/jquery.min.js"> </script>
+	<!-- script type="text/javascript" src="js/lander1.js"> </script -->
+	<script type="text/javascript" src="js/mustache.js">    </script>
+	
+	 <base href="" target="_top" id="base">
+ <script>base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "").replace(/[&?]wrapper_nonce=[A-Za-z0-9]+/, "")</script>
+ 
+</head>
+
+<body id="PageSites">
+
+<!-- Head -->
+<div id="header" style="clear: both">
+ <div id="Head"></div>
+ <div class="SiteList" id="SiteList"></div>
+ <div class="topright">
+  <div class="plugin-multiuser">Current user: <a class='identicon' href='#Show+Private+key' title='Show private key'></a><a href="#Logout" class="button button-logout">Logout</a></div>
+  <div class="plugin-uipassword"><a href="#Logout" class="button button-logout">Logout</a></div>
+ </div>
+</div>
+
+<!-- Userstats -->
+<div id="userstats">
+  <div class="served"> 
+   <b><span id='peers' class='updating'>0</span> peers</b>
+   <span class="port closed" style="display: none"> Port: <a href="#Re+check" title='Re-check'>Closed</a></span>
+   <span class="tor disabled" style="display: none"> Tor: <span>Disabled</span></span>
+  </div>
+</div>
+
+<!-- Status -->
+<div id="status">
+  <div class="plugin-multiuser">Current user: <a class='identicon' href='#Show+Private+key' title='Show private key'></a><a href="#Logout" class="button button-logout">Logout</a></div>
+  <div class="plugin-uipassword"><a href="#Logout" class="button button-logout">Logout</a></div>
+</div>
+
+<!-- Left -->
+<div class="SiteList" id="SiteList"></div>
+
+<!-- Right -->
+<div class="right">
+ <div id="Dashboard"></div>
+ 
+ 	<header class="header">
+		<div class="wrapper">
+			<a id="logo" href="#">App Centre</a>							
+			<div id="search" class="floatR">
+				<input type="text"  placeholder="Search..." />
+				<a class="subm"></a>
+			</div>
+			<div class="anon-box">
+				<section id="no-login">
+					<div class="register-now">
+							<a href="#" title="Join!"></a>
+					</div>
+					<div class="login-now">
+						<a href="#" title="Login" onclick="ZeroAPI.cmd('certSelect', [['zeroid.bit']]);">Login</a>
+					</div>
+				</section>
+				<section id="logget" class="hide">
+					<div class="usermenu">
+						<ul>
+							<li class="monitor" style="position: relative; border-radius: 5px 0 0 5px;">
+								<a href="#notifications" name="Notifications">
+									<i class="icon followers"></i>
+								</a>
+							</li>
+							<li class="mensajes" style="position:relative">
+								<a href="#messages" name="Messages">
+									<i class="icon private-message"></i>
+								</a>
+							</li>
+							<li class="favoritos" style="position:relative">
+								<a href="#favorites" name="Favorites">
+									<i class="icon favs"></i>
+								</a>
+							</li>
+									
+							<div class="nickbar">
+								<a href="#">
+									<span>???</span>
+									<img src="img/arrowd.png">
+								</a>
+								<menu>
+									<a onclick="ZeroAPI.cmd('certSelect', [['zeroid.bit']]);" href="#">Change</a>
+									<a href="#settings">Settings</a>
+								</menu>
+							</div>	
+						</ul>
+					</div>
+				</section>
+			</div>
+		</div>
+	</header>
+	
+	<nav>
+	  <div id="menu-wrapper">
+		<div id="menu">
+			<ul class="clearfix">
+				<li><a href="#home"><i class="icon home"></i></a><span></span></li>
+				<li class="active"><a href="#apps">Apps</a></li>
+				<li><a href="#misc">Misc</a><img src="img/icon-new.png" style="margin:3px 0 0 -19px; pointer-events: none;"></li>
+			</ul>
+		</div>
+	  </div>
+	  <div id="submenu-wrapper">
+		<div id="submenu">
+			<ul class="clearfix">
+				<li template="new">     <a href="#new">New</a></li>
+				<li template="all" class="active"> <a href="#all">All</a></li>
+				<li template="apps">    <a href="#apps">Apps</a></li>
+				<li template="games">   <a href="#games">Games</a></li>
+				<li template="videos">  <a href="#vids">Vids</a></li>
+				<li template="anime">   <a href="#anime">Anime</a></li>
+				<li template="news">    <a href="#news">News</a></li>
+				<li template="reviews"> <a href="#reviews">Reviews</a></li>
+				<li template="help">    <a href="#help">Help</a></li>
+			</ul>					
+		</div>
+	  </div>
+	</nav>
+</div>
+
+<!-- Sites -->
+<div id="sites" class="updating">
+<!-- div class="site-category template"></div -->
+
+ <!-- Site-container -->
+ <div class="site-container site-seeding template">
+  <a href="#" class='hamburger'>&#x2261;</a>
+  <a href="/1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv" target="_top" class="site block">
+   <h4>
+    <div class="anim-updating" title='Updating...'></div>
+    <div class="status">Seeding</div>
+    <div class="notify"></div>
+    <!-- div class='right'></div -->
+   </h4>
+   <span class='title'>ZeroHello</span>
+   <h4 class='description'></h4>
+   <div class="bottom">
+    <h4><div class='icon-profile'></div>&nbsp;<span class='peers'>n/a</span> <div class="icon-clock"></div> <span class='modified-date'>n/a</span></h4>
+   </div>
+  </a>
+ </div>
+ <!-- /Site-container -->
+ 
+</div>
+
+<!-- Site dropdown menu -->
+<div class="menu template">
+ <a href="#" class="menu-item template">Template</a>
+</div>
+
+<!-- Apps -->
+<div class="apps">
+<main class="clearfix">
+<script type="text/javascript" src="js/all.js"></script>
+</main>
+</div>
+
+</body>
+</html>

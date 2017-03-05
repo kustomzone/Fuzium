@@ -1,34 +1,176 @@
-<!DOCTYPE html>
-
-<html>
+<!DOCTYPE html PUBLIC>
+<html lang="en">
 <head>
- <title>Welcome to ZeroNet!</title>
- <meta charset="utf-8">
- <meta http-equiv="content-type" content="text/html; charset=utf-8">
- 
- <link rel="stylesheet" href="css/lander.css">
- 
- <base href="" target="_top" id="base">
- <script>base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "").replace(/[&?]wrapper_nonce=[A-Za-z0-9]+/, "")</script>
+	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+	<title>Lander Apps</title>	
+	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+	
+	<link rel="stylesheet"    type="text/css"     href="css/lander.css">
+	<link rel="stylesheet"    type="text/css"     href="css/style.css">
+	
+	<script type="text/javascript" src="js/lander.js?lang={lang}"></script>
+	<!-- script>if (typeof module === 'object') { window.module = module; module = undefined; }</script -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/mustache.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<!-- script>if (window.module) { module = window.module; }</script -->
+
+	<!-- base href="" target="_top" id="base" -->
+	<!-- script>base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "").replace(/[&?]wrapper_nonce=[A-Za-z0-9]+/, "")</script -->
+
 </head>
+
 <body id="PageSites">
 
 <!-- Left -->
 <div class="left">
- <div id="Head"></div>
-
- <div class="FileList-container"><div class="FileList" id="FileList"></div></div>
- <div class="SiteList" id="SiteList"></div>
-
+	<div id="Head"></div>
+	<div class="FileList-container"><div class="FileList" id="FileList"></div></div>
+	<div class="SiteList" id="SiteList"></div>
 </div>
-
 
 <!-- Right -->
 <div class="right">
- <div id="Dashboard"></div>
-</div>
+	<header class="header">
+		<div class="wrapper">
+			<a id="logo" href="#" title="Apps!">App Centre</a>								
+			<div id="search" class="floatR">
+				<input type="text"  placeholder="Search..." />
+				<a class="subm"></a>
+			</div>
+			<div class="anon-box">
+				<section id="no-login">
+					<div class="register-now">
+							<a href="#" title="Registrate!"><b>Register</b></a>
+					</div>
+					<div class="login-now">
+						<a href="#" title="Identificarme" onclick="ZeroAPI.cmd('certSelect', [['zeroid.bit']]);">Login</a>
+					</div>
+				</section>
+				<section id="logget" class="hide">
+					<div class="userbar">
+						<ul>
+							<li class="monitor" style="position: relative; border-radius: 5px 0 0 5px;">
+								<a href="#notifications" name="Notifications">
+									<i class="icon followers"></i>
+								</a>
+							</li>
+							<li class="mensajes" style="position:relative">
+								<a href="#messages" name="Messages">
+									<i class="icon private-message"></i>
+								</a>
+							</li>
+							<li class="favoritos" style="position:relative">
+								<a href="#favorites" name="Favorites">
+									<i class="icon favs"></i>
+								</a>
+							</li>
+									
+							<div class="nickbar">
+								<a href="#">
+									<span>???</span>
+									<img src="img/arrowd.png">
+								</a>
+								<menu>
+									<a onclick="ZeroAPI.cmd('certSelect', [['zeroid.bit']]);" href="#">Change</a>
+									<a href="#settings">Settings</a>
+								</menu>
+							</div>	
+						</ul>
+					</div>
+				</section>
+			</div>
+		</div>
+	</header>
 
-<script type="text/javascript" src="js/lander.js?lang={lang}"></script>
+	<nav>
+		<div id="menu-wrapper">
+			<div id="menu">
+				<ul class="clearfix">
+					<li><a href="#timeline"><i class="icon home"></i></a><span></span></li>
+					<li class="active"><a href="#">Apps</a></li>
+					<li><a href="#misc">Misc</a><img src="img/icon-new.png" style="margin:3px 0 0 -19px; pointer-events: none"></li>
+				</ul>
+			</div>
+		</div>
+		<div id="submenu-wrapper">
+			<div id="submenu">
+				<ul class="clearfix">
+					<li template="new">     <a href="#addpost">New</a></li>
+					<li template="all" class="active"> <a href="#all">All</a></li>
+					<li template="apps">    <a href="#apps">Apps</a></li>
+					<li template="games">   <a href="#games">Games</a></li>
+					<li template="videos">  <a href="#vids">Vids</a></li>
+					<li template="art">     <a href="#art">Art</a></li>
+					<li template="anime">   <a href="#anime">Anime</a></li>
+					<li template="misc">    <a href="#misc">Misc</a></li>
+					<li template="humor">   <a href="#humor">Humor</a></li>
+					<li template="news">    <a href="#news">News</a></li>
+					<li template="reviews"> <a href="#reviews">Reviews</a></li>
+					<li template="help">    <a href="#help">Help</a></li>
+					
+				</ul>					
+			</div>
+		</div>
+	</nav>
+
+<main class="clearfix homes">	
+<script id="init">
+
+// cargar posts
+ZeroAPI.cmd("dbQuery", ["SELECT posts.*, keyvalue.value AS cert_user_id FROM posts LEFT JOIN json AS data_json USING (json_id) LEFT JOIN json AS content_json ON (data_json.directory = content_json.directory AND content_json.file_name = 'content.json') LEFT JOIN keyvalue ON (keyvalue.key = 'cert_user_id' AND keyvalue.json_id = content_json.json_id) ORDER BY post_date DESC LIMIT 30"], (function(t_posts) { 
+
+	ZeroAPI.cmd("siteInfo", {}, (function(site_info) {
+		var all_info = {
+		  posts: t_posts,
+		  stats: { posts: t_posts.length, peers: site_info.peers, active_peers: site_info.settings.peers, comments: 0}
+		};
+		loadTemplate("all", all_info);
+	}));
+}));
+
+// click posts
+$(document).on("click", ".lastposts li a", function () {
+    ZeroAPI.cmd("dbQuery", ["SELECT * FROM posts WHERE post_id = '" + $(this).attr("data-key") + "'"], (function(post_variables) { 
+      loadTemplate("view-post", post_variables[0]);
+      console.log(post_variables[0]);
+    }));
+});
+
+$("#init").remove(); // hide
+
+</script>
+</main>
+
+	<!-- footer>
+		<div id="extras">
+			<div id="extras-fix">
+				<div id="search-b" class="floatL">
+					<input type="text" placeholder="Search"/>
+					<a class="subm"></a>
+				</div>
+				
+				<div class="floatR">
+					<a onclick="$('body').scrollTo(0)" class="cielo">
+						<strong>Top</strong>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		<section id="links">
+			<div class="floatL">
+				<a href="#zeronet" id="zerobrand">
+					ZeroNet
+				</a>
+			</div>
+			<br>
+			<a href="https://github.com/kustomzone/Fuzium/issues">About</a>
+			<a href="">Search apps</a>
+		</section>
+	</footer -->
+	<br>
+</div>
 
 </body>
 </html>

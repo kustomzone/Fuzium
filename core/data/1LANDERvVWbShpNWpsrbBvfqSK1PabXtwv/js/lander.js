@@ -2388,7 +2388,7 @@
       lang = e.target.hash.replace("#", "");
       Page.cmd("configSet", ["language", lang], function() {
         Page.server_info.language = lang;
-        return top.location = "?Home";
+        return top.location = "?All";
       });
       return false;
     };
@@ -2539,7 +2539,7 @@
         onmousedown: this.handleSettingsClick,
         onclick: Page.returnFalse
       }, ["\u22EE"]), this.menu_settings.render(), h("a.logo", {
-        href: "?Home"
+        href: "?All"
       }, [
         h("img", {
           src: 'img/lander3.jpg',

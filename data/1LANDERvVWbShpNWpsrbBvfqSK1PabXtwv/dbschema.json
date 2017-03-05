@@ -1,0 +1,67 @@
+{
+  "db_name": "LanderApps",
+  "db_file": "data/lander.db",
+  "version": 1,
+  "maps": {
+    "users/.+/data.json": {
+      "to_table": [
+        {"node": "posts", "table": "posts"},
+        {"node": "posts_vote", "table": "posts_vote", "key_col": "post_url", "val_col": "vote"},
+        {"node": "comments", "table": "comments", "key_col": "com_post"},
+        {"node": "comments_vote", "table": "comments_vote", "key_col": "com_url", "val_col": "vote"}
+      ],
+      "to_keyvalue": [ "next_com_id", "next_post_id" ]
+    },
+    "users/.+/content.json": {
+      "to_keyvalue": [ "cert_user_id" ]
+    }
+  },
+  "tables": {
+    "posts": {
+      "cols": [
+        ["post_id",      "INTEGER PRIMARY KEY"],
+        ["post_date",    "DATETIME"],
+        ["post_title",   "TEXT"],
+        ["post_image",   "TEXT"],
+        ["post_content", "TEXT"],
+        ["post_url",     "TEXT"],
+        ["parent_url",   "TEXT"],
+        ["post_cat",     "INTEGER"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX post_key ON posts(json_id, post_date)"],
+      "schema_changed": 1426195825
+    },
+    "comments": {
+      "cols": [
+        ["com_id",       "INTEGER PRIMARY KEY"],
+        ["com_date",     "DATETIME"],
+        ["com_post",     "INTEGER"],
+        ["com_image",    "TEXT"],
+        ["com_content",  "TEXT"],
+		["post_url",     "TEXT"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE INDEX post_url ON comments(post_url)", "CREATE UNIQUE INDEX com_key ON comments(json_id, com_id)"],
+      "schema_changed": 1426195825
+    },
+    "posts_vote": {
+      "cols": [
+        ["post_url",     "TEXT"],
+        ["post_vote",    "INTEGER"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX post_vote_key ON posts_vote(post_url, json_id)", "CREATE INDEX post_vote_url ON posts_vote(post_url)"],
+      "schema_changed": 1426195825
+    },
+    "comments_vote": {
+      "cols": [
+        ["com_url",      "TEXT"],
+        ["com_vote",     "INTEGER"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX com_vote_key ON comments_vote(com_url, json_id)", "CREATE INDEX com_vote_url ON comments_vote(com_url)"],
+      "schema_changed": 1426195825
+    }
+  }
+}
