@@ -1,12 +1,9 @@
 <div id="derecha-full">
-
 <h1 class="full-post-title">{{ post_title }}</h1>
 
 <div class="post-info clearfix">
 	<div class="details">
-		<a href="http://www.taringa.net/posts/info">
-			{{ post_cat }}
-		</a> &nbsp; | &nbsp; 
+			{{ post_cat }} &nbsp; | &nbsp; 
 		<span id="post-date" title="" class="hastipsy">
 			<script>
 			var postdate = timeConverter("{{ post_date }}");
@@ -29,9 +26,23 @@
 		</span>
 	</div>
 </div>
-			<span class="post-content" property="dc:content" style="display:block;width:660px;overflow:hidden;">
+			<span class="post-url" property="dc:url" style="display: block; width: 440px; overflow: hidden;">
+				URL: <a href="{{ post_url }}">{{ post_url }}</a>	
+			</span>
+			
+			<span class="post-image" property="dc:image" style="display: block; width: 440px; overflow: hidden;">
+				<div class="colspan">
+				  <a href="{{ post_url }}">
+				    <img src="{{ post_image }}" style="width: 100px; height: 100px;">
+				  </a>
+				</div>
+			</span>
+			
+			<span class="post-content" property="dc:content" style="display: block; width: 440px; overflow: hidden;">
 				{{ post_content }}		
 			</span>
+			
+			<br>
 			
 			<a href="" name="controls"></a>
 
@@ -108,22 +119,18 @@
 	<div id="comments-content">
 		<div class="comment clearfix comment-highlight-top" data-reply-count="0" data-reply-page="1" data-owner="22044788>
 			<div class="comment-data">
-				<a href="http://www.taringa.net/SantaCachuchas" class="min-avatar">
-					<img class="lazy avatar-48" orig="http://a16.t26.net/avatares/2/2/0/4/48_22044788.jpg?455790" src="http://o1.t26.net/images/space.gif">
-				</a>
+				
 			</div>
 			<div class="comment-text">
 				<div class="comment-author clearfix">
 					<span style="display:block; float:left;">
-						@<a href="http://www.taringa.net/SantaCachuchas" class="hovercard" data-uid="22044788">SantaCachuchas</a>
 						<span class="subtext">
-							<span title="28.02.2014 a las 20:37 hs." ts="1393630672">Hace 1 mes</span>
 						</span>
 						<span class="positivo thumb-up" sdata-votes-total="21" data-votes-positivo="21" data-votes-negativo="0" title="+21 / -0">+21</span>
 					</span>
 				</div>
 				<div class="comment-content">
-					<img class="imagen" border="0" src="../img/icon-new.png">
+					<img class="imagen" border="0" src="img/icon-new.png">
 				</div>
 			</div>
 			<div class="comment-actions rounded shadow">

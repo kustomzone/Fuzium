@@ -21,7 +21,7 @@ A fusion of Electron and Zeronet, with more goodness to come.
   It's a ['smarter, faster'](https://minbrowser.github.io/min/) address bar which suits
   this project perfectly. :surfing_man:
   <br>
-- (Feb 5) New homepage, ready for app store (1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv)
+- (Feb 5) Landing homepage, ready for app store (1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv)
   <br>
 - (Feb 11) Merged in bookmarking with [Vue.js](https://github.com/coligo-io/bookmarking-app-electron-vuejs-firebase)
 
@@ -34,7 +34,7 @@ A fusion of Electron and Zeronet, with more goodness to come.
 - [x] packaged releases (pre-alpha)
 - [x] addressbar (surf's up! :)
 - [x] a newly designed homepage
-- [x] bookmarks & notepad
+- [x] bookmark manager & tasklist
 - [ ] zite bookmark sharing & rating
 - [ ] featured apps & store (altcoins)
 - [ ] test Chrome extensions & zeronet plugins
@@ -45,7 +45,7 @@ A fusion of Electron and Zeronet, with more goodness to come.
 
 ### Bugs (v0.0.6)
 
- * Hide bookmarks when using tabs.
+ * To hide bookmarks the header icon is a temp toggle switch.
  * Opening a zite in the address bar creates additional toggle switches and sidebar buttons.
  * Need to reload (CTRL-R) occasionally after starting if zeronet boots up late.
 
@@ -55,7 +55,8 @@ A fusion of Electron and Zeronet, with more goodness to come.
  * [Min browser's](https://minbrowser.github.io/min/) 'instant answers' address bar with DuckDuckGo integration.
  * taskbar preferences
  * win32 installer or zip
- * bookmarking tool
+ * tabbed addressbar with instant search and tasklist
+ * bookmarking manager
 
 ### Samples
 
@@ -83,8 +84,8 @@ npm install && npm start
 
 ### Test Releases
 
- - [Fuzium-v0.0.5-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.5-pre-alpha)
- - [Fuzium-v0.0.3-win32-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.3-pre-alpha)
+ - (Feb 13) [Fuzium-v0.0.6-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.6-pre-alpha) with Zeronet 0.5.2
+ - (Jan 25) [Fuzium-v0.0.3-win32-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.3-pre-alpha)
 
 
 ### OS Platform Status / Notes

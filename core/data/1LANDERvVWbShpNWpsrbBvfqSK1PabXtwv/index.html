@@ -1,39 +1,62 @@
-<!DOCTYPE html PUBLIC>
-<html lang="en">
+<!DOCTYPE html>
+
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-	<title>Lander Apps</title>	
+	<title>Lander Apps</title>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 	
 	<link rel="stylesheet"    type="text/css"     href="css/lander.css">
-	<link rel="stylesheet"    type="text/css"     href="css/style.css">
+	<link rel="stylesheet"    type="text/css"     href="css/fonts1.css">
 	
-	<script type="text/javascript" src="js/lander.js?lang={lang}"></script>
-	<!-- script>if (typeof module === 'object') { window.module = module; module = undefined; }</script -->
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/mustache.min.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
-	<!-- script>if (window.module) { module = window.module; }</script -->
-
-	<!-- base href="" target="_top" id="base" -->
-	<!-- script>base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "").replace(/[&?]wrapper_nonce=[A-Za-z0-9]+/, "")</script -->
-
+	<script type="text/javascript" src="js/jquery.min.js"> </script>
+	<!-- script type="text/javascript" src="js/lander1.js"> </script -->
+	<script type="text/javascript" src="js/mustache.js">    </script>
+	
+	 <base href="" target="_top" id="base">
+ <script>base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "").replace(/[&?]wrapper_nonce=[A-Za-z0-9]+/, "")</script>
+ 
 </head>
 
 <body id="PageSites">
 
-<!-- Left -->
-<div class="left">
-	<div id="Head"></div>
-	<div class="FileList-container"><div class="FileList" id="FileList"></div></div>
-	<div class="SiteList" id="SiteList"></div>
+<!-- Head -->
+<div id="header" style="clear: both">
+ <div id="Head"></div>
+ <div class="SiteList" id="SiteList"></div>
+ <div class="topright">
+  <div class="plugin-multiuser">Current user: <a class='identicon' href='#Show+Private+key' title='Show private key'></a><a href="#Logout" class="button button-logout">Logout</a></div>
+  <div class="plugin-uipassword"><a href="#Logout" class="button button-logout">Logout</a></div>
+ </div>
 </div>
+
+<!-- Userstats -->
+<div id="userstats">
+  <div class="served"> 
+   <b><span id='peers' class='updating'>0</span> peers</b>
+   <span class="port closed" style="display: none"> Port: <a href="#Re+check" title='Re-check'>Closed</a></span>
+   <span class="tor disabled" style="display: none"> Tor: <span>Disabled</span></span>
+  </div>
+</div>
+
+<!-- Status -->
+<div id="status">
+  <div class="plugin-multiuser">Current user: <a class='identicon' href='#Show+Private+key' title='Show private key'></a><a href="#Logout" class="button button-logout">Logout</a></div>
+  <div class="plugin-uipassword"><a href="#Logout" class="button button-logout">Logout</a></div>
+</div>
+
+<!-- Left -->
+<div class="SiteList" id="SiteList"></div>
 
 <!-- Right -->
 <div class="right">
-	<header class="header">
+ <div id="Dashboard"></div>
+ 
+ 	<header class="header">
 		<div class="wrapper">
-			<a id="logo" href="#" title="Apps!">App Centre</a>								
+			<a id="logo" href="#">App Centre</a>							
 			<div id="search" class="floatR">
 				<input type="text"  placeholder="Search..." />
 				<a class="subm"></a>
@@ -41,14 +64,14 @@
 			<div class="anon-box">
 				<section id="no-login">
 					<div class="register-now">
-							<a href="#" title="Registrate!"><b>Register</b></a>
+							<a href="#" title="Join!"></a>
 					</div>
 					<div class="login-now">
-						<a href="#" title="Identificarme" onclick="ZeroAPI.cmd('certSelect', [['zeroid.bit']]);">Login</a>
+						<a href="#" title="Login" onclick="ZeroAPI.cmd('certSelect', [['zeroid.bit']]);">Login</a>
 					</div>
 				</section>
 				<section id="logget" class="hide">
-					<div class="userbar">
+					<div class="usermenu">
 						<ul>
 							<li class="monitor" style="position: relative; border-radius: 5px 0 0 5px;">
 								<a href="#notifications" name="Notifications">
@@ -82,94 +105,70 @@
 			</div>
 		</div>
 	</header>
-
+	
 	<nav>
-		<div id="menu-wrapper">
-			<div id="menu">
-				<ul class="clearfix">
-					<li><a href="#timeline"><i class="icon home"></i></a><span></span></li>
-					<li class="active"><a href="#">Apps</a></li>
-					<li><a href="#misc">Misc</a><img src="img/icon-new.png" style="margin:3px 0 0 -19px; pointer-events: none"></li>
-				</ul>
-			</div>
+	  <div id="menu-wrapper">
+		<div id="menu">
+			<ul class="clearfix">
+				<li><a href="#home"><i class="icon home"></i></a><span></span></li>
+				<li class="active"><a href="#apps">Apps</a></li>
+				<li><a href="#misc">Misc</a><img src="img/icon-new.png" style="margin:3px 0 0 -19px; pointer-events: none;"></li>
+			</ul>
 		</div>
-		<div id="submenu-wrapper">
-			<div id="submenu">
-				<ul class="clearfix">
-					<li template="new">     <a href="#addpost">New</a></li>
-					<li template="all" class="active"> <a href="#all">All</a></li>
-					<li template="apps">    <a href="#apps">Apps</a></li>
-					<li template="games">   <a href="#games">Games</a></li>
-					<li template="videos">  <a href="#vids">Vids</a></li>
-					<li template="art">     <a href="#art">Art</a></li>
-					<li template="anime">   <a href="#anime">Anime</a></li>
-					<li template="misc">    <a href="#misc">Misc</a></li>
-					<li template="humor">   <a href="#humor">Humor</a></li>
-					<li template="news">    <a href="#news">News</a></li>
-					<li template="reviews"> <a href="#reviews">Reviews</a></li>
-					<li template="help">    <a href="#help">Help</a></li>
-					
-				</ul>					
-			</div>
+	  </div>
+	  <div id="submenu-wrapper">
+		<div id="submenu">
+			<ul class="clearfix">
+				<li template="new">     <a href="#new">New</a></li>
+				<li template="all" class="active"> <a href="#all">All</a></li>
+				<li template="apps">    <a href="#apps">Apps</a></li>
+				<li template="games">   <a href="#games">Games</a></li>
+				<li template="videos">  <a href="#vids">Vids</a></li>
+				<li template="anime">   <a href="#anime">Anime</a></li>
+				<li template="news">    <a href="#news">News</a></li>
+				<li template="reviews"> <a href="#reviews">Reviews</a></li>
+				<li template="help">    <a href="#help">Help</a></li>
+			</ul>					
 		</div>
+	  </div>
 	</nav>
+</div>
 
-<main class="clearfix homes">	
-<script id="init">
+<!-- Sites -->
+<div id="sites" class="updating">
+<!-- div class="site-category template"></div -->
 
-// cargar posts
-ZeroAPI.cmd("dbQuery", ["SELECT posts.*, keyvalue.value AS cert_user_id FROM posts LEFT JOIN json AS data_json USING (json_id) LEFT JOIN json AS content_json ON (data_json.directory = content_json.directory AND content_json.file_name = 'content.json') LEFT JOIN keyvalue ON (keyvalue.key = 'cert_user_id' AND keyvalue.json_id = content_json.json_id) ORDER BY post_date DESC LIMIT 30"], (function(t_posts) { 
+ <!-- Site-container -->
+ <div class="site-container site-seeding template">
+  <a href="#" class='hamburger'>&#x2261;</a>
+  <a href="/1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv" target="_top" class="site block">
+   <h4>
+    <div class="anim-updating" title='Updating...'></div>
+    <div class="status">Seeding</div>
+    <div class="notify"></div>
+    <!-- div class='right'></div -->
+   </h4>
+   <span class='title'>ZeroHello</span>
+   <h4 class='description'></h4>
+   <div class="bottom">
+    <h4><div class='icon-profile'></div>&nbsp;<span class='peers'>n/a</span> <div class="icon-clock"></div> <span class='modified-date'>n/a</span></h4>
+   </div>
+  </a>
+ </div>
+ <!-- /Site-container -->
+ 
+</div>
 
-	ZeroAPI.cmd("siteInfo", {}, (function(site_info) {
-		var all_info = {
-		  posts: t_posts,
-		  stats: { posts: t_posts.length, peers: site_info.peers, active_peers: site_info.settings.peers, comments: 0}
-		};
-		loadTemplate("all", all_info);
-	}));
-}));
+<!-- Site dropdown menu -->
+<div class="menu template">
+ <a href="#" class="menu-item template">Template</a>
+</div>
 
-// click posts
-$(document).on("click", ".lastposts li a", function () {
-    ZeroAPI.cmd("dbQuery", ["SELECT * FROM posts WHERE post_id = '" + $(this).attr("data-key") + "'"], (function(post_variables) { 
-      loadTemplate("view-post", post_variables[0]);
-      console.log(post_variables[0]);
-    }));
-});
-
-$("#init").remove(); // hide
-
-</script>
+<!-- Apps -->
+<div class="apps">
+<main class="clearfix">
+<script type="text/javascript" src="js/all.js"></script>
 </main>
-
-	<!-- footer>
-		<div id="extras">
-			<div id="extras-fix">
-				<div id="search-b" class="floatL">
-					<input type="text" placeholder="Search"/>
-					<a class="subm"></a>
-				</div>
-				
-				<div class="floatR">
-					<a onclick="$('body').scrollTo(0)" class="cielo">
-						<strong>Top</strong>
-					</a>
-				</div>
-			</div>
-		</div>
-		
-		<section id="links">
-			<div class="floatL">
-				<a href="#zeronet" id="zerobrand">
-					ZeroNet
-				</a>
-			</div>
-			<br>
-			<a href="https://github.com/kustomzone/Fuzium/issues">About</a>
-			<a href="">Search apps</a>
-		</section>
-	</footer -->
-	<br>
 </div>
 
 </body>

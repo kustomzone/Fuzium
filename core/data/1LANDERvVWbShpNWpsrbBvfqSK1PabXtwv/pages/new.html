@@ -1,5 +1,5 @@
 <div class="form-new clearfix">
-	<form id="new-f" onsubmit="return false;">
+	<form id="new-post-f" onsubmit="return false;">
 		<ul>
 			<li>
 				<label>Title</label>
@@ -7,14 +7,14 @@
 			</li>
 			<li>
 				<label>Url</label>
-				<input type="text" name="url" placeholder="pending">
+				<input type="text" name="url" placeholder="http://">
 			</li>
 			<li>
 				<label>Description</label>
-				<textarea name="cuerpo" style="min-height: 270px; width: 97%;"></textarea>
+				<textarea name="cuerpo" style="min-height: 100px; width: 80%;"></textarea>
 			</li>
 			<li>
-				<input type="submit" value="Submit" class="btn v">
+				<input type="submit" value="Submit" class="button">
 			</li>
 		</ul>
 	</form>
@@ -24,14 +24,19 @@
 	<select id="categorias" tabindex="5" size="9">
 		<option value="apps">Apps</option>
 		<option value="games">Games</option>
+		<option value="photos">Photos</option>
+		<option value="music">Music</option>
 		<option value="videos">Videos</option>
-		<option value="art">Art</option>
-		<option value="animae">Anime</option>
-		<option style="padding:0;background:none;">-------------</option>
+		<option value="anime">Anime</option>
 		<option value="misc" selected>Misc</option>
 		<option value="humor">Humor</option>
+		<option value="links">Sites</option>
+		<option value="notes">Notes</option>
+		<option value="tools">Tools</option>
 		<option value="news">News</option>
 		<option value="reviews">Reviews</option>
-		<option value="help">Help</option>
+		<option value="files">Files</option>
+		<option value="social">Social</option>
+		<option style="padding: 0; background: none;">--------------------</option>
 	</select>
 </aside>

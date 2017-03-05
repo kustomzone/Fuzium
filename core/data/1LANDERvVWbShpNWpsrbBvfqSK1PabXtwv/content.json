@@ -2,31 +2,43 @@
  "address": "1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv",
  "description": "",
  "files": {
-  "css/lander.css": {
-   "sha512": "15feaa45351d3cb20f4683f3f1bbdf60fc8563ae228b9737615581c081ffeeb4",
-   "size": 192198
+  "css/fonts1.css": {
+   "sha512": "07a85b75ab4dbf432bd39e26b046804a0da2ad246e7559441fa608364c454b39",
+   "size": 149105
   },
-  "css/style.css": {
-   "sha512": "3059832aec559b1b15bc87149aea151e87dd0e5d2d267c8f2d8e781abc66caba",
-   "size": 33552
+  "css/lander.css": {
+   "sha512": "96c1447de5c667fe183f22757e7958b6f0a06e67f3c4d22c7a8c0bfb23d62af9",
+   "size": 69018
   },
   "data/lander.db": {
-   "sha512": "51f8822241313409a3b3a88fcd7c81d3f5bb0e5c20c80c8fde51bd986a076e1d",
-   "size": 15360
+   "sha512": "c739ef2992a8db4325c6a1ea2142486894e9d6dde6e93bbf22a9827d0b5aa2cc",
+   "size": 21504
   },
   "data/users/1KdnTJVBGzEZrJppFZtzfG9chukuMv8xSb/data.json": {
-   "sha512": "77f28abf6a767a077d4ec8afe859aac22da637d4ceba04439abbfebef2b624a6",
-   "size": 465
+   "sha512": "d0cfbd15ffe1cc6cf58290db2d3f93cbff3826440a4b543672d01b5127600cdf",
+   "size": 718
   },
   "dbschema.json": {
-   "sha512": "b7f21e8dfa4d9366b2de60d1cc099635d5303539db11a2e1d570ab708f6728a4",
-   "size": 1170
+   "sha512": "413f99382aed31f70eb22e0217453ee37cfff16a0989ab1345f86b6ace89852e",
+   "size": 2367
   },
-  "fonts/Mochary.ttf": {
+  "font/Mochary.ttf": {
    "sha512": "830eb1aea638e471c24e643fd27ab6fbdc2eefdef3da2689efeaca200bc0fd78",
    "size": 135840
   },
-  "fonts/TextMeOne.ttf": {
+  "font/Roboto-Light.woff": {
+   "sha512": "de3320e07959009e1301ef718bb0ea6761da9eac1f536245dccb1da4abf26b97",
+   "size": 17564
+  },
+  "font/Roboto-Medium.woff": {
+   "sha512": "ddaaa5ca7e11cde24b1f0f993e6cf5f9da8de0664af4cbbba46a5f2f1a0a3b18",
+   "size": 18140
+  },
+  "font/TextMeOne-Regular.woff": {
+   "sha512": "3ea7911d55424dcbb3be9939cd44f5cc92a90df869b5e9df019cbc8969f4f31e",
+   "size": 13868
+  },
+  "font/TextMeOne.ttf": {
    "sha512": "9f2f84817cc750ed0a214472369d2793fed2fa0dbd76e48f423457baf5047ca6",
    "size": 37336
   },
@@ -78,6 +90,10 @@
    "sha512": "db915616879266343b12a827b3e2c46b7f7b402672c606b24aa80e23d4a14020",
    "size": 266
   },
+  "img/join.png": {
+   "sha512": "3707262086eceb34213c7d6a2b6dc8a4bd34578d8ff6b176125155b9b511bbd4",
+   "size": 860
+  },
   "img/lander.jpg": {
    "sha512": "8d1a4c5732acea0fa92635f113cdbfa9782248864632916928e194438cb0f1bd",
    "size": 2087
@@ -93,6 +109,18 @@
   "img/loading-circle.gif": {
    "sha512": "339baf1bccb9b80ae29c2493e73b40cf0588c96fc095954b475dea0538aaa929",
    "size": 2346
+  },
+  "img/loading.gif": {
+   "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00",
+   "size": 723
+  },
+  "img/logo.png": {
+   "sha512": "d9041b19e27b103013db09b2006081720daa859c0627c39fdc9f56c8e70fcce7",
+   "size": 1700
+  },
+  "img/logo_big.png": {
+   "sha512": "81884a41736056c54274a7332f233b872fdf9e298b6dda91d655cc7105221682",
+   "size": 11379
   },
   "img/magn.gif": {
    "sha512": "414530448fd753ad404abf4311b31f76ec3d56c827f4c9a110001e4e5a3a9efe",
@@ -138,29 +166,81 @@
    "sha512": "de22b55af5dcf9e87c67d0b78fe68878a2db2d2b4358e09c24a5dee2c3f8dcf6",
    "size": 261
   },
+  "img/zite/zeronet.korso.win.jpg": {
+   "sha512": "392d794b7fff4497fa27818506e2e90139087e956880782bd4609e2dbb1d7e68",
+   "size": 7073
+  },
   "index.html": {
-   "sha512": "ad673704827a4030fa683ed0865cbb7833fb3645d84a0f39a1af8a20a9d7f95f",
-   "size": 5754
+   "sha512": "0a1585f431fb9ba21ca21e0e388a1f2d95e7377678ad05f8033f33cb23340049",
+   "size": 5634
+  },
+  "js/all.js": {
+   "sha512": "59cda105eee054a21243c9b86984c5103ef6310c422f1583a151744f1c54cc56",
+   "size": 52271
+  },
+  "js/bookmarksHistory/fullTextSearch.js": {
+   "sha512": "38ff5bbd48c38e273ace0bf0b7876542f0a9e0fb5431a9a79e11d3a3aed44315",
+   "size": 5163
+  },
+  "js/bookmarksHistory/placesSearch.js": {
+   "sha512": "cef201784c7e2a7947f2366ae1a1d0e7f21ea779c8dee76df5305423bc4b2dad",
+   "size": 2911
+  },
+  "js/bookmarksHistory/placesWorker.js": {
+   "sha512": "a22989498abdd5ac2eda5b97a4233570ad8d900fd07a598c59a103fb61cad728",
+   "size": 6657
   },
   "js/jquery.min.js": {
    "sha512": "0d40bccaa59fedecf7243d63b33c42592541d0330fefc78ec81a4c6b9689922d",
    "size": 85578
   },
-  "js/lander.js": {
-   "sha512": "029a8fb1bccd5d7456a8548c142f603e8856871cc4ef0ecfd215c968ad85aaec",
-   "size": 129270
+  "js/lib/00-jquery.min.js": {
+   "sha512": "eda31b5c7d371d4b3acced51fa92f27a417515317cf437aae09a47c3acc8a36b",
+   "size": 84320
   },
-  "js/main.js": {
-   "sha512": "41c015482d1a9951a25e484290b7bd294989211bf844f32e466052020c1cbc2a",
-   "size": 6380
+  "js/lib/DateSince.coffee": {
+   "sha512": "ec069fe2f3d68565444f4258b4ab9518852f9367a88c97fdab7a73d53e7bd726",
+   "size": 1024
   },
-  "js/mustache.min.js": {
+  "js/lib/Utils.coffee": {
+   "sha512": "1def24af87147900cd591beafa29f15ca4dcc7dc5744114cf43c155d1d8b14a7",
+   "size": 248
+  },
+  "js/lib/ZeroFrame.coffee": {
+   "sha512": "a655e701be4f8d85c7d5fde269c03d949849630a6db58fcb1de1f2ad3ead3c20",
+   "size": 1336
+  },
+  "js/lib/identicon.js": {
+   "sha512": "6f8c336ec9ab0f2aff901e2e0ea640cbc89a4997cb4130b8b214e54084cacfe0",
+   "size": 3057
+  },
+  "js/lib/jquery.cssanim.js": {
+   "sha512": "3df2761803c08d8689937ec34aa4d056ada5a137f4accbe5f52a91f153775a2a",
+   "size": 785
+  },
+  "js/lib/jquery.csslater.coffee": {
+   "sha512": "ce6d4622b61c43a723b7100595c41ffc56710b8f8e3c72ee42fe06a877eba708",
+   "size": 598
+  },
+  "js/lib/jquery.easing.1.3.js": {
+   "sha512": "6ebae34e9f46e8c90a5f94235f0c00424b1c7c5a4a8b7a248f267f337bc6c308",
+   "size": 8097
+  },
+  "js/lib/pnglib.js": {
+   "sha512": "fdfc643e7c464c21c44d5865efe5b2db724caa4877655a457d12ef85e095909e",
+   "size": 6257
+  },
+  "js/mustache.js": {
    "sha512": "b7fedfeab23190d14b9f91ad7e5e32e8d892b93dd3d5dc90dc30346669648063",
    "size": 9512
   },
   "js/newapi.js": {
    "sha512": "1ef2f6aa8e7ae27d49ad72fbe854d2ba37d28ede8f0a120e91e7d99075cfd662",
    "size": 2420
+  },
+  "js/util/database.js": {
+   "sha512": "f0cc48903417ae9cd3c9678bb53444c2dd09c21493ae66e1e5f6d1284495cdc4",
+   "size": 3457
   },
   "node_modules/dexie/dist/dexie.min.js": {
    "sha512": "911bdd4245353d80c1e494f93f25dec9a1be7a8faadce1c796d0db5b854f86a7",
@@ -171,28 +251,38 @@
    "size": 693
   },
   "pages/all.html": {
-   "sha512": "3e5369de98770a1e5920048e5886867f06cf24e3b53489aa822f3daa710ccac2",
-   "size": 1233
+   "sha512": "17270043d53671375b64f6261ed9a26c7778ba99a35765a335ddcc256b4b34d0",
+   "size": 1394
   },
   "pages/new.html": {
-   "sha512": "aecac1e173edc9dc3e3043b367690e9781825c06f147b5a844d0cff8aa32bc74",
-   "size": 1037
+   "sha512": "c73e0407abbedf60989100f5d9dde97878828cabd17c6e2130fd989bdb74552e",
+   "size": 1257
   },
   "pages/view-post.html": {
-   "sha512": "07f8218684a8adfed336eb398d2a3749f0cfa48f1f5884988598a89e20788b47",
-   "size": 4967
+   "sha512": "92e4650e1bfead130875c4dfa3bc7db0f2c7e882163e994ae4a4078f9aa67f66",
+   "size": 4959
   }
  },
  "ignore": "",
+ "includes": {
+  "data/users/1KdnTJVBGzEZrJppFZtzfG9chukuMv8xSb/content.json": {
+   "signers": [],
+   "signers_required": 1
+  },
+  "data/users/content.json": {
+   "signers": [],
+   "signers_required": 1
+  }
+ },
  "inner_path": "content.json",
- "modified": 1487045443,
+ "modified": 1488718616,
  "sign": [
-  66735181775915447984812575329264326381032359997923863404952898138009265519237,
-  81550924203121360572722067917909593108342760375631457794798456000418705323389
+  106127383233780476769192488497322976729159324078365608109336987868502293773458,
+  57397966301339214690363546534629797880278163253698946295391117234546244541112
  ],
  "signers_sign": "G1Yf49FKrejMtJBkk8IZLDeTnXwEqBXb9jUmB47FdqU+aV464SGlImInLa5buPt4pAdkMtnbF7s384eHFPrsaPc=",
  "signs": {
-  "1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv": "G8R7SDcMxftje0Xiag7PFWHClY8p7NiaaGEHjvZZOnGLzWDDMt3opfnVEy1ICt7mBDmByNAfbz+K2br5oZZ/8cQ="
+  "1LANDERvVWbShpNWpsrbBvfqSK1PabXtwv": "G2GJ5/gOKuoqhecVPLuNHyRKu0mCMWwnLMoeljlHu1oOfPF8umOcS5DaKcWvY2lSvynlLA+ailyN+uXwYUqAbjo="
  },
  "signs_required": 1,
  "title": "Lander Apps",
