@@ -7,7 +7,7 @@
 		<div class="container">
 		{{ #posts }}
 			<div class="lastposts colspan">
-			  <i class="icon {{ post_cat }}"></i>
+			  <i class="icon {{ post_cat }}"></i>&nbsp;
 			  <a href="#post-{{ post_id }}" id="open_post" data-key="{{ post_id }}">{{ post_title }}</a>
 			  <a href="{{ post_url }}"><img src="{{ post_image }}" style="width: 100px; height: 100px;"></a>
 			</div> 
@@ -40,8 +40,9 @@
 		</div>
 		<ul class="list">
 		  {{ #posts }}
-			  <li class="lastposts"><i class="icon {{ post_cat }}">
-				</i><a href="#post-{{ post_id }}" id="open_post" data-key="{{ post_id }}">{{ post_title }}</a>
+			  <li class="lastposts">
+			    <i class="icon {{ post_cat }}"></i>&nbsp;
+				<a href="#post-{{ post_id }}" id="open_post" data-key="{{ post_id }}">{{ post_title }}</a>
 			  </li>
 		  {{ /posts }}			
 		</ul>
