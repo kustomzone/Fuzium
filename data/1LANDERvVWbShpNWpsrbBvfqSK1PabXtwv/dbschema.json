@@ -1,7 +1,7 @@
 {
   "db_name": "LanderApps",
   "db_file": "data/lander.db",
-  "version": 1,
+  "version": 3,
   "maps": {
     "users/.+/data.json": {
       "to_table": [
@@ -19,15 +19,17 @@
   "tables": {
     "posts": {
       "cols": [
-        ["post_id",      "INTEGER PRIMARY KEY"],
-        ["post_date",    "DATETIME"],
-        ["post_title",   "TEXT"],
-        ["post_image",   "TEXT"],
-		["post_blob",    "TEXT"],
-        ["post_content", "TEXT"],
-        ["post_url",     "TEXT"],
-        ["parent_url",   "TEXT"],
-        ["post_cat",     "INTEGER"],
+        ["post_id",         "INTEGER PRIMARY KEY"],
+		["post_title",      "TEXT"],
+		["post_user",       "TEXT"],
+        ["post_date",       "DATETIME"],
+		["post_cat",        "TEXT"],
+		["post_url",        "TEXT"],
+		["post_content",    "TEXT"],
+		["post_parent",     "TEXT"],
+        ["post_image_name", "TEXT"],
+		["post_image_url",  "TEXT"],
+        ["post_image_blob", "TEXT"],
         ["json_id",      "INTEGER REFERENCES json (json_id)"]
       ],
       "indexes": ["CREATE UNIQUE INDEX post_key ON posts(json_id, post_date)"],

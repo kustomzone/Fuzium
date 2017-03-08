@@ -11,16 +11,23 @@
 	<link rel="stylesheet"    type="text/css"     href="css/lander.css">
 	<link rel="stylesheet"    type="text/css"     href="css/fonts1.css">
 	
-	<script type="text/javascript" src="js/jquery.min.js"> </script>
+	<script type="text/javascript" src="js/jquery.min.js">  </script>
 	<!-- script type="text/javascript" src="js/lander1.js"> </script -->
 	<script type="text/javascript" src="js/mustache.js">    </script>
 	
-	 <base href="" target="_top" id="base">
- <script>base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "").replace(/[&?]wrapper_nonce=[A-Za-z0-9]+/, "")</script>
- 
+	<base href="" target="_top" id="base">
+	<script>
+	  setTimeout(function() {
+		base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "").replace(/[&?]wrapper_nonce=[A-Za-z0-9]+/, "");
+	  }, 100); // 100ms later, to workaround double js download in chrome
+	</script>
+	
 </head>
 
 <body id="PageSites">
+
+<!-- Init -->
+<!-- div class="message-big">Initial sync in progress...</div -->
 
 <!-- Head -->
 <div id="header" style="clear: both">
@@ -170,6 +177,13 @@
 <script type="text/javascript" src="js/all.js"></script>
 </main>
 </div>
+
+<!-- testing -->
+<script>
+$(".head .more a").each( function(i, elem) {
+    $(elem).attr("href", Text.fixLink($(elem).attr("href")))
+});
+</script>
 
 </body>
 </html>
