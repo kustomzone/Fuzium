@@ -1,4 +1,5 @@
 
+<!-- Main -->
 <section id="derecha">
 	<div class="caja">
 		<div class="title">
@@ -7,9 +8,11 @@
 		<div class="container">
 		{{ #posts }}
 			<div class="lastposts colspan">
-			  <i class="icon {{ post_cat }}"></i>&nbsp;
+			 <div class="app-header">
+			  <span class="icon {{ post_cat }}"></span>&nbsp;
 			  <a href="#post-{{ post_id }}" id="open_post" data-key="{{ post_id }}">{{ post_title }}</a>
-			  <a href="{{ post_url }}"><img class="apps" src="{{ post_image_blob }}"></a>
+			 </div>
+			 <a href="{{ post_url }}"><img class="apps" src="{{ post_image_blob }}"></a>
 			</div> 
 		{{ /posts }}
 		</div>
@@ -51,3 +54,4 @@
 		</div>
 	</div> 
 </aside>
+<!-- /Main -->

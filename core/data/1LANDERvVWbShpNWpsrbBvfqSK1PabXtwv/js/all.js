@@ -248,7 +248,17 @@ function ZeroFrame() {
 // testing API...
 ZeroAPI = new ZeroFrame();
 
+// todo: back button
+var lastTemplate = "";
+
 function loadTemplate(ntemplate, data) {
+  // alert(ntemplate + " " + lastTemplate);
+  
+  if (ntemplate != lastTemplate) {
+	if (ntemplate == "all") {
+		$("#menu > ul > li.active").toggleClass("active");
+		$("#menu > ul > li.all").toggleClass("active");
+	}
     ZeroAPI.cmd("fileGet", {
           "inner_path": "pages/" + ntemplate + ".html",
           "required": false
@@ -258,24 +268,25 @@ function loadTemplate(ntemplate, data) {
 	$("section[n-template]").each(function() {
       $(this).addClass("hide");
     });
-	// alert($("[n-template=\"" + ntemplate + "\"]").length);
 	
 	// hide previous
 	if($("[n-template=\"" + ntemplate + "\"]").length) {
-	  $("[n-template=\"" + ntemplate + "\"]").toggleClass("hide");
+	   $("[n-template=\"" + ntemplate + "\"]").toggleClass("hide");
 	}
 	// hack for old templates and double loading
-	if(ntemplate == "view-post" || ntemplate == "new") {
+	if(ntemplate == "view-post" || ntemplate == "new" || ntemplate == "misc") {
 	  if($("[n-template=\"" + ntemplate + "\"]").length) {
-		$("[n-template=\"" + ntemplate + "\"]")[0].remove();
+		 $("[n-template=\"" + ntemplate + "\"]")[0].remove();
 	  }
 	}
 	// hack for double loading
-	if(ntemplate == "all") {
+	if(ntemplate == "apps") {
 	  if($("[n-template=\"" + ntemplate + "\"]").length) {
-		$("[n-template=\"" + ntemplate + "\"]")[1].toggleClass("hide");
+		 $("[n-template=\"" + ntemplate + "\"]")[1].toggleClass("hide");
 	  }
 	}
+	lastTemplate = ntemplate;
+  }
 }
 
 ZeroAPI.cmd("siteInfo", {}, (function(site_info) {
@@ -301,7 +312,7 @@ ZeroAPI.cmd("dbQuery", ["SELECT posts.*, keyvalue.value AS cert_user_id FROM pos
 
 // testing API forms...
 $(document).ready(function() {
-  /* templates easy */
+	
   $(document).on("click", ".lastposts a", function () {
     // alert($(this).attr("data-key"));
     ZeroAPI.cmd("dbQuery", ["SELECT * FROM posts WHERE post_id = '" + $(this).attr("data-key") + "'"], (function(post_variables) { 
@@ -311,20 +322,26 @@ $(document).ready(function() {
   });
   
   $(document).on("click", "[template]", function () {
-    var ntemplate = $(this).attr("template");
-    loadTemplate(ntemplate);
+	var ntemplate = $(this).attr("template");
+	loadTemplate(ntemplate);
   });
   
   /* menu */
   $(document).on("click", "#menu > ul > li", function () {
     $("#menu > ul > li.active").toggleClass("active");
     $(this).toggleClass("active");
+	// menu & submenu sync
+	$("#submenu > ul > li.active").toggleClass("active");
+    $("#submenu > ul > li.all").toggleClass("active");
   });  
   
-  /*  submenu */
+  /* submenu */
   $(document).on("click", "#submenu > ul > li", function () {
     $("#submenu > ul > li.active").toggleClass("active");
     $(this).toggleClass("active");
+	// menu & submenu sync
+	$("#menu > ul > li.active").toggleClass("active");
+	$("#menu > ul > li.all").toggleClass("active");
   });
   
   /* create post */
@@ -340,7 +357,7 @@ $(document).ready(function() {
 	  var form_url        = $("input[name=url]").val();
       var form_cuerpo     = $("textarea[name=cuerpo]").val();
 	  var form_parent     = 'none';
-	  var form_image_name = $("input[name=image]").val().replace('C:\\fakepath\\', '');
+	  var form_image_name = $("input[name=image]").val().replace('C:\\fakepath\\', ''); // windows only!
 	  var form_image_url  = form_url + "/zite/thumbs/" + form_image_name;
 	  var form_image_blob = $('#image_preview').attr('src');
 

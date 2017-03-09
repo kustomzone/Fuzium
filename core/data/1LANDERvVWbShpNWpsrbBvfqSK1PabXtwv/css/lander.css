@@ -78,6 +78,14 @@ li {
   background: url(../img/zite/no-app.png) no-repeat center center;
 }
 
+.app-header {
+  max-width: 110px;
+  max-height: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .template { display: none !important; }
 
 .block {
@@ -2355,7 +2363,7 @@ select#categorias option[value="help"]          { background-position: 5px -1079
 .icon.fones                { background-position: -68px 0; }
 .icon.study                { background-position: -87px 0; }
 .icon.comics              { background-position: -103px 0; }
-.icon.ebooks              { background-position: -153px 0; }
+.icon.ebooks              { background-position: -34px -51px; }
 .icon.community        { background-position: -34px -51px; }
 .icon.social              { background-position:     0 -51px; }
 .icon.reviews            { background-position:     0 -68px; }
@@ -2391,9 +2399,9 @@ select#categorias option[value="help"]          { background-position: 5px -1079
 .icon.reviews            { background-position: -239px -17px; }
 .icon.health              { background-position: -255px -17px; }
 .icon.help                  { background-position:      0 -34px; }
-.icon.misc                  { background-position: -51px -34; }
+.icon.misc                  { background-position: -51px -34px; }
 .icon.proxy                { background-position: -34px -34px; }
-.icon.tv                      { background-position: -51px -34; }
+.icon.tv                      { background-position: -51px -34px; }
 .icon.movies              { background-position: -68px -34px; }
 .icon.videos              { background-position: -68px -34px; }
 .icon.points              { background-position: -85px -34px; }

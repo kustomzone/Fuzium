@@ -1,0 +1,169 @@
+
+<!-- Main -->
+<div id="derecha-full" class="center">
+<h1 class="full-post-title">{{ post_title }}</h1>
+<script>alert("news");</script>
+
+<div class="post-info clearfix">
+	<div class="details">
+		<span class="vote">
+			<a class="score" href="#Upvote" style="height: 18px;">
+				<span class="score-inactive"> <span class="icon-up">^</span><span class="score-num">1</span> </span>
+				<span class="score-active">   <span class="icon-up">^</span><span class="score-num">2</span> </span>
+			</a>
+		</span>
+		
+		{{ post_cat }} &nbsp; | &nbsp;
+			
+		<span id="post-date" title="" class="hastipsy">
+			<script>
+			var postdate = timeConverter("{{ post_date }}");
+			document.getElementById("post-date").innerHTML = postdate;
+			document.getElementById("post-date").title = postdate;
+			
+			function timeConverter(UNIX_timestamp){
+				var a      = new Date(UNIX_timestamp * 1000);
+				var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+				var year   = Math.round(a.getFullYear() / 24) - 2;
+				var month  = months[a.getMonth()];
+				var date   = a.getDate();
+				var hour   = a.getHours();
+				var min    = a.getMinutes();
+				var sec    = a.getSeconds();
+				var time   = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+				return time;
+			}
+			</script>
+		</span>
+		
+		<span class="info">
+			<a href="#" class="comment-num"></a> &#9473; submitted by <span class="user_name">{{ post_user }}</span>
+		</span>
+	</div>
+</div>
+
+<span class="post-url" property="dc:url" style="display: block; width: 440px; overflow: hidden;">
+	URL: <a href="{{ post_url }}">{{ post_url }}</a>	
+</span>
+
+<span class="post-image" property="dc:image" style="display: block; width: 440px; overflow: hidden;">
+	<div class="colspan">
+	  <a href="{{ post_url }}">
+	    <img class="apps" src="{{ post_image_blob }}" style="width: 100px; height: 100px;">
+	  </a>
+	</div>
+</span>
+
+<h3 class="post-content" property="dc:content" style="display: block; width: 440px; overflow: hidden;">
+	{{ post_content }}
+</h3>
+
+<br>
+<hr>
+
+<a href="" name="controls"></a>
+
+<div class="post-data box clearfix rounded shadow" id="post-data-stats">
+	
+	<div class="post-points clearfix">
+		<div class="give-points" style="margin-bottom:17px">
+			<div id="point-bar" class="rounded real-shadow clearfix">
+				<div id="points-text" style="font-size:12px;line-height:18px">
+					<span>Points</span>
+				</div>
+				<ul>
+					<li><a points="1" class="require-login">1</a></li>
+					<li><a points="2" class="require-login">2</a></li>
+					<li><a points="3" class="require-login">3</a></li>
+					<li><a points="4" class="require-login">4</a></li>
+					<li><a points="5" class="require-login">5</a></li>
+					<li><a points="6" class="require-login">6</a></li>
+					<li><a points="7" class="require-login">7</a></li>
+					<li><a points="8" class="require-login">8</a></li>
+					<li><a points="9" class="require-login">9</a></li>
+				</ul>
+			</div>
+			<div class="masdiez">
+				<a points="10" class="require-login">+10</a>
+			</div>
+		</div>
+
+		<div class="total-points">
+			<i class="icon points" style="margin: 9px 5px 0 0"></i>
+			<span id="postTotalScore">2</span> Points	
+			<div class="clearfix">
+				<p class="floatR" style="padding-left: 5px">
+					Votes: <strong><span class="votes">2</span></strong> - 
+					Score: <span class="rating"><strong><span class="value">6.5</span> / <span class="best">10</span></strong></span>
+				</p>
+			</div>									
+		</div>
+	</div>
+	
+	<div class="post-stats clearfix">
+		<ul class="action-data floatR">
+			<li class="followers-count">
+				<div class="clearfix">
+					<i class="icon followers"></i>
+					<span class="data-followers-count" data-val="0">0</span>
+				</div>
+				<strong>Followers</strong>
+			</li>
+			<li>
+				<div class="clearfix">
+					<i class="icon visits"></i>
+					<span>470</span>
+				</div>
+				<strong>Visits</strong>
+			</li>
+			<li class="favs-count">
+				<div class="clearfix">
+					<i class="icon favs"></i>
+					<span id="fav_counter" data-val="2">2</span>
+				</div>
+				<strong>Favorites</strong>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div id="comments" class="caja content-safe">
+	<div class="title clearfix">
+		<h2>5 comments</h2>
+	</div>
+
+	<div id="comments-content">
+		<div class="comment clearfix comment-highlight-top" data-reply-count="0" data-reply-page="1" data-owner="22044788>
+			<div class="comment-data">
+				
+			</div>
+			<div class="comment-text">
+				<div class="comment-author clearfix">
+					<span style="display:block; float:left;">
+						<span class="subtext">
+						</span>
+						<span class="positivo thumb-up" sdata-votes-total="21" data-votes-positivo="21" data-votes-negativo="0" title="+21 / -0">+21</span>
+					</span>
+				</div>
+				<div class="comment-content">
+					<img class="imagen" border="0" src="img/icon-new.png">
+				</div>
+			</div>
+			<div class="comment-actions rounded shadow">
+				<ul>
+					<li>
+						<a title="Me gusta" class="require-login hastipsy addLike">
+							<i class="icon thumb-up"></i>
+						</a>
+					</li>
+					<li>
+						<a title="No me gusta" class="require-login hastipsy addUnlike">
+							<i class="icon thumb-down"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Main -->
