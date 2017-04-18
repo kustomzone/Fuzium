@@ -74,13 +74,8 @@ A fusion of Electron and Zeronet, with more goodness to come.
 ### Test Releases
 
  - (Apr 18) [Fuzium-v0.0.8-win32-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.8-pre-alpha)
- <br>
- - (Mar 11) [Fuzium-v0.0.7-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.7-pre-alpha) with Zeronet 0.5.3
- <br>
- - (Feb 13) [Fuzium-v0.0.6-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.6-pre-alpha) with Zeronet 0.5.2
- <br>
- - (Jan 25) [Fuzium-v0.0.3-win32-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.3-pre-alpha)
-
+ - (Mar 11) [Fuzium-v0.0.7-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.7-pre-alpha)
+ - (Feb 13) [Fuzium-v0.0.6-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.6-pre-alpha)
 
 ### OS Platform Status / Notes
 
