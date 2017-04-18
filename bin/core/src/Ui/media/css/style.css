@@ -1,0 +1,155 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300);
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  height: 100%;
+  max-height: 100%;
+}
+
+#app {
+	display: block;
+}
+
+.right-float {
+  float: right;
+}
+
+.selected {
+  color: #87568D;
+}
+
+#categories {
+  background-color: #353E43;
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  width: 320px;
+  height: 100%;
+  overflow: hidden;
+  color: #8F9497;
+}
+
+#categories div.list {
+  margin-left: 30px;
+  font-family: 'Raleway', sans-serif;
+}
+
+#categories .item {
+  padding-bottom: 7px !important;
+}
+
+#categories h2 {
+  margin-top: 20px;
+  margin-left: 15px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+#cat-header {
+  background-color: #4A5557;
+  height: 40px;
+  position: relative;
+}
+
+#cat-header h2 {
+  position: absolute;
+  bottom: 2px;
+  left: 15px;
+  font-family: 'Raleway', sans-serif !important;
+  font-weight: 320;
+  font-size: 18px;
+  color: #B2B0CD;
+  text-transform: uppercase;
+}
+
+#categories h2 .app.icon,
+#categories h2 .add.icon {
+  color: #B87452;
+}
+
+#categories h2 .app.icon:hover {
+  cursor: pointer;
+  color: #C88462;
+}
+
+.clickable {
+  opacity: 1;
+  -webkit-transition: opacity .25s ease-in-out;
+  transition: opacity .25s ease-in-out;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+#categories button {
+  position: absolute;
+  bottom: 40px;
+  right: 15px;
+}
+
+.container {
+  margin: 15px;
+}
+
+i.remove.icon {
+  opacity: 0;
+  -webkit-transition: opacity .25s ease-in-out;
+  transition: opacity .25s ease-in-out;
+}
+
+div.content:hover i.remove.icon {
+  opacity: 1;
+}
+
+#links-container {
+  position: fixed;
+  top: 33px;
+  left: 320px;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  background-color: #D4D9DA;
+  color: #5F676A;
+}
+
+#links-container .list {
+  margin-top: 0px;
+}
+
+#toolbar {
+  background-color: #D4D9DA;
+  border-bottom: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #C2C7CA;
+  height: 40px;
+  width: 500px;
+  padding-top: 2px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+#links-container .list .item {
+  padding: 15px;
+}
+
+.item .description {
+  margin-top: 5px;
+}
+
+i.remove.icon {
+  opacity: 0;
+  -webkit-transition: opacity .25s ease-in-out;
+  transition: opacity .25s ease-in-out;
+}
+
+div.content:hover i.remove.icon {
+  opacity: 0.5;
+}

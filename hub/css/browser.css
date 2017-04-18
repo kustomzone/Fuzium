@@ -1,0 +1,481 @@
+html {
+	font-family: 'Roboto', sans-serif;
+	height: 100%;
+}
+
+body {
+	position: relative;
+	height: 100%;
+}
+
+nav#navtabs {
+	background: #e5e5e5;
+	font-size: 12px;
+	line-height: 12px;
+	position: absolute;
+	width: 100%;
+	height: 28px;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	padding-right: 200px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/*
+	animation should be handled in a separate CSS class
+	to enable/disable the animation temporarily as required
+*/
+nav#navtabs.animate > .tab,
+nav#navtabs.animate > #add-tab {
+	transition: all 120ms ease-in-out;
+}
+
+.nav-tab {
+	color: #777;
+	background: #e5e5e5;
+	font-size: 12px; 
+	line-height: 12px; 
+	border-right: 1px solid #ddd;
+	display: inline-block;
+	height: 28px;
+	-webkit-box-sizing: border-box;
+	width: 200px;
+	cursor: pointer;
+	position: relative; 
+	overflow: hidden;
+}
+
+	.nav-tab.gu-transit, 
+	.nav-tab.active.gu-transit {
+		color: #111; 
+		background: #fff; 
+	}
+
+	.nav-tab.gu-transit > .close, 
+	.nav-tab.gu-transit.active > .close {
+		background: transparent; 
+	}
+
+.nav-tab > .favicon-wrapper {
+	position: absolute;
+	top: 7px;
+	left: 7px;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+}
+
+.nav-tab > .favicon-wrapper > img.favicon {
+	max-width: 100%;
+}
+
+.nav-tab > span.title {
+	position: absolute;
+	top: 9px;
+	left: 28px;
+	width: 1000px;
+}
+
+.nav-tab.active {
+	color: #111;
+	background-color: #f5f5f5;
+}
+
+/* Close button */
+.nav-tab > .close {
+	color: #bbb;
+	font-size: 10px;
+	line-height: 10px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 9px 10px;
+	z-index: 10;
+	/* Add fading effect for text (tab title) running longer than the tab container */
+	background: linear-gradient(to right, rgba(229,229,229,0) 0%,rgba(229,229,229,1) 100%);
+}
+
+	.nav-tab > .close:hover {
+		color: #666;
+	}
+
+.nav-tab.active > .close {
+	color: #ccc;
+	background: linear-gradient(to right, rgba(245,245,245,0) 0%,rgba(245,245,245,0.6) 20%,rgba(245,245,245,1) 100%);
+}
+
+	.nav-tab.active > .close:hover {
+		color: #555;
+	}
+
+nav#navtabs > #add-tab {
+	color: #fff;
+	background: transparent;
+	display: inline-block;
+	height: 28px;
+	-webkit-box-sizing: border-box;
+	cursor: pointer;
+	overflow: hidden;
+}
+
+	nav#navtabs > #add-tab:hover {
+		color: #ccc;
+		background: #fff;
+	}
+
+nav#navtabs > #add-tab > .icon-wrapper {
+	padding: 9px 10px;
+}
+
+/* Clear float */
+nav#navtabs:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+#menubar {
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #ddd;
+	position: absolute;
+	width: 100%;
+	height: 35px;
+	top: 28px;
+	left: 0;
+	overflow: visible;
+	z-index: 15;
+}
+
+#menu-left {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#menu-right {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#button-menu {
+}
+
+.controls > [id^=button-] {
+	color: #333;
+	display: inline-block;
+	padding: 6px 10px;
+	font-size: 22px;
+	line-height: 22px;
+	float: left;
+}
+
+.controls > [id^=button-].disabled {
+	color: #bbb;
+}
+
+.icon-button {
+	cursor: pointer;
+}
+
+#button-stop-loading {
+	display: none;
+}
+
+#button-menu {
+	padding: 7px 10px;
+	font-size: 19px;
+	line-height: 19px;
+}
+
+#address-bar-wrapper {
+	float: left;
+	padding: 4px 36px 4px 96px;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+}
+
+input#address-bar {
+	font-size: 14px;
+	line-height: 14px;
+	padding: 4px 6px;
+	-webkit-box-sizing: border-box;
+	border: 1px solid #e5e5e5;
+	width: 100%;
+	outline: none;
+}
+
+#auto-complete-box {
+	display: none;
+	background: #fff;
+	font-size: 13px;
+	line-height: 13px;
+	padding: 3px 36px 3px 96px;
+	border-bottom: 1px solid #aaa;
+	box-shadow: 0 4px 2px -2px #ccc;
+}
+
+	#auto-complete-box .item {
+		padding: 8px 6px;
+		cursor: default;
+	}
+
+		#auto-complete-box .item .url {
+			color: #6cbd30;
+		}
+
+		#auto-complete-box .item .title {
+			color: #bbb;
+		}
+
+		#auto-complete-box .item:hover {
+			background: #ffffcc;
+		}
+
+			#auto-complete-box .item:hover .url {
+				color: #3c8d00;
+			}
+
+			#auto-complete-box .item:hover .title {
+				color: #777;
+			}
+
+		#auto-complete-box .item.selected {
+			color: #ccffff;
+			background: #6cbd30;
+		}
+
+			#auto-complete-box .item.selected .url {
+				color: #fff;
+			}
+
+			#auto-complete-box .item.selected .title {
+				color: #ffffcc;
+			}
+
+
+
+/* Tabview */
+#webview-container {
+	position: relative;
+	height: 100%;
+	padding-top: 64px;
+	padding-bottom: 48px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #aaa;
+}
+
+.webview-wrapper {
+	width: 100%;
+	height: calc(100% - 64px);
+	position: absolute;
+	top: 64px;
+	left: 0;
+}
+
+.webview-wrapper webview {
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+}
+
+/* Status message box (URL, etc) */
+.webview-wrapper .status-message-box {
+	display: none; 
+	color: #666; 
+	background: #f5f5f5; 
+	font-size: 11px; 
+	line-height: 11px;
+	max-width: 50%;
+	border-top: 1px solid #e5e5e5; 
+	border-right: 1px solid #e5e5e5; 
+	padding: 5px 7px;
+	box-sizing: border-box;
+	position: absolute; 
+	left: 0; 
+	bottom: 0; 
+	z-index: 20;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+	.webview-wrapper .status-message-box.right {
+		left: auto;
+		right: 0;
+		border-right: none;
+		border-left: 1px solid #e5e5e5;
+	}
+
+/* Search Box */
+.search-wrapper {
+	display: none;
+	background: #f5f5f5;
+	position: absolute;
+	top: -1px;
+	right: 20px;
+	z-index: 20;
+	width: 340px;
+	height: 34px;
+	padding: 4px;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-top: none;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.search-input-wrapper {
+	width: 300px;
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	padding: 3px 4px;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	background: #fff;
+}
+
+.search-wrapper input.search {
+	border: none;
+	background: none;
+	width: 220px;
+	font-size: 14px;
+	line-height: 14px;
+	outline: none;
+}
+
+.search-wrapper .match-display {
+	display: none;
+	font-size: 12px;
+	line-height: 12px;
+	position: absolute;
+	top: 1px;
+	right: 54px;
+	padding: 6px 4px 5px 6px;
+}
+
+	.search-wrapper .match-display.no-match {
+		background: #ff6666;
+	}
+
+.search-wrapper a.button {
+	font-size: 14px;
+	line-height: 14px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.search-input-wrapper .button-group {
+	position: absolute;
+	top: 2px;
+	right: 0;
+}
+
+	.search-input-wrapper .button-group a.button {
+		border: 1px solid #f5f5f5;
+		padding: 3px 8px;
+		background: #f5f5f5;
+	}
+
+		.search-input-wrapper a.button.prev {
+			border-left-color: #ddd;
+		}
+
+		.search-input-wrapper a.button.next {
+			border-left-color: #ddd;
+			border-top-right-radius: 3px;
+			border-bottom-right-radius: 3px;
+		}
+
+		.search-input-wrapper .button-group a.button:hover {
+			background: #f9f9f9;
+		}
+
+	.search-wrapper a.button.close {
+		position: absolute;
+		top: 10px;
+		right: 9px;
+	}
+
+
+/* ===============================================
+	common classes
+=============================================== */
+
+/*
+	Make menu text unselectable
+*/
+.unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+
+/* .loader */
+.loader {
+	font-size: 10px;
+	text-indent: -9999em;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: linear-gradient(to right, #999 10%, rgba(153, 153, 153, 0) 42%);
+	position: relative;
+	animation: load3 1.0s infinite linear;
+	transform: translateZ(0);
+	display: none;
+}
+.loader:before {
+	width: 50%;
+	height: 50%;
+	background: #999;
+	border-radius: 100% 0 0 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '';
+}
+.loader:after {
+	background: #e5e5e5;
+	width: 75%;
+	height: 75%;
+	border-radius: 50%;
+	content: '';
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.nav-tab.active .loader:after {
+	background: #f5f5f5;
+}
+@-webkit-keyframes load3 {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes load3 {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.clear {
+	content: '';
+	display: block;
+	clear: both;
+}

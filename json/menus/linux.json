@@ -3,9 +3,16 @@
     "label": "&File",
     "submenu": [{
       "label": "&Preferences",
-      "command": "application:show-settings"
+      "command": "application:show-settings",
+	  "accelerator": "Control+P"
     }, {
-      "label": "Quit",
+      "label": "Open Non-Tor &Browser",
+      "command": "application:new-window",
+	  "accelerator": "Control+B"
+    }, {
+      "type": "separator"
+    }, {
+      "label": "&Quit",
       "command": "application:quit",
       "accelerator": "Control+Q"
     }]

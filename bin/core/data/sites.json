@@ -1,0 +1,17 @@
+{
+  "1Name2NXVi1RDPDgf5617UoW7xA6YrhM9F": {
+    "added": 1489115466, 
+    "auth_key": "29bc0be48806d97a72b6cbb8e244b486103cfed33d600d258992900df5e72fc1", 
+    "cache": {
+      "bad_files": {}, 
+      "hashfield": ""
+    }, 
+    "optional_downloaded": 0, 
+    "own": false, 
+    "permissions": [], 
+    "serving": true, 
+    "size": 0, 
+    "size_optional": 0, 
+    "wrapper_key": "a25737bf9102f93cb05046ae14fc15f8250514d0eee21e4fa2f3c14edfde081e"
+  }
+}

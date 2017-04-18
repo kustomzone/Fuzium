@@ -1,68 +1,434 @@
 'use strict';
 
-///////////////////// Zeronet ///////////////////
+// Pending: (package.json, line 15)
+
+/////////////////////////////////  main.js  ///////////////////////////////////////
+//                                                                               //
+// WIP: Try to run "Non-Tor Browser" (nav buttons and flash) ALSO in main window //
+//                                                                               //
+///////////////////////////////////////////////////////////////////////////////////
 
 // loads Zeronet default homepage
 var HelloZeronet = 'http://localhost:43210/';
 
 ///////////////////// Electron ///////////////////
-const { electron, app, crashReporter, globalShortcut, ipcMain, protocol, remote,
+const electron = require('electron');
+
+const { app, crashReporter, dialog, globalShortcut, ipcMain, protocol, remote,
    BrowserWindow, Menu, MenuItem, Tray } = require('electron');
 
-const devtools   = require('electron-devtools-installer');
+const devtools = require('electron-devtools-installer');
 
-// Global
-let window = {}
-window._ = require('underscore');
+// const ip = require("ip");
 
 // Constants
-const fs         = require('fs');
-const os         = require('os');
-const url        = require('url');
-const path       = require('path');
-const dir        = require('node-dir');
+const fs           = require('fs');
+const os           = require('os');
+const url          = require('url');
+const path         = require('path');
+const winston      = require('winston');
+const dir          = require('node-dir');
+const session      = require('electron').session;
+const EventEmitter = require('events').EventEmitter;
+
+// Global app
+let window = {}
+window._   = require('underscore');
+
+/*
+global.__app = {
+	basePath: __dirname,
+	dataPath: path.join(electron.app.getPath('userData')),
+	logPath:  path.join(electron.app.getPath('userData'), 'logs'),
+	logger: null
+};
+
+// Create log path
+if (!fs.existsSync(global.__app.logPath)) {
+	fs.mkdirSync(global.__app.logPath);
+}
+
+// Create logger
+global.__app.logger = new (winston.Logger)({
+	transports: [
+		new (winston.transports.Console)({ level: 'silly' }),
+		new (winston.transports.File)({
+			filename: path.join(global.__app.logPath, 'app.log'),
+			level: 'info'
+		})
+	]
+});
+*/
 
 // Dependencies
 var _exist       = require("is-there");
 var program      = require('commander');
 var monogamous   = require('monogamous');
-var Configstore  = require('configstore');
+var configstore  = require('configstore');
 var spawn        = require('electron-spawn');
 
+// Processes
 const spawnChild   = require('child_process').spawn;
 const ChildProcess = require('child_process');
 
 // Utils
 const appLogger    = require('./hub/logger');
 const Store        = require('./hub/store');
+
+// Icons
 var appIcons       = require('./gfx/icons');
 
-// Get browser history
+// Package info
+var pkgInfo        = require('./package.json');
+
+// User browser history
+const Datastore    = require('nedb');
 var userDP         = app.getPath('userData');
 var historyPath    = userDP + '/userdata/history.json';
 var extensionsPath = userDP.replace(/\\/g, '/') + '/userdata/extensions';
 var userdataPath   = userDP + '/userdata';
 var configPath     = userDP + '/personal.config';
 var logPath        = userDP + '/verbose.log';
+var basePath       = __dirname;
+
+// const globalShortcuts = new Shortcuts();
+// const MainProcess     = new MainProcessController();
+// MainProcess.start();
+
+// const windowManager = require(basePath + "/js/WindowManager");
+// const IPCMain       = require(basePath + "/js/IPCMain");
+
+// Persistant Storage
+var PersistentStorage = {};
+
+PersistentStorage.getItem = function(key, callback) {
+	// TODO: add check for valid file name format
+
+	var fileToRead = userdataPath + key + ".json";
+
+	// check if JSON file exists
+	fs.exists(fileToRead, function(exists) {
+		// if file with given key name exists, read file
+		if (exists === true) {
+			fs.readFile(userdataPath + key + ".json", function(err, data) {
+				if (err) callback(err, null);
+
+				try {
+					// parse string to JSON object
+					data = JSON.parse(data);
+
+					callback(null, data);
+				} catch (e) {
+					callback({"message": "Invalid data format"}, null);
+				}
+			});
+		} else {
+			callback({"message": "File doesn't exist"}, null);
+		}
+	});
+};
+
+PersistentStorage.setItem = function(key, value) {
+	// TODO: add check for valid file name format
+
+	var _this = this;
+	var fileToWrite = userdataPath + key + ".json";
+
+	if (typeof value === "object" && !Array.isArray(value)) {
+		if (_this.isCyclic(value)) {
+			throw "Object to store cannot be cyclic";
+		}
+
+		// if safe to stringify, go ahead and stringify data
+		value = JSON.stringify(value);
+
+		// Save to file
+		fs.writeFile(fileToWrite, value, function(err) {
+		});
+	} else {
+		throw "Value must be of an object type";
+	}
+};
+
+// Check if object is cyclic. If so TypeError will be thrown while stringify-ing the object we're trying to save into JSON
+
+// References
+// http://stackoverflow.com/questions/14962018/detecting-and-fixing-circular-references-in-javascript
+// http://blog.vjeux.com/2011/javascript/cyclic-object-detection.html
+
+PersistentStorage.isCyclic = function(obj) {
+	var seenObjects = [];
+
+	function detect (obj) {
+		if (obj && typeof obj === 'object') {
+			if (seenObjects.indexOf(obj) !== -1) {
+				return true;
+			}
+			seenObjects.push(obj);
+			for (var key in obj) {
+				if (obj.hasOwnProperty(key) && detect(obj[key])) {
+					console.log(obj, 'cycle at ' + key);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	return detect(obj);
+};
+// End Persistent Storage
+
+// Load Navigation History
+const navigationHistoryDb = new Datastore({ 
+	filename: path.join(userdataPath, 'navigation-history.db'), 
+	autoload: true 
+});
+const autoCompleteDb = new Datastore({ 
+	filename: path.join(userdataPath, 'auto-complete-entries.db'), 
+	autoload: true 
+}); 
+
+// NavigationHistory
+var NavigationHistory = {};
+
+NavigationHistory.addNavigationHistory = function(navigationInfo, callback) {
+	// add navigation history timestamp
+	navigationInfo.date = new Date();
+
+	let completeCount = 0; 
+	let jobCount = 2; 
+
+	navigationHistoryDb.insert(navigationInfo, function(err, newDoc) {
+		if (err) {
+			callback(err);
+		} else {
+			completeCount++; 
+			if (completeCount >= jobCount) {
+				callback(); 
+			}
+		}
+	});
+
+	autoCompleteDb.update({
+		url: navigationInfo.url
+	}, 
+	{
+		$inc: { visitCount: 1 }, 
+		$set: {
+			date: navigationInfo.date, 
+			title: navigationInfo.title
+		}
+	}, 
+	{
+		upsert: true
+	}, 
+	function(err, numAffected, affectedDocuments, upsert) {
+		if (err) {
+			callback(err); 
+		} else {
+			completeCount++; 
+			if (completeCount >= jobCount) {
+				callback(); 
+			}
+		}
+	}); 
+};
+
+// Clears history: @param callback function to be called when all documents are removed (function(err, numRemoved))
+NavigationHistory.clearNavigationHistory = function(callback) {
+	navigationHistoryDb.remove({}, callback);
+};
+
+NavigationHistory.getAutoCompleteList = function(searchTerm, callback) {
+	// Escape RegEx characters inside search term
+	searchTerm = searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+	var searchRegEx = new RegExp(searchTerm);
+
+	// Find a matching domain
+	autoCompleteDb.find({
+		url: searchRegEx
+	})
+		.limit(10)
+		.sort({ 
+			visitCount: -1, 
+			date: -1
+		})
+		.exec(function(err, autoCompleteEntries) {
+			callback(autoCompleteEntries);
+		});
+};
+// End NavigationHistory
+
+// Shortcuts
+function Shortcuts() {
+	// constructor(windowManager) {
+	//	this.windowManager = windowManager;
+	// }
+	let _this = this;
+	var shortcutCommands = [
+		{
+			accelerator: "CommandOrControl+n",
+			action: function() {
+				_this.windowManager.openNewWindow();
+			}
+		},
+		{
+			accelerator: "F11",
+			action: function() {
+				console.log("F11");
+			}
+		},
+		{
+			accelerator: "F12",
+			action: function() {
+				console.log("opening devtools");
+			}
+		}
+	];
+	for (var i = 0; i < shortcutCommands.length; i++) {
+		globalShortcut.register(shortcutCommands[i].accelerator, shortcutCommands[i].action);
+	}
+}
+
+
+// MainProcessController
+// var MainProcessController = function() {
+// 	var _this = this;
+//	var ipcHandler;
+//	var mainProcessEventEmitter;
+	
+	// var init = function() {
+		// attempt to enable Pepper Flash Player plugin
+		// attachEventHandlers();
+	// };
+	
+	/*
+	var attachEventHandlers = function() {
+		app.on("window-all-closed", function() {
+			console.log("window-all-closed, quitting");
+			if (process.platform != "darwin") {
+				console.log("quitting app");
+				app.quit();
+			}
+		});
+		app.on("ready", function() {
+			session.defaultSession.on("will-download", handleWillDownload);
+			// check if .data directory exists
+			fs.exists(userdataPath, function(exists) {
+				if (exists === false) {
+					// create directory if .data directory doesn't exist
+					// TODO: check directory create permissions on Linux
+					fs.mkdir(userdataPath, function(err) {
+						if (err) {
+							// TODO: show error messagebox and quit app
+							dialog.showMessageBox({
+								type: "info",
+								buttons: ["ok"],
+								title: userdataPath,
+								message: JSON.stringify(err),
+								detail: JSON.stringify(err)
+							});
+							app.quit();
+						} else {
+							startBrowser();
+						}
+					});
+				} else {
+					startBrowser();
+				}
+			});
+		});
+	};
+	*/
+
+// enablePepperFlashPlayer();
+
+// Pepper Flash Player (64bit-Win7+Mac)
+function enablePepperFlashPlayer() {
+		var flashPath = null;
+
+		// specify flash path based on OS
+		if(process.platform  == 'win32'){
+			flashPath = path.join(basePath, 'bin', 'pepflashplayer64_25_0_0_127.dll');
+		} else if (process.platform == 'darwin') {
+			// Mac OS
+			flashPath = path.join(basePath, 'bin', 'PepperFlashPlayer.plugin');
+		}
+
+		// in case flashPath is set
+		if (flashPath) {
+			app.commandLine.appendSwitch('ppapi-flash-path', flashPath);
+			app.commandLine.appendSwitch('ppapi-flash-version', '25.0.0.127');
+		}
+}
+
+// startBrowser();
+
+// start browser
+/*
+function startBrowser() {
+		// create a shared EventEmitter for windowManager to communicate with ipcHandler
+		EventEmitter = new EventEmitter();
+		ipcHandler   = new IPCMain(_this);
+
+		var shortcutHandler = new Shortcuts(windowManager);
+
+		// register all global shortcuts
+		shortcutHandler.registerAll();
+
+		windowManager.openNewWindow();
+	};
+*/
+
+function handleWillDownload(event, item, webContents) {
+		item.on("done", function(e, state) {
+			if (state === "completed") {
+				var itemInfoObj = {
+					type: "file-download",
+					fileSize: item.getTotalBytes(),
+					fileURL: item.getURL(),
+					fileName: item.getFilename(),
+					fileMimeType: item.getMimeType()
+				};
+			}
+		});
+	};
+	
+	/*
+	_this.start = function() {
+		init();
+	};
+
+	_this.getMainProcessEventEmitter = function() {
+		return mainProcessEventEmitter;
+	};
+
+	_this.getWindowManager = function() {
+		return windowManager;
+	};
+	*/
+	
+// }
+
+// module.exports = MainProcessController;
+// End MainProcessController
 
 // Save windowbounds
 const store = new Store({
   // We'll call our data file 'user-preferences'
   configName: 'user-preferences',
   defaults: {
-    // 800x600 is the default size of our window
+    // default window size
     windowBounds: { width: 800, height: 600 }
   }
 });
-
-// Load app info
-var pkg = require('./package.json');
 
 // Define config constructor
 function Config(cliOverrides, cliInfo) {
   
   // Create config
-  this.config = new Configstore(pkg.name, {  });
+  this.config = new configstore(pkgInfo.name, {  } );
   this.cliOverrides = cliOverrides;
 
   // Generate IPC bindings for config and its info
@@ -122,7 +488,7 @@ if (fs.existsSync(configPath)) {
 
 // Define CLI parser
 program
-  .version(pkg.version)
+  .version(pkgInfo.version)
   .option('-S, --skip-taskbar', 'Skip showing the application in the taskbar')
   .option('--minimize-to-tray', 'Hide window to tray instead of minimizing')
   .option('--hide-via-tray',    'Hide window to tray instead of minimizing (only for tray icon)')
@@ -177,6 +543,8 @@ app.on('ready', function() {
 		// const state = store.getState();
 		// localStorage.myAppState = JSON.stringify(state);
 		
+		enablePepperFlashPlayer();
+		
 		startApp();
 	}
 
@@ -211,7 +579,9 @@ app.on("open-url", function(event, url) {
 });
 
 //////////// Functions for main window ////////////
+
 var logo = appIcons['logo'];
+
 let func = {
   browserWindow: null,
   config: config,
@@ -225,13 +595,15 @@ let func = {
 	  '<div style="text-align: center; font-family: \'Helvetica Neue\', \'Arial\', \'sans-serif\'">',
 		'<h3>About</h3>',
 		'<p>',
-		  'Fuzium: ' + pkg.version,
+		  'Fuzium: ' + pkgInfo.version,
 		  '<br/>',
-		  'Zeronet: 0.5.1',
+		  'Zeronet: 0.5.3',
 		  '<br/>',
 		  'Electron version: ' + process.versions.electron,
 		  '<br/>',
 		  'Node.js version: ' + process.versions.node,
+		  '<br/>',
+		  'Pepper Flash Player version: 25.0.0.127',
 		  '<br/>',
 		  'Chromium version: ' + process.versions.chrome,
 		'</p>',
@@ -240,7 +612,6 @@ let func = {
 		'<img src="' + logo + '">',
 	  '</div>'
 	].join('');
-	
 	var aboutWindow = new BrowserWindow({
 	  title: 'About',
 	  width:  540,
@@ -252,6 +623,7 @@ let func = {
 	aboutWindow.loadURL('data:text/html,' + info);
 	logger.debug('Show app info');
   },
+  
   // Config window
   openConfigWindow: function () {
 	var configWindow = new BrowserWindow({
@@ -266,6 +638,21 @@ let func = {
 	var configPage = __dirname + '/hub/config.htm';
 	configWindow.loadURL(configPage);
 	logger.debug('Show config; ' + configPage);
+  },
+  
+  // New window
+  openSubWindow: function () {
+  	var subWindow = new BrowserWindow({
+	  title: 'Fuzium',
+	  width:  1000,
+	  height: 800,
+	  autoHideMenuBar: true,
+	  titleBarStyle: 'hidden-inset',
+	  icon: appIcons['info-32']
+	});
+	var subWindowPage = __dirname + '/hub/browser.htm';
+	subWindow.loadURL(subWindowPage);
+	logger.debug('New Window; ' + subWindowPage);
   },
   
   // Quit application
@@ -349,15 +736,15 @@ let func = {
 checkPaths();
 
 function checkPaths() {
-    //check if directory called userdata exists
+    // Check if directory called userdata exists
     if (!_exist(userdataPath)) {
         fs.mkdir(userdataPath);
     }
-    //check if directory called extensions exists
+    // Check if directory called extensions exists
     if (!_exist(extensionsPath)) {
         fs.mkdir(extensionsPath);
     }
-    //check if file called history.json exists
+    // Check if file called history.json exists
     if (!_exist(historyPath)) {
         fs.writeFile(historyPath, '{"history":[]}');
     }
@@ -384,15 +771,16 @@ function truncateStr(str, len) {
 var booter;
 
 if (!config.get('allow-multiple-instances')) {
+  
   // Start up/connect to a monogamous server (detects other instances)
-  booter = monogamous({sock: pkg.name});
-
+  booter = monogamous({sock: pkgInfo.name});
+  
   // If we are the first instance, start up func
   booter.on('boot', startApp);
-
+  
   // Otherwise, focus it
   booter.on('reboot', func.onRaise);
-
+  
   // If we encounter an error, log it and start anyway
   booter.on('error', function handleError (err) {
 	logger.info('Ignoring boot error ' + err + ' while connecting to monogamous server');
@@ -459,7 +847,7 @@ function startApp() {
 	
 	// Logger info
 	logger.info('\n\n App is ready:', {
-	  version: pkg.version,
+	  version: pkgInfo.version,
 	  platform: process.platform,
 	  options: windowOpts,
 	  processVersions: process.versions
@@ -494,7 +882,7 @@ function startApp() {
 
   	// Set download folder 
 	func.browserWindow.webContents.session.on('will-download', (event, item, webContents) => {
-	  // Set the save path, making Electron not to prompt a save dialog
+	  // Set the save path, so electron doesn't prompt a save dialog
 	  item.setSavePath('files/'+item.getFilename());
 	 
 	  // Track download progress
@@ -544,13 +932,16 @@ function startApp() {
 		label: 'Show/hide',
 		click: func.onTrayClick
 	}));
+	
 	trayMenu.append(new MenuItem({
 		type: 'separator'
 	}));
+	
 	trayMenu.append(new MenuItem({
 		label: 'Restart',
 		click: function() { ipcRenderer.send('restart', 'true' ); console.log('restarting..'); }
 	}));
+	
 	trayMenu.append(new MenuItem({
 		label: 'Quit',
 		click: func.quitApplication
@@ -577,7 +968,7 @@ function startApp() {
 	  ].join('\n');
 	  appIcon.setToolTip(infoStr);
 	});
-
+	
 	// Config change; update icon
 	ipcMain.on('change:config', function handlePlaybackChange(evt, configState) {
 	  func.logger.debug('Updating tray icon; Config -', {
@@ -587,14 +978,13 @@ function startApp() {
 	  // appIcon.setImage(icon);
 	});
 	
-	
 	// Timing bootup.
 	// Getting Electron's and Zeronet's timing right will depend on each device.
 	// Of course Electron should be ready first while Zeronet is booting.
 	// Timing is improving as more things get added anyway.
 	
 	if (func.browserWindow) {
-		// Hopefully Zeronet is ready to go after a few of seconds.
+		// Hopefully Zeronet is ready to go after a few seconds.
 		setTimeout(function() { func.browserWindow.loadURL(HelloZeronet); }, 3000);
 		
 		// But if not, a delayed reload also works fine.
@@ -699,6 +1089,8 @@ function bindMenuItems(menuItems) {
 	  menuItem.click = func.openAboutWindow;
 	} else if (cmd === 'application:show-settings') {
 	  menuItem.click = func.openConfigWindow;
+	} else if (cmd === 'application:new-window') {
+	  menuItem.click = func.openSubWindow;
 	} else if (cmd === 'application:quit') {
 	  menuItem.click = func.quitApplication;
 	} else if (cmd === 'window:reload') {

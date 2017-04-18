@@ -1,0 +1,480 @@
+
+<script>
+// var image = document.createElement('img');
+// image.onload = function (imgEvt) { ... }
+</script>
+
+<div id="viewtopics" class="form-new clearfix">
+
+<!-- editbar -->
+<div class="editbg"></div>
+<div class="editbar bottombar">
+ <ul class="markdown-help">
+  <li># H1</li>
+  <li>## H2</li>
+  <li>### H3</li>
+  <li><i>_italic_</i></li>
+  <li><b>**bold**</b></li>
+  <li>~~<s>strikethrough</s>~~</li>
+  <li>- Lists</li>
+  <li>1. Numbered lists</li>
+  <li>[Links](http://www.zeronet.io)</li>
+  <li>[References][1]<br>[1]: Can be used</li>
+  <li>![image alt](img/logo.png)</li>
+  <li>Inline <code>`code`</code></li>
+  <li><code>```python<br>print "Code block"<br>```</code></li>
+  <li>&gt; Quotes</li>
+  <li>--- Horizontal rule</li>
+ </ul>
+ <a href="#Markdown+help" class="icon-help">?</a> Editing: <span class="object">Post:21.body</span> <a href="#Save" class="button save">Save</a> <a href="#Delete" class="button button-delete button-outline delete">Delete</a> <a href="#Cancel" class="cancel">Cancel</a>
+</div>
+<!-- EOF editbar -->
+
+<!-- Head -->
+<div class="head">
+ <a class='logo nolink' href="#home">Zer0<br>Plus</a>
+</div>
+<!-- EOF Head -->
+
+<!-- Page: Main -->
+<div class="center topics-list">
+ <h3 class="topic-title">
+   <span class='parent-link'><a href='#home'>Home</a> &rsaquo; </span> 
+   <span class='parent-link'><a href='#apps'>Apps</a> &rsaquo; </span> 
+   <span class="parent-link">New Topic</span>
+ </h3>
+  
+ <a href="#Follow" class="feed-follow feed-follow-list">
+  <span class='text-follow'>Follow in Newsfeed</span>
+  <span class='text-following'>Following</span>
+  <div class="icon-feed"></div>
+ </a>
+
+ <!-- New Topic -->
+ <!-- a href="#New+topic" class="topic-new-link nolink"> New </a -->
+ <div class="topic topic-new">
+  <a href="#" class="image nolink">
+	<div class="icon-topic-chat"></div>
+  </a>
+  <h4 class="title"><input type="text" id="topic_title" class="text" placeholder="Post title"></h4>
+  <div class="body"><textarea id="topic_body" placeholder="Post text"></textarea></div>
+  
+  <h4 class="title">
+    <input type="file" name="image" id="image_file" class="text">
+	<input type="hidden" id="filedata">
+	<p id="desc"></p>
+	<img id="image_preview">
+  </h4>
+  
+  <div class="info"><a class="user_name user_name-my certselect" href="#Change+user" title='Change user'>user_name</a> &#9473; <span class="added">new topic</span></div>
+  <a href="#Add+new+topic" class="button button-submit">Share</a>&nbsp;
+  <input type="submit" value="Share" class="button">
+  <div style="clear: both"></div>
+ </div>
+ <!-- EOF New Topic -->
+
+ <div class="topics-loading"><img src="img/loading.gif"/>Loading...</div>
+
+ <div class="topics">
+
+  <!-- Template: Topic -->
+  <div class="topic template">
+   <div class="dot">&bullet;</div>
+   <a href="#" class="image nolink"><div class="icon icon-topic-chat"></div></a>
+   <h4 class="title"><a href="#" class="title-link">Title</a></h4>
+   <div class="body">Body</div>
+   <a href="#" class="link"><div class="icon icon-link"></div> <span class="link-url"></span></a>
+   <div class="info">
+    <a class="score" href="#Upvote">
+     <span class="score-inactive"> <span class="icon-up">^</span><span class="score-num">1</span> </span>
+     <span class="score-active"> <span class="icon-up">^</span><span class="score-num">2</span> </span>
+    </a>
+    <a href="#" class="comment-num"></a>
+    <span class="added">added</span>
+     &#9473; submitted by <span class="user_name">user_name</span>
+   </div>
+  </div>
+  <!-- EOF Template: Topic main -->
+
+ </div>
+
+ <a href="#More" class="topics-more">More topics</a>
+
+</div>
+<!-- EOF Page: Main -->
+
+
+<!-- Page: Topic -->
+<div class="center topics-full">
+
+ <div class="topic topic-full">
+  <a href="#" class="image nolink"><div class="icon icon-topic-chat"></div></a>
+  <a href="#Follow" class="feed-follow feed-follow-show"><span class='text-follow'>Follow in Newsfeed</span><span class='text-following'>Following</span><div class="icon-feed"></div></a>
+  <h4 class="title"><a href="#" class="title-link">Title</a></h4>
+  <div class="body">Body</div>
+  <div class="info">
+    <a class="score" href="#Upvote">
+     <span class="score-inactive"> <span class="icon-up">^</span><span class="score-num">?</span> </span>
+     <span class="score-active"> <span class="icon-up">^</span><span class="score-num">0</span> </span>
+    </a>
+   <span class="user_name">username</span> posted <span class="added">added</span>
+  </div>
+ </div>
+
+ <!-- New comment -->
+ <div class="comment comment-new">
+  <div class="info"><a class="user_name user_name-my certselect" href="#Change+user" title='Change user'>user_name</a> &#9473; <span class="added">new comment</span></div>
+  <div class="body">
+   <a class="button button-submit button-certselect certselect" href="#Change+user"><div class='icon-profile'></div>Sign in as...</a>
+   <textarea id="comment_body"></textarea>
+   <h4 class="title"><input type="file" id="comment_image_file" class="text"><input type="hidden" id="commentfiledata"></h4>
+   <a href="#Submit+comment" class="button button-submit button-submit-form">Submit comment</a>
+   <div style='float: right; margin-top: -6px; position: relative; text-align: right'>
+    <div class="user-size user-size-used">Used space: 22k/100k</div>
+    <div class="user-size">Used space: 22k/100k</div>
+    <div class="user-size-warning">You are running out of your allowed space, please contact the site's admin at <a href="#">unknown</a> to raise your limit.</div>
+   </div>
+   <div style="clear: both"></div>
+  </div>
+ </div>
+<!-- Comments -->
+ <div class="comments center">
+
+  <!-- Template: Comment -->
+  <div class="comment template">
+   <div class="info">
+    <span class="user_name">user_name</span>
+    &#9473;
+    <span class="added">added</span>
+    <a class="score" href="#Upvote">
+     <span class="score-inactive"> <span class="icon-up">^</span><span class="score-num">1</span> </span>
+     <span class="score-active"> <span class="icon-up">^</span><span class="score-num">2</span> </span>
+    </a>
+    <a href="#Reply" class="reply"><div class="icon icon-reply"></div> <span class="reply-text">Reply</span></a>
+   </div>
+   <div class="body">Body</div>
+  </div>
+  <!-- EOF Template: Comment -->
+ </div>
+ <a href="#More" class="comments-more">More comments</a>
+
+</div>
+<!-- EOF Page: Topic -->
+
+<!-- Template: menu -->
+<div class="menu template">
+ <a href="#" class="menu-item template">Template</a>
+</div>
+<!-- EOF Template: menu -->
+
+<script type="text/javascript" src="js/topics.js"></script>
+  
+<script type="text/javascript">
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var hasBlobConstructor = typeof Blob !== 'undefined' && (function () {
+	try {
+		return Boolean(new Blob());
+	} catch (e) {
+		return false;
+	}
+})();
+
+var hasArrayBufferViewSupport = hasBlobConstructor && typeof Uint8Array !== 'undefined' && (function () {
+	try {
+		return new Blob([new Uint8Array(100)]).size === 100;
+	} catch (e) {
+		return false;
+	}
+})();
+
+var hasToBlobSupport = typeof HTMLCanvasElement !== "undefined" ? HTMLCanvasElement.prototype.toBlob : false;
+
+var hasBlobSupport = hasToBlobSupport || typeof Uint8Array !== 'undefined' && typeof ArrayBuffer !== 'undefined' && typeof atob !== 'undefined';
+
+var hasReaderSupport = typeof FileReader !== 'undefined' || typeof URL !== 'undefined';
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  filedataHiddenElement		= document.querySelector("#filedata");
+  commentfiledataHiddenElement = document.querySelector("#commentfiledata"); 
+
+  function handleFileSelect(evt) {
+	var files = evt.target.files; // FileList object
+	console.log(files);
+	
+	// var width = files[0];
+	// var height = files[0].height;
+	// var isTooLarge = false;
+	// alert("width = " + width);
+	
+	// Loop through the FileList and render image files as thumbnails.
+	for (var i = 0, f; f = files[i]; i++) {
+
+	  // Only process image files.
+	  if (!f.type.match('image.*')) {
+		alert("only image files allowed!"); continue;
+	  }
+
+	  var reader = new FileReader();
+
+	  // Closure to capture the file information.
+	  reader.onload = (function(theFile) {
+	   return function(e) {	
+		filedataHiddenElement.value		   = e.target.result;
+		commentfiledataHiddenElement.value = e.target.result;
+		
+		/*
+		  var img = $('<img id="new_image">'); // create img
+		  img.attr('src', e.target.result);
+		  img.attr('style', 'width: 100px; height: 100px;');
+		  img.appendTo('#image_preview');
+		*/
+	   };
+	  })(f);
+	  
+		ImageTools.resize(f, {
+			width: 100, // max width
+			height: 100 // max height
+		}, function(blob, didItResize) {
+		  // document.getElementById('image_preview').src = window.URL.createObjectURL(blob);
+		  blobToDataURL(blob, function(dataurl) { document.getElementById('image_preview').src = dataurl; });
+		  // reader.readAsArrayBuffer(blob));
+		  // you can also now upload this blob using an XHR.
+		});
+		
+	  // Read in the image file as a data URL.
+	  reader.readAsDataURL(f);
+	}
+  }
+  
+  document.getElementById('image_file').addEventListener('change', handleFileSelect, false);
+  document.getElementById('comment_image_file').addEventListener('change', handleFileSelect, false);
+
+
+var ImageTools = (function () {
+	function ImageTools() {
+		_classCallCheck(this, ImageTools);
+	}
+
+	_createClass(ImageTools, null, [{
+		key: 'resize',
+		value: function resize(file, maxDimensions, callback) {
+			if (typeof maxDimensions === 'function') {
+				callback = maxDimensions;
+				maxDimensions = {
+					width: 100,
+					height: 100
+				};
+			}
+
+			// var maxWidth = maxDimensions.width;
+			// var maxHeight = maxDimensions.height;
+
+			if (!ImageTools.isSupported() || !file.type.match('image.*')) {
+				callback(file, false);
+				return false;
+			}
+
+			if (file.type.match('image\/gif')) { // Not attempting, could be an animated gif
+				callback(file, false);
+				// TODO: use https://github.com/antimatter15/whammy to convert gif to webm
+				return false;
+			}
+
+			var image = document.createElement('img');
+
+			image.onload = function (imgEvt) {
+				var width = image.width;
+				var height = image.height;
+				var maxWidth = 100;
+				var maxHeight = 100;
+				var isTooLarge = false;
+				document.getElementById('desc').innerHTML = "Downscaled from ( w:" + width + " h:" + height + " ) TO ( w:" + maxWidth + " h:" + maxHeight + " )";
+				
+				// alert("width = " + width + " height = " + height);
+				/*
+				if (width >= height && width > maxDimensions.width) {
+					// width is the largest dimension, and it's too big.
+					height *= maxDimensions.width / width;
+					width = maxDimensions.width;
+					isTooLarge = true;
+				} else if (height > maxDimensions.height) {
+					// either width wasn't over-size or height is the largest dimension
+					// and the height is over-size
+					width *= maxDimensions.height / height;
+					height = maxDimensions.height;
+					isTooLarge = true;
+				}
+				if (!isTooLarge) { // early exit; no need to resize
+					callback(file, false);
+					return;
+				}
+				*/
+
+				var canvas = document.createElement('canvas');
+				canvas.width = maxWidth;
+				canvas.height = maxHeight;
+
+				var ctx = canvas.getContext('2d');
+				ctx.drawImage(image, 0, 0, maxWidth, maxHeight);
+
+				if (hasToBlobSupport) {
+					canvas.toBlob(function (blob) {
+						callback(blob, true);
+					}, file.type);
+				} else {
+					var blob = ImageTools._toBlob(canvas, file.type);
+					callback(blob, true);
+				}
+			};
+			ImageTools._loadImage(image, file);
+
+			return true;
+		}
+	}, {
+		key: '_toBlob',
+		value: function _toBlob(canvas, type) {
+			var dataURI = canvas.toDataURL(type);
+			var dataURIParts = dataURI.split(',');
+			var byteString = undefined;
+			if (dataURIParts[0].indexOf('base64') >= 0) {
+				// Convert base64 to raw binary data held in a string:
+				byteString = atob(dataURIParts[1]);
+			} else {
+				// Convert base64/URLEncoded data component to raw binary data:
+				byteString = decodeURIComponent(dataURIParts[1]);
+			}
+			var arrayBuffer = new ArrayBuffer(byteString.length);
+			var intArray = new Uint8Array(arrayBuffer);
+
+			for (var i = 0; i < byteString.length; i += 1) {
+				intArray[i] = byteString.charCodeAt(i);
+			}
+
+			var mimeString = dataURIParts[0].split(':')[1].split(';')[0];
+			var blob = null;
+
+			if (hasBlobConstructor) {
+				blob = new Blob([hasArrayBufferViewSupport ? intArray : arrayBuffer], { type: mimeString });
+			} else {
+				var bb = new BlobBuilder();
+				bb.append(arrayBuffer);
+				blob = bb.getBlob(mimeString);
+			}
+
+			return blob;
+		}
+	}, {
+		key: '_loadImage',
+		value: function _loadImage(image, file, callback) {
+			if (typeof URL === 'undefined') {
+				var reader = new FileReader();
+				reader.onload = function (evt) {
+					image.src = evt.target.result;
+					if (callback) {
+						callback();
+					}
+				};
+				reader.readAsDataURL(file);
+			} else {
+				image.src = URL.createObjectURL(file);
+				if (callback) {
+					callback();
+				}
+			}
+		}
+	}, {
+		key: 'isSupported',
+		value: function isSupported() {
+			return typeof HTMLCanvasElement !== 'undefined' && hasBlobSupport && hasReaderSupport;
+		}
+	}]);
+
+	return ImageTools;
+})();
+
+//**dataURL to blob**
+function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+}
+
+//**blob to dataURL**
+function blobToDataURL(blob, callback) {
+    var a = new FileReader();
+    a.onload = function(e) {callback(e.target.result);}
+    a.readAsDataURL(blob);
+}
+
+//test:
+// var blob = dataURLtoBlob('data:text/plain;base64,YWFhYWFhYQ==');
+// blobToDataURL(blob, function(dataurl){
+//    alert(dataurl);
+// });
+
+});
+
+</script>
+
+
+<script type="text/javascript">
+
+/*
+document.addEventListener("DOMContentLoaded", function() {
+  filedataHiddenElement = document.querySelector("#filedata"); 
+  commentfiledataHiddenElement = document.querySelector("#commentfiledata"); 
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+    console.log(files);
+	alert(files);
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+       //Only process image files.
+       if (!f.type.match('image.*')) {
+        alert("only image files allowed!");
+         continue;
+       }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          
+          filedataHiddenElement.value = e.target.result;
+          //not the best way to deal with with this, need to clean this up
+          commentfiledataHiddenElement.value = e.target.result;
+          //var u = document.createElement('p');
+
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+
+document.getElementById('image_file').addEventListener('change', handleFileSelect, false);
+document.getElementById('comment_image_file').addEventListener('change', handleFileSelect, false);
+
+});
+*/
+
+</script>
+
+<script>
+$(".head .more a").each( function(i, elem) {
+    $(elem).attr("href", Text.fixLink($(elem).attr("href")))
+});
+</script>
+</div>

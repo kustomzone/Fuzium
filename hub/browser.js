@@ -1,9 +1,10 @@
-// Load in dependencies
+
+// Dependencies
 var ipcRenderer = require('electron').ipcRenderer;
 var webContents = require('electron').remote.getCurrentWebContents();
 var Watcher     = require('file-watcher');
 
-// When the DOM loads
+// DOM loaded
 window.addEventListener('DOMContentLoaded', function handleDOMLoad () {
   // Find attachment point for nav buttons
   var leftNavContainer = document.querySelector('.top > #material-one-left');

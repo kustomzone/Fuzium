@@ -1,0 +1,95 @@
+{
+  "db_name": "LanderApps",
+  "db_file": "data/lander.db",
+  "version": 4,
+  "maps": {
+    "users/.+/data.json": {
+      "to_table": [
+	    {"node": "topics", "table": "topics"},
+		{"node": "topics_vote", "table": "topics_vote", "key_col": "topic_uri", "val_col": "vote"},
+        {"node": "posts", "table": "posts"},
+        {"node": "posts_vote", "table": "posts_vote", "key_col": "post_url", "val_col": "vote"},
+        {"node": "comments", "table": "comments", "key_col": "com_post"},
+        {"node": "comments_vote", "table": "comments_vote", "key_col": "com_url", "val_col": "vote"}
+      ],
+      "to_keyvalue": [ "next_com_id", "next_post_id", "next_topic_id" ]
+    },
+    "users/.+/content.json": {
+      "to_keyvalue": [ "cert_user_id" ]
+    }
+  },
+  "tables": {
+    "topics": {
+		"cols": [
+			["topic_id", "INTEGER"], 
+			["title", "TEXT"],
+			["body", "TEXT"],
+			["image", "TEXT"],
+			["image_thumb", "TEXT"],
+			["parent_topic_uri", "TEXT"],
+			["added", "DATETIME"],
+			["json_id", "INTEGER REFERENCES json (json_id)"]
+		],
+		"indexes": ["CREATE UNIQUE INDEX topic_key ON topics(topic_id, json_id)"],
+		"schema_changed": 1426195825
+	},
+    "posts": {
+      "cols": [
+        ["post_id",         "INTEGER PRIMARY KEY"],
+		["post_title",      "TEXT"],
+		["post_user",       "TEXT"],
+        ["post_date",       "DATETIME"],
+		["post_cat",        "TEXT"],
+		["post_url",        "TEXT"],
+		["post_content",    "TEXT"],
+		["post_parent",     "TEXT"],
+        ["post_image_name", "TEXT"],
+		["post_image_url",  "TEXT"],
+        ["post_image_blob", "TEXT"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX post_key ON posts(json_id, post_date)"],
+      "schema_changed": 1426195825
+    },
+    "comments": {
+      "cols": [
+        ["com_id",       "INTEGER PRIMARY KEY"],
+        ["com_date",     "DATETIME"],
+        ["com_post",     "INTEGER"],
+        ["com_image",    "TEXT"],
+        ["com_content",  "TEXT"],
+		["post_url",     "TEXT"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE INDEX post_url ON comments(post_url)", "CREATE UNIQUE INDEX com_key ON comments(json_id, com_id)"],
+      "schema_changed": 1426195825
+    },
+	"topics_vote": {
+	  "cols": [
+		["topic_uri",     "TEXT"],
+		["topic_vote",    "INTEGER"],
+		["json_id",       "INTEGER REFERENCES json (json_id)"]
+	  ],
+	  "indexes": ["CREATE UNIQUE INDEX topic_vote_key ON topics_vote(topic_uri, json_id)", "CREATE INDEX topic_vote_uri ON topics_vote(topic_uri)"],
+	  "schema_changed": 1426195825
+	},
+    "posts_vote": {
+      "cols": [
+        ["post_url",     "TEXT"],
+        ["post_vote",    "INTEGER"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX post_vote_key ON posts_vote(post_url, json_id)", "CREATE INDEX post_vote_url ON posts_vote(post_url)"],
+      "schema_changed": 1426195825
+    },
+    "comments_vote": {
+      "cols": [
+        ["com_url",      "TEXT"],
+        ["com_vote",     "INTEGER"],
+        ["json_id",      "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX com_vote_key ON comments_vote(com_url, json_id)", "CREATE INDEX com_vote_url ON comments_vote(com_url)"],
+      "schema_changed": 1426195825
+    }
+  }
+}

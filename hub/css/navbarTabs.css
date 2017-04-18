@@ -1,0 +1,220 @@
+.tab-group {
+	/* make room for the window controls */
+	padding-left: 75px;
+	display: flex;
+	height: 2.3333em;
+	align-items: center;
+	transition: 0.2s background-color;
+	max-width: 100vw;
+	-webkit-user-select: none;
+	position: relative;
+	outline: none;
+	-webkit-app-region: drag;
+}
+
+/* there are no window controls in fullscreen, so we don't need any padding */
+
+body.fullscreen .tab-group,
+body.notMac .tab-group {
+	padding-left: 0;
+}
+
+/* when the tab-group is white, we need a line to separate it from the webviews */
+
+.tab-group:before {
+	content: "";
+	width: 100vw;
+	height: 1px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.075);
+	transition: 0.2s;
+}
+
+/* dark colors don't need to be darkened as much for contrast */
+
+.dark-theme .tab-group:before {
+	background: rgba(0, 0, 0, 0.04);
+}
+.dark-theme.is-edit-mode .tab-group:before {
+	background: none;
+}
+
+/* tab layout */
+
+.tab-group #tabs {
+	display: flex;
+	flex: 1;
+	overflow: auto;
+}
+.tab-item {
+	flex: 1;
+	min-width: 125px;
+	transition: .15s min-width, 0.2s transform;
+	padding: 0 1em;
+	font-size: 0.8em;
+	line-height: 36px;
+	height: 36px;
+	overflow: hidden;
+	word-break: break-all;
+}
+.tab-item:not(.active):hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* icons */
+
+.tab-item .tab-icon-area {
+	float: right;
+}
+.tab-item i {
+	font-size: 0.8em;
+	padding: 0 0.66em;
+	vertical-align: middle;
+	width: 1em;
+	box-sizing: content-box;
+}
+.tab-item.active:not(:only-child) {
+	background: rgba(0, 0, 0, 0.05);
+}
+.dark-theme .tab-item.active:not(:only-child) {
+	background: rgba(255, 255, 255, 0.2);
+}
+.tab-item.selected {
+	min-width: 100%;
+	/* remove the white transparent-ness */
+	background: none;
+	padding-left: 9px;
+}
+.tab-item.fade {
+	opacity: 0.5;
+}
+
+/* style tab scrollbar */
+
+.tab-group #tabs::-webkit-scrollbar {
+	height: 0.2em;
+}
+.tab-group #tabs::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+.tab-group #tabs::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.dark-theme .tab-group #tabs::-webkit-scrollbar-track {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+.dark-theme .tab-group #tabs::-webkit-scrollbar-thumb {
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* when an input is selected, hide other tabs */
+
+.is-edit-mode .tab-item:not(.selected) {
+	min-width: 0;
+	max-width: 0;
+	width: 0;
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+/* the background isn't necessary when there is only one tab */
+
+.is-edit-mode .tab-item {
+	background: none !important;
+}
+
+/* show either the view or edit contents */
+
+.tab-item .tab-edit-contents {
+	display: none;
+}
+.tab-item.selected .tab-edit-contents {
+	display: flex;
+	height: 100%;
+	align-items: center;
+}
+.tab-item.selected .tab-view-contents {
+	display: none;
+}
+
+/* tab inputs */
+
+.tab-item .tab-input {
+	line-height: 1.15em;
+	font-size: 1.15em;
+	-webkit-appearance: none;
+	background: none;
+	border: none;
+	color: inherit;
+	flex: 1;
+	height: 1.5em;
+	outline: none;
+	-webkit-user-select: auto;
+	-webkit-app-region: no-drag;
+}
+.tab-item .tab-input::-webkit-input-placeholder {
+	color: inherit;
+	opacity: 0.5;
+	line-height: 1.25em;
+}
+
+/* hide the lock icon unless its the current tab */
+
+.tab-item:not(.active) .icon-tab-not-secure {
+	display: none;
+}
+.tab-item .tab-view-contents .title {
+	font-size: 15px;
+}
+
+/* buttons */
+
+.navbar-action-button {
+	padding: 1em;
+}
+.navbar-action-button + .navbar-action-button {
+	padding-left: 0.5em;
+}
+
+/* reader button */
+
+.tab-item .reader-button {
+	display: none;
+	padding-left: 0;
+}
+.tab-item.active .reader-button.can-reader {
+	display: inline-block;
+}
+.tab-item.active .reader-button.is-reader {
+	display: inline-block;
+}
+
+/* when the tab is hovered, hide info buttons and show the close button */
+
+.tab-item.jshover .tab-info-icon {
+	display: none;
+}
+.tab-item .tab-close-button {
+	display: none;
+}
+.tab-item.jshover .tab-close-button {
+	display: inline-block;
+}
+
+/* hide other tabs in focus mode */
+
+body.is-focus-mode .tab-item:not(.active) {
+	display: none;
+}
+body.is-focus-mode .navbar-action-button {
+	display: none;
+}
+
+/* since only one tab is shown in focus mode, the highlight isn't needed */
+
+body.is-focus-mode .tab-item {
+	background: none !important;
+}

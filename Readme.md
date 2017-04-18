@@ -16,16 +16,17 @@ A fusion of Electron and Zeronet, with more goodness to come.
  
 ### What's new?
 
-- (Feb 1, 2017) Merged in [Min Browser](https://github.com/minbrowser/min) which uses [DuckDuckGo](https://duckduckgo.com/)
+- (Feb 1, 2017) Integrated [Min Browser](https://github.com/minbrowser/min) with [DuckDuckGo](https://duckduckgo.com/)
   for extra privacy and instant answers.
   <br>
-  It's a ['smarter, faster'](https://minbrowser.github.io/min/) address bar which suits
-  this project perfectly. :surfing_man:
+  It's a ['smarter, faster'](https://minbrowser.github.io/min/) address bar which suits this project perfectly. :surfing_man:
   <br>
-- (Feb 11) Merged in bookmarking with [Vue.js](https://github.com/coligo-io/bookmarking-app-electron-vuejs-firebase)
+- (Feb 11) Integrated bookmarking with [Vue.js](https://github.com/coligo-io/bookmarking-app-electron-vuejs-firebase)
   <br>
-- (March 11) Lander Apps homepage allowing users to add their own content to the store. 
-  <br> (..edit and delete option pending)
+- (March 11) New AppCentre homepage allowing users to add their own content to the store. 
+  <br> (..user edit and delete option still pending)
+- (April 18) Integrated [HackBrower](https://github.com/hackbrowser/hackbrowser) for 'non-Tor' sub-windows.
+  <br>
 
 ### Todo
 
@@ -38,7 +39,12 @@ A fusion of Electron and Zeronet, with more goodness to come.
 - [x] a newly designed homepage
 - [x] bookmark manager & tasklist
 - [x] homepage featured appstore (todo: rating, etc)
+- [x] menu option to open sub-windows with Flash and nav history
+- [ ] integrate Mastadon
+- [ ] apply Flash plugin and nav history to main window
+- [ ] add search options to preferences
 - [ ] other templated zites on tabbar
+- [ ] integrate LBRY
 - [ ] altcoin plugin intergration
 - [ ] user content management (apps and themes)
 - [ ] test Chrome extensions & zeronet plugins
@@ -47,12 +53,12 @@ A fusion of Electron and Zeronet, with more goodness to come.
 - [ ] cross platform testing
 
 
-### Bugs (v0.0.7)
+### Bugs (v0.0.8)
 
  * To hide bookmarks the header icon is a temp toggle switch.
  * Opening a zite in the address bar creates additional toggle switches and sidebar buttons.
  * Need to reload (CTRL-R) occasionally after starting if zeronet boots up late.
- * A few display bugs with Zeronet 0.5.3 (toggle On/Off for sidebar)
+ * Still a few display bugs with Zeronet 0.5.3 (toggle On/Off for scrollbar)
 
  
 ### Features
@@ -63,11 +69,12 @@ A fusion of Electron and Zeronet, with more goodness to come.
  * tabbed addressbar with instant search and tasklist
  * bookmarking manager
  * homepage appstore
-
+ * supports Flash plugin and nav history in sub-windows
 
 ### Test Releases
 
-
+ - (Apr 18) [Fuzium-v0.0.8-win32-zip](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.8-pre-alpha)
+ <br>
  - (Mar 11) [Fuzium-v0.0.7-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.7-pre-alpha) with Zeronet 0.5.3
  <br>
  - (Feb 13) [Fuzium-v0.0.6-win32-installer](https://github.com/kustomzone/Fuzium/releases/tag/v0.0.6-pre-alpha) with Zeronet 0.5.2
@@ -104,7 +111,7 @@ npm install && npm start
 
 #### Thank you!
 
-
+ - [Hackbrowser](https://github.com/hackbrowser/hackbrowser) for browser history and Flash plugin
  - [Freeload](https://github.com/MagicInventor/FreeLoad) homepage layout.
  - [PalmerAL](https://github.com/PalmerAL) for the [Min Browser](https://github.com/minbrowser) components.
  - Tamas Kocsis, creator of Zeronet ( https://zeronet.io )

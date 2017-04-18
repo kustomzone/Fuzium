@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Fuzium</title>
+	
+	<link rel="stylesheet" type="text/css" href="css/cssreset-min.css">
+	<link rel="stylesheet" type="text/css" href="css/ionicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/browser.css">
+	<link rel="stylesheet" type="text/css" href="css/dragula.css">
+	<link rel="stylesheet" type="text/css" href="css/roboto.css">
+	
+	<script src="browser/lib/keymaster.js"></script>
+	<script src="browser/utility/Utility.js"></script>
+	<script src="browser/utility/KeyCode.js"></script>
+	<script src="browser/utility/URIParser.js"></script>
+	<script src="browser/view/BrowserTabBar.js"></script>
+	<script src="browser/view/BrowserTab.js"></script>
+	<script src="browser/view/AddressBar.js"></script>
+	<script src="browser/view/AutoCompleteBox.js"></script>
+	<script src="browser/view/UserMenu.js"></script>
+	<script src="browser/controller/NavigationHistoryHandler.js"></script>
+	<script src="browser/view/SearchBox.js"></script>
+	<script src="browser/view/NavigationControls.js"></script>
+	<script src="browser/view/ContextMenuHandler.js"></script>
+	<script src="browser/view/TabView.js"></script>
+	<script src="browser/controller/BrowserWindow.js"></script>
+	<script src="browser/controller/IPCRendererProcessHandler.js"></script>
+	<script src="browser/init.js"></script>
+	
+</head>
+<body>
+	<nav id="navtabs" class="unselectable">
+		<div id="add-tab">
+			<div class="icon-wrapper">
+				<i class="icon ion-plus"></i>
+			</div><!-- // .icon-wrapper -->
+		</div><!-- // #add-tab -->
+	</nav><!-- // nav#navbar -->
+
+	<section id="menubar" class="unselectable">
+		<div id="menu-left" class="controls left">
+			<div id="button-back" class="icon-button disabled">
+				<i class="icon ion-ios-arrow-back"></i>
+			</div><!-- // #button-back -->
+
+			<div id="button-forward" class="icon-button disabled">
+				<i class="icon ion-ios-arrow-forward"></i>
+			</div><!-- // #button-forward -->
+
+			<div id="button-reload" class="icon-button">
+				<i class="icon ion-android-refresh"></i>
+			</div><!-- // #button-reload -->
+
+			<div id="button-stop-loading" class="icon-button">
+				<i class="icon ion-android-close"></i>
+			</div><!-- // #button-stop-loading -->
+		</div><!-- // controls.left -->
+
+		<div id="address-bar-wrapper">
+			<input type="text" id="address-bar" />
+		</div><!-- // #address-bar-wrapper -->
+
+		<div id="menu-right" class="controls right">
+			<div id="button-menu" class="icon-button"><i class="icon ion-navicon-round"></i></div>
+		</div><!-- // .controls.right -->
+
+		<div class="clear"></div>
+
+		<div id="auto-complete-box">
+		</div><!-- // #auto-complete-box -->
+	</section><!-- // #menubar -->
+
+	<!-- Wrapper for WebView elements -->
+	<section id="webview-container">
+	</section><!-- // section#webview-container -->
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js'></script>
+
+	<script>
+		var dragListener = dragula([document.getElementById('navtabs')], {
+			direction: 'horizontal'
+		}); 
+
+		dragListener.on('drag', function(el) {
+			if (el.classList.contains('nav-tab')) {
+				el.click(); 
+			}
+		});
+	</script>
+</body>
+</html>

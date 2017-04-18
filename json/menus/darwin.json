@@ -7,6 +7,11 @@
     }, {
       "type": "separator"
     }, {
+      "label": "New Window",
+      "command": "application:new-window"
+    }, {
+      "type": "separator"
+    }, {
       "label": "Preferences",
       "command": "application:show-settings",
       "accelerator": "Command+,"

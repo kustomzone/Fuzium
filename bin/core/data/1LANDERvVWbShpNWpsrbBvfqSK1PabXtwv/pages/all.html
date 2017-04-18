@@ -1,0 +1,59 @@
+
+<!-- Main -->
+<div class="info" style="position: absolute; left: 73px; top: 14px; color: #F04020; opacity: 0.55;">A standalone copy of AppCentre is now available on <a href="https://github.com/kustomzone/AppCentre">Github</a></div>
+
+<section id="derecha">
+	<div class="caja">
+		<div class="title">
+		  <h2>Latest</h2>
+		</div>
+		<div class="container">
+		{{ #posts }}
+			<div class="lastposts colspan">
+			 <div class="app-header">
+			  <span class="icon {{ post_cat }}"></span>&nbsp;
+			  <a href="#post-{{ post_id }}" id="open_post" data-key="{{ post_id }}">{{ post_title }}</a>
+			 </div>
+			 <a href="{{ post_url }}"><img class="apps" src="{{ post_image_blob }}"></a>
+			</div> 
+		{{ /posts }}
+		</div>
+	</div>
+</section>
+
+<aside id="categories">
+	<div id="stats" class="caja">
+		<div class="title">
+			<h2>Stats</h2>
+		</div>
+		<div class="clearfix">
+			<div class="floatL"><b>{{ stats.peers }}</b> peers</div>
+			<!-- div><b>{{ stats.active_peers }}</b> active</div -->
+			<div class="floatR"><b>{{ stats.topics }} 0 </b> topics</div>&nbsp;
+			<div class="floatL"><b>{{ stats.posts }}</b> posts</div>
+			<div class="floatR"><b>{{ stats.comments }}</b> comments</div>
+			<div class="floatL"><b>{{ stats.zites }}</b> zites seeded</div>
+		</div>
+		<div class="ver-mas" style="margin-top:5px">
+			<a href="#refresh">Refresh</a>
+		</div>
+	</div>
+	
+	<div id="featured" class="caja">
+		<div class="title">
+			<h2>Featured</h2>
+		</div>
+		<ul class="list">
+		  {{ #posts }}
+			  <li class="lastposts">
+			    <i class="icon {{ post_cat }}"></i>&nbsp;
+				<a href="#post-{{ post_id }}" id="open_post" data-key="{{ post_id }}">{{ post_title }}</a>
+			  </li>
+		  {{ /posts }}			
+		</ul>
+		<div class="ver-mas">
+			<a href="#more">More</a>
+		</div>
+	</div> 
+</aside>
+<!-- /Main -->

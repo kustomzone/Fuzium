@@ -1,0 +1,36 @@
+{
+ "address": "1Name2NXVi1RDPDgf5617UoW7xA6YrhM9F",
+ "description": "Namecoin address registry",
+ "files": {
+  "css/all.css": {
+   "sha512": "f00818c5b52013a467dc1883214b57cf6ac3dbe6da2df3f0af3cb232cd74877b",
+   "size": 69952
+  },
+  "data/names.json": {
+   "sha512": "1c88f8a192e41985c697d96a0e0231ba8b73766f07dca6e1e99201e95823e2a9",
+   "size": 91009
+  },
+  "index.html": {
+   "sha512": "b3fd5f2e61666874b06cc08150144015c0e88c45d3e7847ff8d4c641e789807d",
+   "size": 2160
+  },
+  "js/all.js": {
+   "sha512": "4426ca2dfacd524fb995c9f7522ca4e6f70c3e524b4bd8ca67f6416f93fca111",
+   "size": 90523
+  }
+ },
+ "ignore": "(js|css)/(?!all.(js|css))",
+ "inner_path": "content.json",
+ "modified": 1492463713.515726,
+ "sign": [
+  92297640221009352291765407406792753271073037944859306139582100696655283630122,
+  57881455756546407888730095413948937707818171052936579924921301825595764678293
+ ],
+ "signers_sign": "HOKZByY9pO2Iqh5UE+Nb7N5qb2cTvhULB3euvszufDnGIVeF4mswur3PyXxGXM+tJ8kZOFzspFRIl0gOyCE0tCM=",
+ "signs": {
+  "1Name2NXVi1RDPDgf5617UoW7xA6YrhM9F": "G3yyUj4+ue7NyhslHfj9rZ0otaisom3T+tKr0/BSwlxp32S6pWfri8ERMOafBs6Rte1f+krltihObCQQRZTEKzI="
+ },
+ "signs_required": 1,
+ "title": "ZeroName",
+ "zeronet_version": "0.4.1"
+}
