@@ -98,10 +98,12 @@ Report any [issues](https://github.com/kustomzone/Fuzium/issues) you come across
 
 ### Install
 
+`pnpm` works better
+
 ```
 git clone https://github.com/kustomzone/Fuzium.git
 cd Fuzium
-npm install && npm start
+pnpm install && pnpm start
 ```
 
 #### Thank you!
